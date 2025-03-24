@@ -14,7 +14,8 @@ const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
 
 // Require router files:
-const userRouter = require('./routes/user.router');
+const userRouter = require('./routes/user.router')
+const artistsRouter = require('./routes/artists.router')
 
 // Apply middleware:
 app.use(express.json());
@@ -28,6 +29,8 @@ app.use(bodyParser.json());
 // Apply router files:
 app.use('/api/user', userRouter);
 app.use('/api/organizations', organizationRouter);
+app.use('/api/artists', artistsRouter);
+
 
 // Start the server:
 app.listen(PORT, () => {
