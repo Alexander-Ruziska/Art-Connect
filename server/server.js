@@ -16,6 +16,7 @@ const passport = require('./strategies/user.strategy');
 // Require router files:
 const userRouter = require('./routes/user.router')
 const artistsRouter = require('./routes/artists.router')
+const ideaRouter = require('./routes/idea.router')
 
 // Apply middleware:
 app.use(express.json());
@@ -30,6 +31,7 @@ app.use(bodyParser.json());
 app.use('/api/user', userRouter);
 app.use('/api/organizations', organizationRouter);
 app.use('/api/artists', artistsRouter);
+app.use('/api/idea', ideaRouter);
 
 
 // Start the server:
