@@ -40,21 +40,30 @@ router.get('/:id', (req, res) => {
 router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const hashedPassword = encryptLib.encryptPassword(req.body.password);
+  const isArtist = req.body.is_artist;
 
   const sqlText = `
     INSERT INTO "user" 
-      ("username", "password", "is_artist", "is_organization")
+      ("username", "password", "is_artist")
       VALUES
-      ($1, $2, $3, $4);
+      ($1, $2, $3);
   `;
+  
   const sqlValues = [
     username,
     hashedPassword,
-    req.body.is_artist ? true : false,
-    req.body.is_organization ? true : false
+    isArtist,
   ];
 
   pool.query(sqlText, sqlValues)
+    .then(() => {
+      const updateSql = `
+        UPDATE "user" 
+        SET "is_organization" = true
+        WHERE "is_artist" = false;
+      `;
+      return pool.query(updateSql);
+    })
     .then(() => {
       res.sendStatus(201);
     })
@@ -63,6 +72,7 @@ router.post('/register', (req, res, next) => {
       res.sendStatus(500);
     });
 });
+
 
 
 // Handles the logic for logging in a user. When this route receives
