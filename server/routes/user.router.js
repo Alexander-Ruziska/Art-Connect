@@ -41,6 +41,8 @@ router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const hashedPassword = encryptLib.encryptPassword(req.body.password);
 
+  // TODO: Create a default artist profile if user has selected artist=true, OR organization profile otherwise
+
   const sqlText = `
     INSERT INTO "user"
       ("username", "password")
