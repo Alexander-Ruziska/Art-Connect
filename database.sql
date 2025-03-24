@@ -57,3 +57,118 @@ CREATE TRIGGER on_user_update
 BEFORE UPDATE ON "user"
 FOR EACH ROW
 EXECUTE PROCEDURE set_updated_at_to_now();
+
+
+CREATE TABLE "user"(
+    "id" SERIAL NOT NULL,
+    "password" VARCHAR(255) NOT NULL,
+    "username" VARCHAR(255) NOT NULL,
+    "is_admin" BOOLEAN NOT NULL DEFAULT '0',
+    "created_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "is_artist" BOOLEAN NOT NULL DEFAULT '0',
+    "is_banned" BOOLEAN NOT NULL DEFAULT '0',
+    "is_organization" BOOLEAN NOT NULL DEFAULT '0',
+    "profile_pic" VARCHAR(255) NULL,
+    "linkedin" TEXT NULL,
+    "facebook" TEXT NULL,
+    "insta" TEXT NULL,
+    "website" TEXT NULL,
+    "bio" TEXT NULL,
+    "phone" VARCHAR(255) NULL
+);
+ALTER TABLE
+    "user" ADD PRIMARY KEY("id");
+CREATE TABLE "artists"(
+    "id" SERIAL NOT NULL,
+    "user_id" INTEGER NOT NULL,
+    "name" VARCHAR(255) NOT NULL,
+    "created_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "soundcloud_id" VARCHAR(255) NULL,
+    "spotify_id" VARCHAR(255) NULL,
+    "accepted_jobs" TEXT NULL,
+    "headline_description" VARCHAR(255) NULL
+);
+ALTER TABLE
+    "artists" ADD PRIMARY KEY("id");
+ALTER TABLE
+    "artists" ADD CONSTRAINT "artists_user_id_unique" UNIQUE("user_id");
+CREATE TABLE "organizations"(
+    "id" SERIAL NOT NULL,
+    "user_id" INTEGER NOT NULL,
+    "name" VARCHAR(255) NULL,
+    "description" TEXT NULL,
+    "created_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "mission _statement" VARCHAR(255) NULL
+);
+ALTER TABLE
+    "organizations" ADD PRIMARY KEY("id");
+ALTER TABLE
+    "organizations" ADD CONSTRAINT "organizations_user_id_unique" UNIQUE("user_id");
+CREATE TABLE "photos"(
+    "id" SERIAL NOT NULL,
+    "artist_id" INTEGER NOT NULL,
+    "image_url" VARCHAR(255) NULL,
+    "title" VARCHAR(255) NULL,
+    "description" VARCHAR(255) NULL,
+    "created_at" TIMESTAMP(0) WITH
+        TIME zone NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE
+    "photos" ADD PRIMARY KEY("id");
+CREATE TABLE "jobs"(
+    "id" SERIAL NOT NULL,
+    "organization_id" INTEGER NOT NULL,
+    "title" VARCHAR(255) NULL,
+    "description" TEXT NULL,
+    "deadline" DATE NULL,
+    "created_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "is_archived" BOOLEAN NOT NULL DEFAULT '0'
+);
+ALTER TABLE
+    "jobs" ADD PRIMARY KEY("id");
+CREATE TABLE "job_requests"(
+    "id" SERIAL NOT NULL,
+    "job_id" INTEGER NOT NULL,
+    "artist_id" INTEGER NOT NULL,
+    "status" VARCHAR(20) NOT NULL DEFAULT 'pending',
+    "created_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE
+    "job_requests" ADD PRIMARY KEY("id");
+CREATE TABLE "ideas"(
+    "id" SERIAL NOT NULL,
+    "artist_id" INTEGER NOT NULL,
+    "created_at" TIMESTAMP(0) WITH
+        TIME zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        "is_archived" BOOLEAN NOT NULL DEFAULT '0',
+        "idea" TEXT NULL
+);
+ALTER TABLE
+    "ideas" ADD PRIMARY KEY("id");
+CREATE TABLE "user_organizations"(
+    "id" SERIAL NOT NULL,
+    "user_id" INTEGER NOT NULL,
+    "organization_id" INTEGER NOT NULL
+);
+ALTER TABLE
+    "user_organizations" ADD PRIMARY KEY("id");
+ALTER TABLE
+    "user_organizations" ADD CONSTRAINT "user_organizations_user_id_unique" UNIQUE("user_id");
+ALTER TABLE
+    "ideas" ADD CONSTRAINT "ideas_artist_id_foreign" FOREIGN KEY("artist_id") REFERENCES "artists"("id");
+ALTER TABLE
+    "artists" ADD CONSTRAINT "artists_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "user"("id");
+ALTER TABLE
+    "photos" ADD CONSTRAINT "photos_artist_id_foreign" FOREIGN KEY("artist_id") REFERENCES "artists"("id");
+ALTER TABLE
+    "jobs" ADD CONSTRAINT "jobs_organization_id_foreign" FOREIGN KEY("organization_id") REFERENCES "organizations"("id");
+ALTER TABLE
+    "user_organizations" ADD CONSTRAINT "user_organizations_organization_id_foreign" FOREIGN KEY("organization_id") REFERENCES "organizations"("id");
+ALTER TABLE
+    "job_requests" ADD CONSTRAINT "job_requests_artist_id_foreign" FOREIGN KEY("artist_id") REFERENCES "artists"("id");
+ALTER TABLE
+    "organizations" ADD CONSTRAINT "organizations_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "user"("id");
+ALTER TABLE
+    "user_organizations" ADD CONSTRAINT "user_organizations_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "user"("id");
+ALTER TABLE
+    "job_requests" ADD CONSTRAINT "job_requests_job_id_foreign" FOREIGN KEY("job_id") REFERENCES "jobs"("id");
