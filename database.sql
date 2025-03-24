@@ -59,6 +59,19 @@ FOR EACH ROW
 EXECUTE PROCEDURE set_updated_at_to_now();
 
 
+--DROP TABLE IF EXISTS "job_requests";
+--DROP TABLE IF EXISTS "jobs";
+--DROP TABLE IF EXISTS "idea";
+--DROP TABLE IF EXISTS "photos";
+--DROP TABLE IF EXISTS "artists";
+--DROP TABLE IF EXISTS "organizations";
+--DROP TABLE IF EXISTS "user";
+--DROP TABLE IF EXISTS "user_organizations";
+--
+--
+
+
+
 CREATE TABLE "user"(
     "id" SERIAL NOT NULL,
     "password" VARCHAR(255) NOT NULL,
