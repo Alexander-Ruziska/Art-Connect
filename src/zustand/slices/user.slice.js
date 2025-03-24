@@ -9,6 +9,7 @@ axios.defaults.withCredentials = true;
 const createUserSlice = (set, get) => ({
   user: {},
   authErrorMessage: '',
+  role: '',
   fetchUser: async () => {
     //  Retrieves the current user's data from the /api/user endpoint.
     try {

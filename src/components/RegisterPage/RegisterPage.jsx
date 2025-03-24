@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import useStore from '../../zustand/store';
 
-
 function RegisterPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const register = useStore((state) => state.register)
+  const [role, setRole] = useState('');
+  const register = useStore((state) => state.register);
   const errorMessage = useStore((state) => state.authErrorMessage);
   const setAuthErrorMessage = useStore((state) => state.setAuthErrorMessage);
 
@@ -13,8 +13,8 @@ function RegisterPage() {
     // Clear the auth error message when the component unmounts:
     return () => {
       setAuthErrorMessage('');
-    }
-  }, [])
+    };
+  }, [setAuthErrorMessage]);
 
   const handleRegister = (event) => {
     event.preventDefault();
@@ -22,7 +22,9 @@ function RegisterPage() {
     register({
       username: username,
       password: password,
-    })
+      is_artist: role === 'artist',
+      is_organization: role === 'organization',
+    });
   };
 
   return (
@@ -45,8 +47,19 @@ function RegisterPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <label htmlFor="role">User Type:</label>
+        <select
+          id="role"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          required
+        >
+          <option value="">Select User Type</option>
+          <option value="artist">Artist</option>
+          <option value="organization">Organization</option>
+        </select>
         <button type="submit">
-          Register 
+          Register
         </button>
       </form>
       { // Conditionally render registration error:
@@ -57,6 +70,5 @@ function RegisterPage() {
     </>
   );
 }
-
 
 export default RegisterPage;
