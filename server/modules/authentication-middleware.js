@@ -3,11 +3,10 @@ const pool = require("../modules/pool");
 const createProfilesIfNotExists = async (req) => {
   // If the user is an artist but has no artist_id, create an artist profile
   if (req.user.is_artist && req.user.artist_id === null) {
-    await pool.query(`INSERT INTO "artists" ("user_id") VALUES ($1)`, [
+    await pool.query(`INSERT INTO "artists" ("user_id") VALUES ($1);`, [
       req.user.id,
     ]);
   }
-
 
   // If the user is an organization but has no organization_id, create an organization profile
   if (req.user.is_organization && req.user.organization_id === null) {
@@ -32,7 +31,7 @@ const rejectUnauthenticated = (req, res, next) => {
   }
 };
 
-const rejectIfNotArist = (req, res, next) => {
+const rejectIfNotArtist = (req, res, next) => {
   // Rejects request even if they are authenticated but not an artist
   if (req.isAuthenticated() && req.user.is_artist) {
     createProfilesIfNotExists(req);
@@ -58,6 +57,6 @@ const rejectIfNotOrganization = (req, res, next) => {
 
 module.exports = {
   rejectUnauthenticated,
-  rejectIfNotArist,
+  rejectIfNotArtist,
   rejectIfNotOrganization,
 };
