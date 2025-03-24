@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
+const {rejectUnauthenticated, rejectIfNotArtist} = require('../modules/authentication-middleware');
 
 
-// GET route to get all artists
-router.get('/', async (req, res) => {
+// GET all artists
+router.get('/', rejectUnauthenticated, async (req, res) => {
   const queryText = 'SELECT * FROM "artists";'; 
   try {
     const result = await pool.query(queryText); 
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
   }
 });
 // GET ARTIST BY ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', rejectUnauthenticated,  async (req, res) => {
   const artistId = req.params.id;
   const queryText = 'SELECT * FROM "artists" WHERE "id" = $1;';
   
@@ -30,7 +31,7 @@ router.get('/:id', async (req, res) => {
   } catch (err) {
     console.error('Error in GET /api/artists/:id', err);
     res.sendStatus(500);
-  }1
+  }
 });
 
 
