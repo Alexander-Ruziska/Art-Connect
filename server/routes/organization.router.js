@@ -1,18 +1,14 @@
 const express = require('express');
-
 const pool = require('../modules/pool');
-
 const router = express.Router();
-
 
 const isAuthenticated = (req, res) => {
   if (!req.isAuthenticated()) {
-    res.sendStatus(403); 
+    res.sendStatus(403);
     return false;
   }
   return true;
 };
-
 
 router.get('/', (req, res) => {
   if (!isAuthenticated(req, res)) return;
@@ -49,7 +45,8 @@ router.post('/', (req, res) => {
     });
 });
 
-
+// TODO: Update this to be explicit with which fields to update - building strings for UPDATE
+// with map introduces sql injection (because we're not using sql parameterization ($1, $2, etc))
 router.put('/:id', (req, res) => {
   if (!isAuthenticated(req, res)) return;
   const fields = Object.entries(req.body).filter(([key, value]) => value !== null && value !== undefined);
@@ -80,3 +77,19 @@ router.delete('/:id', (req, res) => {
 });
 
 module.exports = router;
+
+/*
+  Refactor organization:
+    - Add a new table `user_organizations` that ties a user to an organization
+    - Add a user.is_organization
+    - Add a unique constraint to (user_id, organization_id) so each user can only belong to one org
+
+    Backend Updates:
+{x}- Update the user strategy to check for an organization that the user belongs to
+{x} - Create an organization on user registration if user.is_organization is true
+{x} - Update the rejectIfNotOrganization middleware
+
+
+{x}  - If user is an organization but no profile exists, create it
+{x}  - If user is an artist but no artist profile exists, create it
+*/
