@@ -1,5 +1,7 @@
 require('dotenv').config();
 const express = require('express');
+const organizationRouter = require('./routes/organization.router');
+const bodyParser = require('body-parser');
 
 // Instantiate an express server:
 const app = express();
@@ -21,9 +23,11 @@ app.use(express.static('build'));
 app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(bodyParser.json());
 
 // Apply router files:
 app.use('/api/user', userRouter);
+app.use('/api/organizations', organizationRouter);
 
 // Start the server:
 app.listen(PORT, () => {
