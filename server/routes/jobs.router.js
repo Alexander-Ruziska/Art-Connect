@@ -3,10 +3,10 @@ const pool = require('../modules/pool');
 
 const router = express.Router();
 
-// Helper function for authenticated access
+
 const isAuthenticated = (req, res) => req.isAuthenticated() ? true : (res.sendStatus(403), false);
 
-// Get all jobs
+
 router.get('/', (req, res) => {
   if (!isAuthenticated(req, res)) return;
   pool.query('SELECT * FROM "jobs"')
@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     .catch((err) => res.sendStatus(500) && console.error('GET /api/jobs error:', err));
 });
 
-// Get job by ID
+
 router.get('/:id', (req, res) => {
   if (!isAuthenticated(req, res)) return;
   pool.query('SELECT * FROM "jobs" WHERE id = $1', [req.params.id])
@@ -22,7 +22,7 @@ router.get('/:id', (req, res) => {
     .catch((err) => res.sendStatus(500) && console.error('GET /api/jobs/:id error:', err));
 });
 
-// Create a new job
+
 router.post('/', (req, res) => {
   if (!isAuthenticated(req, res)) return;
   const { title, description, deadline, organization_id, archived } = req.body;
@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
     .catch((err) => res.sendStatus(500) && console.error('POST /api/jobs error:', err));
 });
 
-// Update a job by ID
+
 router.put('/:id', (req, res) => {
   if (!isAuthenticated(req, res)) return;
   const fields = Object.entries(req.body).filter(([_, value]) => value !== null && value !== undefined);
@@ -47,7 +47,7 @@ router.put('/:id', (req, res) => {
     .catch((err) => res.sendStatus(500) && console.error('PUT /api/jobs/:id error:', err));
 });
 
-// Delete a job by ID
+
 router.delete('/:id', (req, res) => {
   if (!isAuthenticated(req, res)) return;
   pool.query('DELETE FROM "jobs" WHERE id = $1', [req.params.id])

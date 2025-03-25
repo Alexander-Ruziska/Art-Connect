@@ -2,6 +2,9 @@ const express = require('express');
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
+
+const { createProfilesIfNotExists } = require('../modules/authentication-middleware');
+
 const router = express.Router();
 
 // If the request came from an authenticated user, this route
@@ -16,7 +19,7 @@ router.get('/', (req, res) => {
   }
 });
 
-// Get user by ID
+
 router.get('/:id', (req, res) => {
   if (req.isAuthenticated()) {
     const sqlText = 'SELECT * FROM "user" WHERE id = $1';
@@ -36,21 +39,34 @@ router.get('/:id', (req, res) => {
 
 // Handles the logic for creating a new user. The one extra wrinkle here is
 // that we hash the password before inserting it into the database.
-router.post('/register', (req, res, next) => {
+router.post('/register', createProfilesIfNotExists, (req, res, next) => {
   const username = req.body.username;
   const hashedPassword = encryptLib.encryptPassword(req.body.password);
-
-  // TODO: Create a default artist profile if user has selected artist=true, OR organization profile otherwise
+  const isArtist = req.body.is_artist;
 
   const sqlText = `
-    INSERT INTO "user"
-      ("username", "password")
+    INSERT INTO "user" 
+      ("username", "password", "is_artist")
       VALUES
-      ($1, $2);
+      ($1, $2, $3);
   `;
-  const sqlValues = [username, hashedPassword];
+  
+  const sqlValues = [
+    username,
+    hashedPassword,
+    isArtist,
+  ];
 
   pool.query(sqlText, sqlValues)
+    .then(() => {
+      const updateSql = `
+        UPDATE "user" 
+        SET "is_organization" = true
+        WHERE "is_artist" = false;
+      `;
+      return pool.query(updateSql);
+
+    })
     .then(() => {
       res.sendStatus(201);
     })
@@ -59,6 +75,8 @@ router.post('/register', (req, res, next) => {
       res.sendStatus(500);
     });
 });
+
+
 
 // Handles the logic for logging in a user. When this route receives
 // a request, it runs a middleware function that leverages the Passport
@@ -80,7 +98,7 @@ router.post('/logout', (req, res, next) => {
   });
 });
 
-// Update user by ID
+// Update user by ID (might not need this?)
 router.put('/:id', (req, res) => {
   if (req.isAuthenticated()) {
     const userId = req.params.id;
@@ -89,7 +107,7 @@ router.put('/:id', (req, res) => {
       .map((key, index) => `"${key}" = $${index + 1}`);
     const sqlValues = [
       ...Object.values(req.body).filter(value => value !== null && value !== undefined),
-      userId // Directly include the user ID at the end
+      userId 
     ];
 
     // Check if there are fields to update
@@ -110,13 +128,11 @@ router.put('/:id', (req, res) => {
         res.sendStatus(500);
       });
   } else {
-    res.sendStatus(403); // Forbidden
+    res.sendStatus(403); 
   }
 });
 
 
-
-// Delete user by ID
 router.delete('/:id', (req, res) => {
   if (req.isAuthenticated()) {
     const sqlText = 'DELETE FROM "user" WHERE id = $1';
