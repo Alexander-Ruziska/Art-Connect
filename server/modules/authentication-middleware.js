@@ -1,21 +1,29 @@
 const pool = require("../modules/pool");
 
 const createProfilesIfNotExists = async (req) => {
+  console.log("req.user", req.user);
   // If the user is an artist but has no artist_id, create an artist profile
   if (req.user.is_artist && req.user.artist_id === null) {
-    await pool.query(`INSERT INTO "artists" ("user_id") VALUES ($1);`, [
-      req.user.id,
-    ]);
+    try {
+      await pool.query(`INSERT INTO "artists" ("user_id") VALUES ($1);`, [
+        req.user.id,
+      ]);
+    } catch (err) {
+      console.error(`Error creating artist profile`, err);
+    }
   }
 
   // If the user is an organization but has no organization_id, create an organization profile
   if (req.user.is_organization && req.user.organization_id === null) {
-    const result = await pool.query(`INSERT INTO "organizations" DEFAULT VALUES RETURNING "id";`);
-    //insert organization id and user id once the tabe has been created
-    await pool.query(`INSERT INTO "user_organizations" ("user_id", "organization_id") VALUES ($1, $2);`, [req.user.id, result.rows[0].id]);
+    try {
+      await pool.query(`INSERT INTO "organizations" ("user_id") VALUES ($1);`, [
+        req.user.id,
+      ]);
+    } catch (err) {
+      console.error(`Error creating organization profile`, err);
+    }
   }
 };
-
 
 const rejectUnauthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -59,5 +67,4 @@ module.exports = {
   rejectUnauthenticated,
   rejectIfNotArtist,
   rejectIfNotOrganization,
-  createProfilesIfNotExists,
 };
