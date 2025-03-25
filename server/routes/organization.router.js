@@ -11,7 +11,6 @@ const isAuthenticated = (req, res) => {
 };
 
 router.get('/', (req, res) => {
-  if (!isAuthenticated(req, res)) return;
   pool.query('SELECT * FROM "organizations"')
     .then((result) => res.send(result.rows))
     .catch((err) => {
@@ -22,7 +21,6 @@ router.get('/', (req, res) => {
 
 
 router.get('/:id', (req, res) => {
-  if (!isAuthenticated(req, res)) return;
   const sqlText = 'SELECT * FROM "organizations" WHERE id = $1';
   pool.query(sqlText, [req.params.id])
     .then((result) => res.send(result.rows[0]))
