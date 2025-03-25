@@ -22,7 +22,7 @@ const pool = require('../modules/pool');
 //     })
 // });
 
-//check to make sure that it works once Ismails code is in the system
+
 //post for idea form
 router.post('/', (req, res) => {
     const query = `
