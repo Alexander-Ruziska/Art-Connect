@@ -6,21 +6,23 @@ const pool = require('../modules/pool');
 
 //wait until ismails code is done it is giving me a 200 although I don't know if that is false or not because the code isn't set...? Maybe?
 // getting all ideas
-// router.get('/', rejectIfNotArist, (req, res) => {
-//     const query = `
-//       SELECT "artist_id", "created", "is_archived", "idea"
-//   FROM "ideas"
-// 	WHERE "artist_id" = $1 AND "is_archived" = FALSE;
-//     `;
-//     pool.query(query, [req.user.artist_id ])
-//     .then(result => {
-//         res.send(result.rows);
-//     })
-//     .catch(err => {
-//         console.log('ERROR: cannot render idea list', err);
-//         res.sendStatus(500);
-//     })
-// });
+router.get('/', (req, res) => {
+    const query = `
+    SELECT "ideas"."id", "ideas"."artist_id", "ideas"."created_at", "ideas"."is_archived", "ideas"."idea", "artists"."id" AS "art_id", "artists"."name"
+  	FROM "ideas"
+  	JOIN "artists"
+  	ON "ideas"."artist_id" = "artists"."id"
+	WHERE "artist_id" = $1 AND "is_archived" = FALSE;
+    `;
+    pool.query(query, [req.user.artist_id])
+    .then(result => {
+        res.send(result.rows);
+    })
+    .catch(err => {
+        console.log('ERROR: cannot render idea list', err);
+        res.sendStatus(500);
+    })
+});
 
 
 //post for idea form
