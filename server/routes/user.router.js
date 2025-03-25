@@ -51,6 +51,10 @@ router.post("/register", async (req, res, next) => {
 
   const sqlValues = [username, hashedPassword, isArtist, isOrganization];
 
+  // TODO: If the user wants to join an existing organization, add an INSERT here
+  // to add an entry to the user_organizations table - that way the automatic
+  // profile creation that happens later won't create a new organization for them
+
   pool
     .query(sqlText, sqlValues)
     .then((result) => { 
