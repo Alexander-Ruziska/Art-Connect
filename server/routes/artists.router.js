@@ -35,4 +35,46 @@ router.get('/:id', rejectUnauthenticated,  async (req, res) => {
 });
 
 
+router.put('/update/:id', rejectUnauthenticated, async (req, res) => {
+  const artistId = req.params.id;        // 🟢 comes from URL like /update/5
+  const userId = req.user.id;            // 🟢 comes from logged-in session
+
+  const {
+    name,
+    soundcloud_id,
+    spotify_id,
+    accepted_jobs,
+    headline_description,
+  } = req.body;
+
+  const queryText = `
+    UPDATE "artists"
+    SET
+      "name" = $1,
+      "soundcloud_id" = $2,
+      "spotify_id" = $3,
+      "accepted_jobs" = $4,
+      "headline_description" = $5
+    WHERE "id" = $6 AND "user_id" = $7;
+  `;
+
+  const values = [
+    name,
+    soundcloud_id,
+    spotify_id,
+    accepted_jobs,
+    headline_description,
+    artistId,
+    userId, // 🔒 ensures only the owner (logged-in user) can update it
+  ];
+
+  try {
+    await pool.query(queryText, values);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error('PUT /api/artists/update/:id error:', err);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;
