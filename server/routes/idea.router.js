@@ -3,7 +3,6 @@ const router = express.Router();
 const pool = require('../modules/pool');
 
 
-//wait until ismails code is done it is giving me a 200 although I don't know if that is false or not because the code isn't set...? Maybe?
 // getting all ideas
 router.get('/', (req, res) => {
     const query = `
