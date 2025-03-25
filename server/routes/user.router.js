@@ -1,9 +1,11 @@
-const express = require('express');
-const encryptLib = require('../modules/encryption');
-const pool = require('../modules/pool');
-const userStrategy = require('../strategies/user.strategy');
+const express = require("express");
+const encryptLib = require("../modules/encryption");
+const pool = require("../modules/pool");
+const userStrategy = require("../strategies/user.strategy");
 
-const { createProfilesIfNotExists } = require('../modules/authentication-middleware');
+const {
+  rejectUnauthenticated,
+} = require("../modules/authentication-middleware");
 
 const router = express.Router();
 
@@ -11,7 +13,7 @@ const router = express.Router();
 // sends back an object containing that user's information.
 // Otherwise, it sends back an empty object to indicate there
 // is not an active session.
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   if (req.isAuthenticated()) {
     res.send(req.user);
   } else {
@@ -19,76 +21,60 @@ router.get('/', (req, res) => {
   }
 });
 
-
-router.get('/:id', (req, res) => {
-  if (req.isAuthenticated()) {
-    const sqlText = 'SELECT * FROM "user" WHERE id = $1';
-    const sqlValues = [req.params.id];
-    pool.query(sqlText, sqlValues)
-      .then((result) => {
-        res.send(result.rows[0]);
-      })
-      .catch((err) => {
-        console.error('GET /api/user/:id error:', err);
-        res.sendStatus(500);
-      });
-  } else {
-    res.send({});
-  }
-});
-
-// Handles the logic for creating a new user. The one extra wrinkle here is
-// that we hash the password before inserting it into the database.
-router.post('/register', createProfilesIfNotExists, (req, res, next) => {
-  const username = req.body.username;
-  const hashedPassword = encryptLib.encryptPassword(req.body.password);
-  const isArtist = req.body.is_artist;
-
-  const sqlText = `
-    INSERT INTO "user" 
-      ("username", "password", "is_artist")
-      VALUES
-      ($1, $2, $3);
-  `;
-  
-  const sqlValues = [
-    username,
-    hashedPassword,
-    isArtist,
-  ];
-
-  pool.query(sqlText, sqlValues)
-    .then(() => {
-      const updateSql = `
-        UPDATE "user" 
-        SET "is_organization" = true
-        WHERE "is_artist" = false;
-      `;
-      return pool.query(updateSql);
-
+router.get("/:id", (req, res) => {
+  const sqlText = 'SELECT * FROM "user" WHERE id = $1';
+  const sqlValues = [req.params.id];
+  pool
+    .query(sqlText, sqlValues)
+    .then((result) => {
+      res.send(result.rows[0]);
     })
-    .then(() => {
-      res.sendStatus(201);
-    })
-    .catch((dbErr) => {
-      console.log('POST /api/user/register error:', dbErr);
+    .catch((err) => {
+      console.error("GET /api/user/:id error:", err);
       res.sendStatus(500);
     });
 });
 
+// Handles the logic for creating a new user. The one extra wrinkle here is
+// that we hash the password before inserting it into the database.
+router.post("/register", async (req, res, next) => {
+  const username = req.body.username;
+  const hashedPassword = encryptLib.encryptPassword(req.body.password);
+  const isArtist = Boolean(req.body.is_artist);
+  const isOrganization = !isArtist;
+  const sqlText = `
+    INSERT INTO "user" 
+      ("username", "password", "is_artist", "is_organization")
+      VALUES
+      ($1, $2, $3, $4) RETURNING *;
+  `;
 
+  const sqlValues = [username, hashedPassword, isArtist, isOrganization];
+
+  pool
+    .query(sqlText, sqlValues)
+    .then((result) => { 
+      res.send(result.rows[0]);
+    })
+
+    .catch((err) => {
+      console.error("GET /api/register error", err);
+      res.sendStatus(500);
+    });
+});
 
 // Handles the logic for logging in a user. When this route receives
 // a request, it runs a middleware function that leverages the Passport
 // library to instantiate a session if the request body's useruser_name and
 // password are correct.
 // You can find this middleware function in /server/strategies/user.strategy.js.
-router.post('/login', userStrategy.authenticate('local'), (req, res) => {
+// Note we are calling rejectUnauthenticated to make sure the profile is created.
+router.post("/login", userStrategy.authenticate("local"), rejectUnauthenticated, (req, res) => {
   res.sendStatus(200);
 });
 
 // Clear all server session information about this user:
-router.post('/logout', (req, res, next) => {
+router.post("/logout", (req, res, next) => {
   // Use passport's built-in method to log out the user.
   req.logout((err) => {
     if (err) {
@@ -99,51 +85,54 @@ router.post('/logout', (req, res, next) => {
 });
 
 // Update user by ID (might not need this?)
-router.put('/:id', (req, res) => {
+router.put("/:id", (req, res) => {
   if (req.isAuthenticated()) {
     const userId = req.params.id;
     const updates = Object.keys(req.body)
-      .filter(key => req.body[key] !== null && req.body[key] !== undefined)
+      .filter((key) => req.body[key] !== null && req.body[key] !== undefined)
       .map((key, index) => `"${key}" = $${index + 1}`);
     const sqlValues = [
-      ...Object.values(req.body).filter(value => value !== null && value !== undefined),
-      userId 
+      ...Object.values(req.body).filter(
+        (value) => value !== null && value !== undefined
+      ),
+      userId,
     ];
 
     // Check if there are fields to update
     if (updates.length === 0) {
-      return res.status(400).send('No valid fields to update.');
+      return res.status(400).send("No valid fields to update.");
     }
 
     const sqlText = `
       UPDATE "user"
-      SET ${updates.join(', ')}
+      SET ${updates.join(", ")}
       WHERE "id" = $${sqlValues.length};
     `;
 
-    pool.query(sqlText, sqlValues)
+    pool
+      .query(sqlText, sqlValues)
       .then(() => res.sendStatus(200))
       .catch((err) => {
-        console.error('PUT /api/user/:id error:', err);
+        console.error("PUT /api/user/:id error:", err);
         res.sendStatus(500);
       });
   } else {
-    res.sendStatus(403); 
+    res.sendStatus(403);
   }
 });
 
-
-router.delete('/:id', (req, res) => {
+router.delete("/:id", (req, res) => {
   if (req.isAuthenticated()) {
     const sqlText = 'DELETE FROM "user" WHERE id = $1';
     const sqlValues = [req.params.id];
 
-    pool.query(sqlText, sqlValues)
+    pool
+      .query(sqlText, sqlValues)
       .then(() => {
         res.sendStatus(200);
       })
       .catch((err) => {
-        console.error('DELETE /api/user/:id error:', err);
+        console.error("DELETE /api/user/:id error:", err);
         res.sendStatus(500);
       });
   } else {

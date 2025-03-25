@@ -94,7 +94,7 @@ ALTER TABLE
 CREATE TABLE "artists"(
     "id" SERIAL NOT NULL,
     "user_id" INTEGER NOT NULL,
-    "name" VARCHAR(255) NOT NULL,
+    "name" VARCHAR(255) NOT NULL DEFAULT '',
     "created_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "soundcloud_id" VARCHAR(255) NULL,
     "spotify_id" VARCHAR(255) NULL,
@@ -107,7 +107,6 @@ ALTER TABLE
     "artists" ADD CONSTRAINT "artists_user_id_unique" UNIQUE("user_id");
 CREATE TABLE "organizations"(
     "id" SERIAL NOT NULL,
-    "user_id" INTEGER NOT NULL,
     "name" VARCHAR(255) NULL,
     "description" TEXT NULL,
     "created_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
