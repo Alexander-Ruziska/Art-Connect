@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
-// const { rejectIfNotArtist } = require('../modules/authentication-middleware');
 
 
 //wait until ismails code is done it is giving me a 200 although I don't know if that is false or not because the code isn't set...? Maybe?
@@ -43,30 +42,29 @@ router.post('/', (req, res) => {
     });
 });
 
-//check to make sure that it works once Ismails code is in the system
+
 //put route to archive an idea
-/*
-router.put('/archiveId', rejectIfNotArist, (req, res) =>{
+router.put('/archive', (req, res) => {
     //Below is making a request to grab the id from the req.body
     const { id } = req.body;
 
     if(!id){
         return res.status(400).json({ error: "Missing idea ID"});
     }
-    const sqlText = `
+    const sqlText=`
     UPDATE "ideas"
     SET "is_archived" = TRUE
     WHERE "is_archived" = FALSE
     AND "ideas"."id" = $1 AND "ideas"."artist_id"= $2;
     `;
-    pool.query(sqlText, [id, req.user.id])
+    pool.query(sqlText, [id, req.user.artist_id])
         .then(() => res.sendStatus(200))
         .catch(err => {
             console.error(err);
             res.sendStatus(500);
-        })
+        });
 });
-*/
+
 
 
 
