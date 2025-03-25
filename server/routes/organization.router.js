@@ -49,12 +49,33 @@ router.post('/', (req, res) => {
 // with map introduces sql injection (because we're not using sql parameterization ($1, $2, etc))
 router.put('/:id', (req, res) => {
   if (!isAuthenticated(req, res)) return;
-  const fields = Object.entries(req.body).filter(([key, value]) => value !== null && value !== undefined);
-  if (fields.length === 0) return res.status(400).send('No valid fields to update.');
 
-  const updates = fields.map(([key], index) => `"${key}" = $${index + 1}`).join(', ');
-  const sqlValues = fields.map(([, value]) => value).concat(req.params.id);
-  const sqlText = `UPDATE "organizations" SET ${updates} WHERE "id" = $${sqlValues.length}`;
+  const id = req.params.id;
+  if (!(Number(id) > 0)) {
+    res.status(400).send("Invalid ID");
+    return;
+  }
+
+  // Explicitly allowed fields to update
+  const orgProfile = ["name", "description", "address", "phone", "email", "website"];
+  const updates = [];
+  const sqlValues = [];
+
+  orgProfile.forEach((field) => {
+    const value = req.body[field];
+    if (value !== null && value !== undefined) {
+      updates.push(`"${field}" = $${sqlValues.length + 1}`);
+      sqlValues.push(value);
+    }
+  });
+
+  if (updates.length === 0) {
+    res.status(400).send("No valid fields to update.");
+    return;
+  }
+
+  sqlValues.push(id);
+  const sqlText = `UPDATE "organizations" SET ${updates.join(', ')} WHERE "id" = $${sqlValues.length}`;
 
   pool.query(sqlText, sqlValues)
     .then(() => res.sendStatus(200))
@@ -63,6 +84,7 @@ router.put('/:id', (req, res) => {
       res.sendStatus(500);
     });
 });
+
 
 
 router.delete('/:id', (req, res) => {

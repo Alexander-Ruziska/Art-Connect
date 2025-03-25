@@ -2,7 +2,7 @@ const express = require('express');
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
-
+const { createProfilesIfNotExists } = require('../modules/authentication-middleware');
 const router = express.Router();
 
 // If the request came from an authenticated user, this route
@@ -37,7 +37,7 @@ router.get('/:id', (req, res) => {
 
 // Handles the logic for creating a new user. The one extra wrinkle here is
 // that we hash the password before inserting it into the database.
-router.post('/register', (req, res, next) => {
+router.post('/register', createProfilesIfNotExists, (req, res, next) => {
   const username = req.body.username;
   const hashedPassword = encryptLib.encryptPassword(req.body.password);
   const isArtist = req.body.is_artist;
@@ -63,6 +63,7 @@ router.post('/register', (req, res, next) => {
         WHERE "is_artist" = false;
       `;
       return pool.query(updateSql);
+
     })
     .then(() => {
       res.sendStatus(201);
