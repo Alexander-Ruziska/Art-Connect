@@ -68,3 +68,10 @@ Once you've attained that, you'll have the opportunity to:
 
 - Take stock of how much time is left, as well as how much bandwidth you have.
 - Reason about which stretch goal(s) to attempt.
+
+***STRETCH GOALS***
+[] Once an organization has been created make that user the admin of the page. Any other requests to join the organization will come through as a request for the admin to accept or reject.
+
+[] Add Spotify
+
+[] 
