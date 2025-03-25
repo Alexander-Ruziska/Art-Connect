@@ -3,8 +3,7 @@ const router = express.Router();
 const pool = require('../modules/pool');
 
 
-//wait until ismails code is done it is giving me a 200 although I don't know if that is false or not because the code isn't set...? Maybe?
-// getting all ideas
+// GET to grab all posted ideas by a specific artist
 router.get('/', (req, res) => {
     const query = `
     SELECT "ideas"."id", "ideas"."artist_id", "ideas"."created_at", "ideas"."is_archived", "ideas"."idea", "artists"."id" AS "art_id", "artists"."name"
@@ -24,7 +23,7 @@ router.get('/', (req, res) => {
 });
 
 
-//post for idea form
+//POST to make a new artist idea
 router.post('/', (req, res) => {
     const query = `
    INSERT INTO "ideas"
@@ -43,7 +42,7 @@ router.post('/', (req, res) => {
 });
 
 
-//put route to archive an idea
+//PUT route to archive an artist idea
 router.put('/archive', (req, res) => {
     //Below is making a request to grab the id from the req.body
     const { id } = req.body;
