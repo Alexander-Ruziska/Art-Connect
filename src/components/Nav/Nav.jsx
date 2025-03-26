@@ -1,42 +1,80 @@
+import { Col, Row } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+// import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink } from 'react-router-dom';
-import useStore from '../../zustand/store';
+import { useState } from "react";
+import useStore from "../../zustand/store";
+import { useNavigate } from 'react-router-dom';
 
+function Navi() {
+  const user = useStore((store) => store.user)
+  const [expanded, setExpanded] = useState(false);
+  const logOut = useStore((state) => state.logOut);
+  const navigate = useNavigate();
 
-function Nav() {
-  const user = useStore((store) => store.user);
+  const logOutFunction = () => {
+    setExpanded(false);
+    logOut();
+    navigate('/login');
+  }
 
   return (
-    <nav>
-      <ul>
-      { // User is not logged in, render these links:
-        !user.id && (
-          <>
-            <li>
-              <NavLink to="/login">Login</NavLink>
-            </li>
-            <li>
-              <NavLink to="/registration">Register</NavLink>
-            </li>
-          </>
-        )
-      }
-      { // User is logged in, render these links:
-        user.id && (
-          <>
-            <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-          </>
-        )
-      }
-      {/* Show these links regardless of auth status: */}
-        <li>
-          <NavLink to="/about">About</NavLink>
-        </li>
-      </ul>
-    </nav>
+
+    <Col>
+      <Navbar data-bs-theme="dark" expanded={expanded} onToggle={() => setExpanded(!expanded)} collapseOnSelect expand="lg" className="bg-body-tertiary" fixed="top">
+        <Container fluid>
+          <Navbar.Brand >Art Connect</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              
+                     <>
+                  {!user.id && (
+                  <Nav.Item>
+                    <NavLink className="nav-link" to="/registration" onClick={() => setExpanded(false)}>Register</NavLink>
+                  </Nav.Item>
+                  )}
+                  {!user.id && (
+                  <Nav.Item>
+                    <NavLink className="nav-link" to="/login" onClick={() => setExpanded(false)}>Login</NavLink>
+                  </Nav.Item>
+                   )}
+                   <Nav.Item>
+                    <NavLink className="nav-link" to="/home" onClick={() => setExpanded(false)}>Home</NavLink>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <NavLink className="nav-link" to="/artist-list" onClick={() => setExpanded(false)}>Artists</NavLink>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <NavLink className="nav-link" to="/organization-list" onClick={() => setExpanded(false)}>Organizations</NavLink>
+                  </Nav.Item>
+                  {user.id && (
+                <>
+                  <Nav.Item>
+                    <NavLink className="nav-link" to="/job-list" onClick={() => setExpanded(false)}>Jobs</NavLink>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <NavLink className="nav-link" to="/login" onClick={logOutFunction}>Logout</NavLink>
+                  </Nav.Item>
+                  {user.admin && (
+                    <Nav.Item>
+                      <NavLink className="nav-link" to="/admin" onClick={() => setExpanded(false)}>Admin</NavLink>
+                    </Nav.Item>
+                    )}
+              </>
+              )}
+                </>
+              
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </Col>
   );
-}
+}  
 
+   
 
-export default Nav;
+export default Navi;
