@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import axios from 'axios';
 
 
-const useJobsStore = create((set, get) => ({
+const createJobsSlice = ((set, get) => ({
   jobs: [],
   // Fetch all jobs
   fetchJobs: async () => {
@@ -57,5 +57,5 @@ updateJob: async (id, updates) => {
 
 
 
+export default createJobsSlice;
 
-export default useJobsStore;
