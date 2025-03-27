@@ -12,23 +12,25 @@ import HomePage from '../HomePage/HomePage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import OrganizationList from '../OrganizationList/OrganizationList';
-// import ArtistList from '../ArtistList/ArtistList';
+import ArtistList from '../ArtistList/ArtistList';
 // import JobList from '../JobList/JobList';
 // import ArtistIdea from '../ArtistIdea/ArtistIdea';
 
 function App() {
   const user = useStore((state) => state.user);
   const fetchUser = useStore((state) => state.fetchUser);
+  const fetchArtists = useStore((state) => state.fetchArtists);
 
   useEffect(() => {
     fetchUser();
-  }, [fetchUser]);
+    fetchArtists();
+  }, [fetchUser, fetchArtists]);
 
   return (
     <>
      <Container>
       <header>
-        <h1>EDA Solo Project</h1>
+ 
         
         <Nav />
       </header>
@@ -64,8 +66,8 @@ function App() {
               )
             }
           />
-           {/* <Route 
-            exact path="/artist-list"
+           <Route 
+            exact path="/artists"
             element={
               user.id ? (
                 <ArtistList /> // Redirect authenticated user.
@@ -73,7 +75,7 @@ function App() {
                 <ArtistList /> // Render RegisterPage for unauthenticated user.
               )
             }
-          /> */}
+          />
           {/* <Route 
             exact path="/job-list"
             element={
