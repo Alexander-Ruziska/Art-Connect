@@ -13,8 +13,9 @@ const createArtistSlice
 artistList: [],
 fetchArtists: async () => {
     try{
-        const response = await axios.get('/api/artists');
-        set({ artistList: response.data});
+        const response = await
+        axios.get('/api/artists');
+        set({ artistList: response.data });
     } catch (error) {
         console.log(`Error fetching artists list`);
     }

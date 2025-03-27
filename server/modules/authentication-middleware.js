@@ -16,9 +16,14 @@ const createProfilesIfNotExists = async (req) => {
   // If the user is an organization but has no organization_id, create an organization profile
   if (req.user.is_organization && req.user.organization_id === null) {
     try {
-      await pool.query(`INSERT INTO "organizations" ("user_id") VALUES ($1);`, [
-        req.user.id,
-      ]);
+      const result = await pool.query(
+        `INSERT INTO "organizations" DEFAULT VALUES RETURNING "id";`
+      );
+      //insert organization id and user id once the table has been created
+      await pool.query(
+        `INSERT INTO "user_organizations" ("user_id", "organization_id") VALUES ($1, $2);`,
+        [req.user.id, result.rows[0].id]
+      );
     } catch (err) {
       console.error(`Error creating organization profile`, err);
     }

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import Container from 'react-bootstrap/Container';
 import {
   Routes,
   Route,
@@ -10,7 +11,10 @@ import Nav from '../Nav/Nav';
 import HomePage from '../HomePage/HomePage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-
+import OrganizationList from '../OrganizationList/OrganizationList';
+import ArtistList from '../ArtistList/ArtistList';
+// import JobList from '../JobList/JobList';
+// import ArtistIdea from '../ArtistIdea/ArtistIdea';
 
 function App() {
   const user = useStore((state) => state.user);
@@ -20,12 +24,14 @@ function App() {
   useEffect(() => {
     fetchUser();
     fetchArtists();
-  }, [fetchUser]);
+  }, [fetchUser, fetchArtists]);
 
   return (
     <>
+     <Container>
       <header>
-        <h1>Art Connect</h1>
+ 
+        
         <Nav />
       </header>
       <main>
@@ -57,6 +63,46 @@ function App() {
                 <Navigate to="/" replace /> // Redirect authenticated user.
               ) : (
                 <RegisterPage /> // Render RegisterPage for unauthenticated user.
+              )
+            }
+          />
+           <Route 
+            exact path="/artists"
+            element={
+              user.id ? (
+                <ArtistList /> // Redirect authenticated user.
+              ) : (
+                <ArtistList /> // Render RegisterPage for unauthenticated user.
+              )
+            }
+          />
+          {/* <Route 
+            exact path="/job-list"
+            element={
+              user.id ? (
+                <JobList /> // Redirect authenticated user.
+              ) : (
+                <LoginPage/> // Render RegisterPage for unauthenticated user.
+              )
+            }
+          /> */}
+          {/* <Route 
+            exact path="/artist-idea"
+            element={
+              user.id ? (
+                <ArtistList /> // Redirect authenticated user.
+              ) : (
+                <ArtistList /> // Render RegisterPage for unauthenticated user.
+              )
+            }
+          /> */}
+          <Route 
+            exact path="/organization-list"
+            element={
+              user.id ? (
+                <OrganizationList /> // Redirect authenticated user.
+              ) : (
+                <OrganizationList /> // Render RegisterPage for unauthenticated user.
               )
             }
           />
@@ -104,6 +150,7 @@ function App() {
       <footer>
         <p>Copyright © {new Date().getFullYear()}</p>
       </footer>
+      </Container>
     </>
   );
 }
