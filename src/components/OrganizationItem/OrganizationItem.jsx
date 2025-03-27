@@ -14,6 +14,8 @@ const OrganizationItem = ({ organization }) => {
   <div className="organization-card">
     
     <h3>{organization.name}</h3>
+    <h3>{organization.description}</h3>
+    <h3>{organization.mission_statement}</h3>
   </div>
 
   );

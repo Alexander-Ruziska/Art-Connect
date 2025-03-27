@@ -110,7 +110,7 @@ CREATE TABLE "organizations"(
     "name" VARCHAR(255) NULL,
     "description" TEXT NULL,
     "created_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "mission _statement" VARCHAR(255) NULL
+    "mission_statement" VARCHAR(255) NULL
 );
 ALTER TABLE
     "organizations" ADD PRIMARY KEY("id");
