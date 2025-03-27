@@ -1,21 +1,28 @@
-import useStore from '../../zustand/store'
-
+import React, { useEffect } from 'react';
+import useStore from "../../zustand/store";
 
 function HomePage() {
-  const user = useStore((state) => state.user);
-  const logOut = useStore((state) => state.logOut);
+    const { randomArtist, fetchArtists, getRandomArtist } = useStore();
 
-  return (
-    <>
-      <h2>Home Page</h2>
-      <p>Your username is: {user.username}</p>
-      <p>Your ID is: {user.id}</p>
-      <button onClick={logOut}>
-        Log Out
-      </button>
-    </>
-  );
+    useEffect(() => {
+        async function loadArtists() {
+            await fetchArtists();
+            getRandomArtist();  // Pick a random artist after fetching
+        }
+        loadArtists();
+    }, [fetchArtists, getRandomArtist]);
+
+    if (!randomArtist) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div>
+            <h2>{randomArtist.name}</h2>
+            <p>{randomArtist.headline_description}</p>
+            <p>Soundcloud ID: {randomArtist.soundcloud_id}</p>
+        </div>
+    );
 }
-
 
 export default HomePage;

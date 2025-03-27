@@ -42,7 +42,7 @@ function Navi() {
                   </Nav.Item>
                    )}
                    <Nav.Item>
-                    <NavLink className="nav-link" to="/home" onClick={() => setExpanded(false)}>Home</NavLink>
+                    <NavLink className="nav-link" to="/" onClick={() => setExpanded(false)}>Home</NavLink>
                   </Nav.Item>
                   <Nav.Item>
                     <NavLink className="nav-link" to="/artists" onClick={() => setExpanded(false)}>Artists</NavLink>
