@@ -20,11 +20,13 @@ function App() {
   const user = useStore((state) => state.user);
   const fetchUser = useStore((state) => state.fetchUser);
   const fetchArtists = useStore((state) => state.fetchArtists);
+  const fetchJobs = useStore((state) => state.fetchJobs);
 
   useEffect(() => {
     fetchUser();
     fetchArtists();
-  }, [fetchUser, fetchArtists]);
+    fetchJobs();
+  }, [fetchUser, fetchArtists, fetchJobs]); 
 
   return (
     <>
