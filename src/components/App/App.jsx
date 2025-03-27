@@ -15,15 +15,17 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 function App() {
   const user = useStore((state) => state.user);
   const fetchUser = useStore((state) => state.fetchUser);
+  const fetchArtists = useStore((state) => state.fetchArtists);
 
   useEffect(() => {
     fetchUser();
+    fetchArtists();
   }, [fetchUser]);
 
   return (
     <>
       <header>
-        <h1>EDA Solo Project</h1>
+        <h1>Art Connect</h1>
         <Nav />
       </header>
       <main>

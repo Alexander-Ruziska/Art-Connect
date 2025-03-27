@@ -4,19 +4,14 @@ const pool = require('../modules/pool');
 const {rejectUnauthenticated, rejectIfNotArtist} = require('../modules/authentication-middleware');
 
 // GET all artists
-// router.get('/', rejectUnauthenticated, async (req, res) => {
-//   const queryText = 'SELECT * FROM "artists";'; 
-//   try {
-//     const result = await pool.query(queryText); 
-//     res.send(result.rows);
-//   } catch (err) {
-//     console.error('Error in GET /api/artists:', err);
-//     res.sendStatus(500);
-//   }
-// });
-
+//need to add in the photo
 router.get('/', (req, res) => {
-  pool.query('SELECT * FROM "artists"')
+  const query = `SELECT "artists"."id", "artists"."name", "artists"."headline_description", "user"."id" AS "user_id", "user"."is_banned"
+       FROM "user"
+    JOIN "artists"
+    ON "user"."id" = "artists"."user_id"
+       WHERE "user"."is_banned" = FALSE;`;
+       pool.query(query)
     .then((result) => res.send(result.rows))
     .catch((err) => {
       console.error('GET /api/artists error:', err);
