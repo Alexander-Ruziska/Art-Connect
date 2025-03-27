@@ -33,7 +33,15 @@ createJob: async (newJob) => {
     console.error('createJob error:', err);
   }
 },
-
+// Update a job
+updateJob: async (id, updates) => {
+  try {
+    await axios.put(`/api/jobs/${id}`, updates);
+    await get().fetchJobs();
+  } catch (err) {
+    console.error('updateJob error:', err);
+  }
+},
   
 }))
 
