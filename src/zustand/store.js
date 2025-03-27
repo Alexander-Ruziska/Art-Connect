@@ -2,6 +2,7 @@ import { create } from "zustand";
 import userSlice from './slices/user.slice.js';
 import organizationSlice from './slices/organization.slice.js';
 import ArtistSlice from "./slices/artist.slice.js";
+import jobsSlice from "./slices/jobs.slice.js";
 
 
 // Combine all slices in the store:
