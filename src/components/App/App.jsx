@@ -44,7 +44,7 @@ function App() {
               user.id ? (
                 <HomePage /> // Render HomePage for authenticated user.
               ) : (
-                <Navigate to="/login" replace /> // Redirect unauthenticated user.
+                <HomePage /> // Redirect unauthenticated user.
               )
             }
           />

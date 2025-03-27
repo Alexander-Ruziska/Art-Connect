@@ -11,6 +11,7 @@ const createArtistSlice
 
 // getting all of the artist for the list
 artistList: [],
+randomArtist: null,
 fetchArtists: async () => {
     try{
         const response = await
@@ -19,8 +20,15 @@ fetchArtists: async () => {
     } catch (error) {
         console.log(`Error fetching artists list`);
     }
-}
+},
 
+getRandomArtist: () => {
+    const artists = get().artistList;
+    if (artists.length > 0) {
+        const randomIndex = Math.floor(Math.random() * artists.length);
+        set({ randomArtist: artists[randomIndex] });
+    }
+}
 
 //getting an artist by a specific id
 
