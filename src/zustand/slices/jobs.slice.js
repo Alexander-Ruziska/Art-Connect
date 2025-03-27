@@ -37,9 +37,19 @@ createJob: async (newJob) => {
 updateJob: async (id, updates) => {
   try {
     await axios.put(`/api/jobs/${id}`, updates);
-    await get().fetchJobs();
+     get().fetchJobs();
   } catch (err) {
     console.error('updateJob error:', err);
+  }
+},
+ // Delete a job
+ deleteJob: async (id) => {
+  try {
+    await axios.delete(`/api/jobs/${id}`);
+    get().fetchJobs();
+  } catch (err) {
+    console.error('deleteJob error:', err);
+    set({ jobError: 'Failed to delete job' });
   }
 },
   
