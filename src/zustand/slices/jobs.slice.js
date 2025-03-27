@@ -23,6 +23,17 @@ const useJobsStore = create((set, get) => ({
       console.error('fetchJobById error:', err);
     }
   },
+  // Create a new job
+createJob: async (newJob) => {
+  try {
+    const res = await axios.post('/api/jobs', newJob);
+    get().fetchJobs(); // Refresh list after adding job
+    return res.data; // Return the newly created jobs
+  } catch (err) {
+    console.error('createJob error:', err);
+  }
+},
+
   
 }))
 
