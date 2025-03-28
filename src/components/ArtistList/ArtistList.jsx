@@ -4,12 +4,20 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { useEffect } from "react";
 
 
 function ArtistList() {
   const artistList = useStore((state) => state.artistList);
   const navigate = useNavigate();
   const params = useParams();
+  const fetchArtist = useStore((state) => state.fetchArtist);
+
+  useEffect(() => {
+    console.log(`Getting artistList`);
+    fetchArtist();
+  }, [fetchArtist]);
+
 
   const handleClick= (event) => {
     const artistId = event.target.id;

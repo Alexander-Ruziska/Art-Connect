@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 function ArtistPage() {
-    const artistInfo = useStore((state) => state.artistInfo);
+    const artistOBJ = useStore((state) => state.artistOBJ);
     const fetchArtist = useStore((state) => state.fetchArtist);
     const params = useParams();
 
@@ -15,15 +15,18 @@ function ArtistPage() {
     useEffect(() => {
         console.log(`Getting artist by id ${params.artistId}`);
         fetchArtist(params.artistId);
-        console.log(artistInfo);
+
     }, [params.artistId]);
 
+    useEffect(() => {
+        console.log('updated artistobj:', artistOBJ);
+    }, [artistOBJ]);
 
   return (
     <div id='cards'>
       <section className='artist'>
 
-        {artistInfo?.map((artist) => {
+        {artistOBJ?.map((artist) => {
             return (
                 <div key={artist.id} id={artist.id}>
                     <h2>{artist.name}</h2>
