@@ -11,6 +11,7 @@ const createArtistSlice
 
 // getting all of the artist for the list
 artistList: [],
+randomArtist: null,
 fetchArtists: async () => {
     try{
         const response = await
@@ -21,9 +22,18 @@ fetchArtists: async () => {
     }
 },
 
+getRandomArtist: () => {
+    const artists = get().artistList;
+    if (artists.length > 0) {
+        const randomIndex = Math.floor(Math.random() * artists.length);
+        set({ randomArtist: artists[randomIndex] });
+    }
+},
 
 //getting an artist by a specific id
 artistInfo: [],
+
+//something is wrong with this code.
 fetchArtist: async (artistId) => {
     try {
         const response = await axios.get(`/api/artists/${artistId}`);

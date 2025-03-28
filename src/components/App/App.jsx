@@ -14,18 +14,20 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import OrganizationList from '../OrganizationList/OrganizationList';
 import ArtistList from '../ArtistList/ArtistList';
 import ArtistPage from '../ArtistPage/ArtistPage';
-// import JobList from '../JobList/JobList';
+import JobList from '../JobList/JobList';
 // import ArtistIdea from '../ArtistIdea/ArtistIdea';
 
 function App() {
   const user = useStore((state) => state.user);
   const fetchUser = useStore((state) => state.fetchUser);
   const fetchArtists = useStore((state) => state.fetchArtists);
+  const fetchJobs = useStore((state) => state.fetchJobs);
 
   useEffect(() => {
     fetchUser();
     fetchArtists();
-  }, [fetchUser, fetchArtists]);
+    fetchJobs();
+  }, [fetchUser, fetchArtists, fetchJobs]); 
 
   return (
     <>
@@ -43,7 +45,7 @@ function App() {
               user.id ? (
                 <HomePage /> // Render HomePage for authenticated user.
               ) : (
-                <Navigate to="/login" replace /> // Redirect unauthenticated user.
+                <HomePage /> // Redirect unauthenticated user.
               )
             }
           />
@@ -77,7 +79,7 @@ function App() {
               )
             }
           />
-          {/* <Route 
+          <Route 
             exact path="/job-list"
             element={
               user.id ? (
@@ -86,7 +88,7 @@ function App() {
                 <LoginPage/> // Render RegisterPage for unauthenticated user.
               )
             }
-          /> */}
+          />
           {/* <Route 
             exact path="/artist-idea"
             element={

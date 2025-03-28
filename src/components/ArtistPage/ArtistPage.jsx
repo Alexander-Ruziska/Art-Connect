@@ -29,6 +29,8 @@ function ArtistPage() {
                     <h2>{artist.name}</h2>
                     {/* <img smg={artist.card_photo} /> */}
                     <h4>Recent Work</h4>
+                    {/* insert run through of artist's photos below */}
+
                     
                     <p>{artist.bio}</p>
                 </div>
