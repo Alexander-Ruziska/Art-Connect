@@ -31,17 +31,17 @@ router.get('/:id', (req, res) => {
 });
 
 
-router.post('/', (req, res) => {
-  if (!isAuthenticated(req, res)) return;
-  const { name, description, mission_statement } = req.body;
-  const sqlText = 'INSERT INTO "organizations" ("name", "description", "mission_statement") VALUES ($1, $2, $3) RETURNING id';
-  pool.query(sqlText, [name, description, mission_statement])
-    .then((result) => res.status(201).send(result.rows[0]))
-    .catch((err) => {
-      console.error('POST /api/organizations error:', err);
-      res.sendStatus(500);
-    });
-});
+// router.post('/', (req, res) => {
+//   if (!isAuthenticated(req, res)) return;
+//   const { name, description, mission_statement } = req.body;
+//   const sqlText = 'INSERT INTO "organizations" ("name", "description", "mission_statement") VALUES ($1, $2, $3) RETURNING id';
+//   pool.query(sqlText, [name, description, mission_statement])
+//     .then((result) => res.status(201).send(result.rows[0]))
+//     .catch((err) => {
+//       console.error('POST /api/organizations error:', err);
+//       res.sendStatus(500);
+//     });
+// });
 
 // TODO: Update this to be explicit with which fields to update - building strings for UPDATE
 // with map introduces sql injection (because we're not using sql parameterization ($1, $2, etc))
@@ -85,16 +85,16 @@ router.put('/:id', (req, res) => {
 
 
 
-router.delete('/:id', (req, res) => {
-  if (!isAuthenticated(req, res)) return;
-  const sqlText = 'DELETE FROM "organizations" WHERE id = $1';
-  pool.query(sqlText, [req.params.id])
-    .then(() => res.sendStatus(200))
-    .catch((err) => {
-      console.error('DELETE /api/organizations/:id error:', err);
-      res.sendStatus(500);
-    });
-});
+// router.delete('/:id', (req, res) => {
+//   if (!isAuthenticated(req, res)) return;
+//   const sqlText = 'DELETE FROM "organizations" WHERE id = $1';
+//   pool.query(sqlText, [req.params.id])
+//     .then(() => res.sendStatus(200))
+//     .catch((err) => {
+//       console.error('DELETE /api/organizations/:id error:', err);
+//       res.sendStatus(500);
+//     });
+// });
 
 module.exports = router;
 

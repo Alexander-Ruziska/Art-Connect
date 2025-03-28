@@ -16,7 +16,7 @@ import ArtistList from '../ArtistList/ArtistList';
 import ArtistPage from '../ArtistPage/ArtistPage';
 import JobList from '../JobList/JobList';
 // import ArtistIdea from '../ArtistIdea/ArtistIdea';
-
+import OrganizationPage from '../OrganizationPage/OrganizationPage';
 function App() {
   const user = useStore((state) => state.user);
   const fetchUser = useStore((state) => state.fetchUser);
@@ -99,6 +99,16 @@ function App() {
               )
             }
           /> */}
+          <Route 
+            exact path="/organization-list/:id"
+            element={
+              user.id ? (
+                <OrganizationPage /> // Redirect authenticated user.
+              ) : (
+                <OrganizationPage /> // Render RegisterPage for unauthenticated user.
+              )
+            }
+          />
           <Route 
             exact path="/organization-list"
             element={
