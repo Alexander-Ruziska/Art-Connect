@@ -13,6 +13,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import OrganizationList from '../OrganizationList/OrganizationList';
 import ArtistList from '../ArtistList/ArtistList';
+import ArtistPage from '../ArtistPage/ArtistPage';
 import JobList from '../JobList/JobList';
 // import ArtistIdea from '../ArtistIdea/ArtistIdea';
 
@@ -108,6 +109,7 @@ function App() {
               )
             }
           />
+          <Route path='/artists/:artistId' element={<ArtistPage />} />
           <Route 
             exact path="/about"
             element={

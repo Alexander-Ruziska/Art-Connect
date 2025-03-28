@@ -31,7 +31,50 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.put('/:id', rejectUnauthenticated, async (req, res) => {
+//GET an artist's uploaded photos
+// router.get('/:artistId', (req, res) => {
+//   const sqlText = `SELECT * FROM "photos"
+// WHERE "photos"."artist_id" = $1;`;
+//   pool.query(sqlText, [req.params.artistId])
+//   .then(result => {
+//     res.send(result.rows);
+//   })
+//   .catch(err => {
+//     console.error('Failed getting artists photos:', err)
+//     res.sendStatus(500);
+//   })
+// });
+
+//s
+router.get('/:artistId', (req, res) => {
+  const query = `
+    SELECT "artists"."id", "artists"."name", "artists"."headline_description", "artists"."card_photo", "artists"."soundcloud_id", "artists"."spotify_id", "user"."id" AS "user_id", "user"."is_banned", "user"."profile_pic", "user"."linkedin", "user"."facebook", "user"."insta", "user"."website", "user"."bio", "user"."phone",
+    "photos"."image_url" AS "photos"
+    FROM "user"
+    JOIN "artists"
+    ON "user"."id" = "artists"."user_id"
+    JOIN "photos"
+    ON "artists"."id = "photos"."artist_id"
+    WHERE "user"."is_banned" = FALSE
+    AND "artists"."id" = $1;
+
+  `;
+  //I tried adding this in to the code and calling it below after query, and nothing worked.. I also have it's own get below
+  // const photoQuery = `SELECT * FROM "photos"
+  // WHERE "photos"."artist_id" = $1;`;
+       pool.query(query, [req.params.artistId])
+    .then(result => {
+      res.send(result.rows);
+    })
+    .catch(err => {
+      console.error('GET artist by id error:', err);
+      res.sendStatus(500);
+    });
+});
+
+
+
+router.put('/artists/:id', rejectUnauthenticated, async (req, res) => {
   const artistId = req.params.id;        // 🟢 comes from URL like /update/5
   const userId = req.user.id;            // 🟢 comes from logged-in session
 

@@ -184,3 +184,6 @@ ALTER TABLE
     "user_organizations" ADD CONSTRAINT "user_organizations_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "user"("id");
 ALTER TABLE
     "job_requests" ADD CONSTRAINT "job_requests_job_id_foreign" FOREIGN KEY("job_id") REFERENCES "jobs"("id");
+    /*Added the extra column to artists*/
+    ALTER TABLE "artists" 
+ADD COLUMN "card_photo" TEXT;
