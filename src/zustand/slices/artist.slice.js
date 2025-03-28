@@ -13,7 +13,6 @@ const createArtistSlice
 artistList: [],
 randomArtist: null,
 
-
 fetchArtists: async () => {
     try{
         const response = await

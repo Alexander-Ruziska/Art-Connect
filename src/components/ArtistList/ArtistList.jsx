@@ -11,12 +11,6 @@ function ArtistList() {
   const artistList = useStore((state) => state.artistList);
   const navigate = useNavigate();
   const params = useParams();
-  const fetchArtist = useStore((state) => state.fetchArtist);
-
-  useEffect(() => {
-    console.log(`Getting artistList`);
-    fetchArtist();
-  }, [fetchArtist]);
 
 
   const handleClick= (event) => {
@@ -34,13 +28,13 @@ function ArtistList() {
 
           return(
 
-            <div key={artist.artistId} id={artist.artistId}>
+            <div key={artist.artist_id} id={artist.artistId}>
               <Card style={{ width: '18rem' }}>
               <Card.Img variant="top" src={artist.card_photo} />
               <Card.Body>
               <Card.Title>{artist.name}</Card.Title>
               <Card.Text>{artist.headline_description}</Card.Text>
-             <Button id={artist.id} onClick={handleClick} variant="primary">Go somewhere</Button>
+             <Button id={artist.id} onClick={handleClick} variant="primary">Go To Artist Profile</Button>
             </Card.Body>
             </Card>
             </div>
