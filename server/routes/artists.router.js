@@ -21,15 +21,15 @@ router.get('/', (req, res) => {
 
 // GET ARTIST BY ID
 
-router.get('/:id', (req, res) => {
-  const sqlText = 'SELECT * FROM "artists" WHERE id = $1';
-  pool.query(sqlText, [req.params.id])
-    .then((result) => res.send(result.rows[0]))
-    .catch((err) => {
-      console.error('GET /api/artists/:id error:', err);
-      res.sendStatus(500);
-    });
-});
+// router.get('/:id', (req, res) => {
+//   const sqlText = 'SELECT * FROM "artists" WHERE id = $1';
+//   pool.query(sqlText, [req.params.id])
+//     .then((result) => res.send(result.rows[0]))
+//     .catch((err) => {
+//       console.error('GET /api/artists/:id error:', err);
+//       res.sendStatus(500);
+//     });
+// });
 
 //GET an artist's uploaded photos
 // router.get('/:artistId', (req, res) => {
@@ -45,16 +45,13 @@ router.get('/:id', (req, res) => {
 //   })
 // });
 
-//s
+//
 router.get('/:artistId', (req, res) => {
   const query = `
-    SELECT "artists"."id", "artists"."name", "artists"."headline_description", "artists"."card_photo", "artists"."soundcloud_id", "artists"."spotify_id", "user"."id" AS "user_id", "user"."is_banned", "user"."profile_pic", "user"."linkedin", "user"."facebook", "user"."insta", "user"."website", "user"."bio", "user"."phone",
-    "photos"."image_url" AS "photos"
+    SELECT "artists"."id", "artists"."name", "artists"."headline_description", "artists"."card_photo", "artists"."soundcloud_id", "artists"."spotify_id", "user"."id" AS "user_id", "user"."is_banned", "user"."profile_pic", "user"."linkedin", "user"."facebook", "user"."insta", "user"."website" 
     FROM "user"
     JOIN "artists"
     ON "user"."id" = "artists"."user_id"
-    JOIN "photos"
-    ON "artists"."id = "photos"."artist_id"
     WHERE "user"."is_banned" = FALSE
     AND "artists"."id" = $1;
 
@@ -74,46 +71,46 @@ router.get('/:artistId', (req, res) => {
 
 
 
-router.put('/artists/:id', rejectUnauthenticated, async (req, res) => {
-  const artistId = req.params.id;        // 🟢 comes from URL like /update/5
-  const userId = req.user.id;            // 🟢 comes from logged-in session
+// router.put('/artists/:id', rejectUnauthenticated, async (req, res) => {
+//   const artistId = req.params.id;        // 🟢 comes from URL like /update/5
+//   const userId = req.user.id;            // 🟢 comes from logged-in session
 
-  const {
-    name,
-    soundcloud_id,
-    spotify_id,
-    accepted_jobs,
-    headline_description,
-  } = req.body;
+//   const {
+//     name,
+//     soundcloud_id,
+//     spotify_id,
+//     accepted_jobs,
+//     headline_description,
+//   } = req.body;
 
-  const queryText = `
-    UPDATE "artists"
-    SET
-      "name" = $1,
-      "soundcloud_id" = $2,
-      "spotify_id" = $3,
-      "accepted_jobs" = $4,
-      "headline_description" = $5
-    WHERE "id" = $6 AND "user_id" = $7;
-  `;
+//   const queryText = `
+//     UPDATE "artists"
+//     SET
+//       "name" = $1,
+//       "soundcloud_id" = $2,
+//       "spotify_id" = $3,
+//       "accepted_jobs" = $4,
+//       "headline_description" = $5
+//     WHERE "id" = $6 AND "user_id" = $7;
+//   `;
 
-  const values = [
-    name,
-    soundcloud_id,
-    spotify_id,
-    accepted_jobs,
-    headline_description,
-    artistId,
-    userId, // 🔒 ensures only the owner (logged-in user) can update it
-  ];
+//   const values = [
+//     name,
+//     soundcloud_id,
+//     spotify_id,
+//     accepted_jobs,
+//     headline_description,
+//     artistId,
+//     userId, // 🔒 ensures only the owner (logged-in user) can update it
+//   ];
 
-  try {
-    await pool.query(queryText, values);
-    res.sendStatus(200);
-  } catch (err) {
-    console.error('PUT /api/artists/update/:id error:', err);
-    res.sendStatus(500);
-  }
-});
+//   try {
+//     await pool.query(queryText, values);
+//     res.sendStatus(200);
+//   } catch (err) {
+//     console.error('PUT /api/artists/update/:id error:', err);
+//     res.sendStatus(500);
+//   }
+// });
 
 module.exports = router;
