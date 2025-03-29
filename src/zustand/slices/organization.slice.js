@@ -9,7 +9,7 @@ axios.defaults.withCredentials = true;
 const createOrganizationSlice = (set, get) => ({
     organizations: [],
     orgImage: {},
-    organizationObj: [],
+    organizationObj: null,
     fetchOrganizations: async () => {
         try {
           const response = await axios.get("/api/organizations");
@@ -20,16 +20,16 @@ const createOrganizationSlice = (set, get) => ({
       },
 
 
-fetchOrganization: async (organizationId) => {
-    try {
-        const response = await axios.get(`/api/organizations/${organizationId}`);
-        set({ organizationObj : response.data });
-    } catch (error) {
-        console.log('Error fetching organization info', error);
-    }
-},
-
-})
+      fetchOrganization: async (organizationId) => {
+        try {
+            const response = await axios.get(`/api/organizations/${organizationId}`);
+            console.log("Fetched Organization:", response.data);  // Log to verify response
+            set({ organizationObj: response.data });
+        } catch (error) {
+            console.log('Error fetching organization info', error);
+        }
+    },
+});
 
 
 

@@ -100,7 +100,7 @@ function App() {
             }
           /> */}
           <Route 
-            exact path="/organization-list/:id"
+            exact path="/organization-list/:organizationId"
             element={
               user.id ? (
                 <OrganizationPage /> // Redirect authenticated user.
