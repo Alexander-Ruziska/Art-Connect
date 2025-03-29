@@ -47,7 +47,6 @@ artistPhotos: [],
 
 Slice: "",//getting an artist by a specific id
 artistOBJ: [],
-//something is wrong with this code.
 fetchArtist: async (artistId) => {
     try {
         const response = await axios.get(`/api/artists/${artistId}`);
@@ -58,6 +57,19 @@ fetchArtist: async (artistId) => {
     }
 },
    
+
+//Getting a specific artist's idea list
+artistIdeas: [],
+fetchArtistIdeas: async (artistId) => {
+    try {
+        const response = await axios.get(`/api/artists/${artistId}/ideas`);
+        console.log(`Idea get response for specific artist:`, response.data);
+        set({ artistIdeas : response.data });
+    } catch (error) {
+        console.log('Error fetching a specific artists ideas', error);
+    }
+}
+
 
 });
 

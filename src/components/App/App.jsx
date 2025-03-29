@@ -15,7 +15,7 @@ import OrganizationList from '../OrganizationList/OrganizationList';
 import ArtistList from '../ArtistList/ArtistList';
 import ArtistPage from '../ArtistPage/ArtistPage';
 import JobList from '../JobList/JobList';
-// import ArtistIdea from '../ArtistIdea/ArtistIdea';
+import ArtistIdea from '../ArtistIdea/ArtistIdea';
 import OrganizationPage from '../OrganizationPage/OrganizationPage';
 function App() {
   const user = useStore((state) => state.user);
@@ -89,8 +89,9 @@ function App() {
               )
             }
           />
+          {/* This will be added later to get all of the artists ideas */}
           {/* <Route 
-            exact path="/artist-idea"
+            exact path="/ideas"
             element={
               user.id ? (
                 <ArtistList /> // Redirect authenticated user.
@@ -120,6 +121,8 @@ function App() {
             }
           />
           <Route path='/artists/:artistId' element={<ArtistPage />} />
+          <Route path='/artists/:artistId/ideas' element={<ArtistIdea />} />
+
           <Route 
             exact path="/about"
             element={

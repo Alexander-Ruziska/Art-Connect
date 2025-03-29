@@ -69,7 +69,24 @@ router.get('/:artistId', (req, res) => {
     });
 });
 
-
+// GET to grab all posted ideas by a specific artist
+router.get('/:artistId/ideas', (req, res) => {
+  const query = `
+  SELECT "ideas"."id", "ideas"."artist_id", "ideas"."created_at", "ideas"."is_archived", "ideas"."idea", "artists"."id" AS "art_id", "artists"."name"
+  FROM "ideas"
+  JOIN "artists"
+  ON "ideas"."artist_id" = "artists"."id"
+WHERE "artist_id" = $1 AND "is_archived" = FALSE;
+  `;
+  pool.query(query, [req.params.artistId])
+  .then(result => {
+      res.send(result.rows);
+  })
+  .catch(err => {
+      console.log('ERROR: cannot render idea list', err);
+      res.sendStatus(500);
+  })
+});
 
 // router.put('/artists/:id', rejectUnauthenticated, async (req, res) => {
 //   const artistId = req.params.id;        // 🟢 comes from URL like /update/5
