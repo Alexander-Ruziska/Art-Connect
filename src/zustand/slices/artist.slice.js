@@ -22,6 +22,8 @@ fetchArtists: async () => {
     }
 },
 
+
+//creating a function to flip through featured artists for the homescreen
 getRandomArtist: () => {
     const artists = get().artistList;
     if (artists.length > 0) {
@@ -30,24 +32,17 @@ getRandomArtist: () => {
     }
 },
 
-//getting an artist by a specific id
-artistInfo: [],
 
-//something is wrong with this code.
 
 
 //getting an artist's photos by a specific id
 artistPhotos: [],
 
 
-//creating a function to flip through featured artists for the homescreen
 
-
-//
 
 Slice: "",//getting an artist by a specific id
 artistOBJ: [],
-//something is wrong with this code.
 fetchArtist: async (artistId) => {
     try {
         const response = await axios.get(`/api/artists/${artistId}`);
@@ -58,6 +53,19 @@ fetchArtist: async (artistId) => {
     }
 },
    
+
+//Getting a specific artist's idea list
+artistIdeas: [],
+fetchArtistIdeas: async (artistId) => {
+    try {
+        const response = await axios.get(`/api/artists/${artistId}/ideas`);
+        console.log(`Idea get response for specific artist:`, response.data);
+        set({ artistIdeas : response.data });
+    } catch (error) {
+        console.log('Error fetching a specific artists ideas', error);
+    }
+}
+
 
 });
 

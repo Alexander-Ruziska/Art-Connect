@@ -187,3 +187,6 @@ ALTER TABLE
     /*Added the extra column to artists*/
     ALTER TABLE "artists" 
 ADD COLUMN "card_photo" TEXT;
+    /*Added the extra column to idea table*/
+    ALTER TABLE "ideas" 
+DD COLUMN "title" TEXT NOT NULL;
