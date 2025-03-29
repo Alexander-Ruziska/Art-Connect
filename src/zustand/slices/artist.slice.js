@@ -22,6 +22,8 @@ fetchArtists: async () => {
     }
 },
 
+
+//creating a function to flip through featured artists for the homescreen
 getRandomArtist: () => {
     const artists = get().artistList;
     if (artists.length > 0) {
@@ -30,20 +32,14 @@ getRandomArtist: () => {
     }
 },
 
-//getting an artist by a specific id
-artistInfo: [],
 
-//something is wrong with this code.
 
 
 //getting an artist's photos by a specific id
 artistPhotos: [],
 
 
-//creating a function to flip through featured artists for the homescreen
 
-
-//
 
 Slice: "",//getting an artist by a specific id
 artistOBJ: [],

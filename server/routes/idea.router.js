@@ -10,10 +10,10 @@ const pool = require('../modules/pool');
 router.post('/', (req, res) => {
     const query = `
    INSERT INTO "ideas"
-   ("artist_id","idea")
-   VALUES ($1, $2);
+   ("artist_id", "title", "idea")
+   VALUES ($1, $2, $3);
     `;
-    pool.query(query, [req.user.artist_id, req.body.idea])
+    pool.query(query, [req.user.artist_id, req.body.title, req.body.idea])
     .then(result => {
         console.log(`post idea results:`, result.rows);
         res.sendStatus(201);

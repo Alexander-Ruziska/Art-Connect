@@ -72,7 +72,7 @@ router.get('/:artistId', (req, res) => {
 // GET to grab all posted ideas by a specific artist
 router.get('/:artistId/ideas', (req, res) => {
   const query = `
-  SELECT "ideas"."id", "ideas"."artist_id", "ideas"."created_at", "ideas"."is_archived", "ideas"."idea", "artists"."id" AS "art_id", "artists"."name"
+  SELECT "ideas"."id", "ideas"."artist_id", "ideas"."created_at", "ideas"."title", "ideas"."is_archived", "ideas"."idea", "artists"."id" AS "art_id", "artists"."name"
   FROM "ideas"
   JOIN "artists"
   ON "ideas"."artist_id" = "artists"."id"

@@ -31,7 +31,7 @@ function ArtistPage() {
   return (
     <div id='artistPage'>
       <section className='artist'>
-
+        
         {artistOBJ?.map((artist) => {
             return (
                 <div key={artist.id} id={artist.id}>
