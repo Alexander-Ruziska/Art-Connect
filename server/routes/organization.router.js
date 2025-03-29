@@ -30,7 +30,6 @@ router.get('/:id', (req, res) => {
     });
 });
 
-
 // router.post('/', (req, res) => {
 //   if (!isAuthenticated(req, res)) return;
 //   const { name, description, mission_statement } = req.body;
