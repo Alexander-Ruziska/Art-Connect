@@ -9,7 +9,7 @@ const jobRequestSlice = (set, get) => ({
       alert('Interest submitted successfully!');
     } catch (err) {
       console.error('Error expressing interest:', err);
-      alert('You must be logged in as an artist to express interest.');
+      alert('You must be logged in as an artist to express interest....');
     }
   }
 });
