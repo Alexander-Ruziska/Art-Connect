@@ -15,19 +15,19 @@ const createIdeaSlice
         //}
 
 
-    //POST an artist's idea
-    addIdea: async (idea) => {
-        //idea: {artist_id, title, idea}
-        console.log('idea', idea);
-        try {
-            await axios.post(`/api/ideas`, idea);
-            //wil need to update the artist idea list after this
-            //get().fetchAllArtistIdeas();
-        } catch (err) {
-            console.error('Slice issue post the idea', err);
-        }
-    }
 
+        //POST an artist's idea
+        addIdea: async (newIdea) => {
+            //newIdea: {artist_id, title, newIdea}
+            console.log('newIdea', newIdea);
+            try {
+                await axios.post(`/api/newIdeas`, newIdea);
+                //wil need to update the artist idea list after this
+                //get().fetchAllArtistIdeas();
+            } catch (err) {
+                console.error('Slice issue post the idea', err);
+            }
+        }
 
 
 });
