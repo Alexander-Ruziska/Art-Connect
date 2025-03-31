@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const organizationRouter = require('./routes/organization.router');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 // Instantiate an express server:
 const app = express();
 
@@ -19,13 +18,10 @@ const artistsRouter = require('./routes/artists.router')
 const ideasRouter = require('./routes/idea.router')
 const jobsRouter = require('./routes/jobs.router')
 const jobRequestRouter = require('./routes/job_requests.router')
+const adminRouter = require('./routes/admin.router');
 
 
 
-app.use(cors({
-  origin: 'http://localhost:5173',  // Update to your frontend URL
-  credentials: true  // Allow cookies to be sent with requests
-}));
 
 // Apply middleware:
 app.use(express.json());
@@ -44,7 +40,7 @@ app.use('/api/artists', artistsRouter);
 app.use('/api/ideas', ideasRouter);
 app.use('/api/jobs', jobsRouter);
 app.use('/api/job_requests', jobRequestRouter);
-
+app.use('/api/admin', adminRouter);
 // Start the server:
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);

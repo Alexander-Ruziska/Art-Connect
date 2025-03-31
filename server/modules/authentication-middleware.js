@@ -68,8 +68,19 @@ const rejectIfNotOrganization = (req, res, next) => {
   }
 };
 
+const rejectIfNotAdmin = (req, res, next) => {
+  if (req.isAuthenticated() && req.user.is_admin) {
+    next();
+  } else {
+    res.sendStatus(403);
+  }
+};
+
 module.exports = {
   rejectUnauthenticated,
   rejectIfNotArtist,
   rejectIfNotOrganization,
+  rejectIfNotAdmin, // ✅ Add it here
 };
+
+
