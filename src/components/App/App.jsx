@@ -18,8 +18,12 @@ import JobList from '../JobList/JobList';
 import ArtistIdea from '../ArtistIdea/ArtistIdea';
 import OrganizationPage from '../OrganizationPage/OrganizationPage';
 import IdeaForm from '../IdeaForm/IdeaForm';
+
+import PostJob from '../PostJob/PostJob';
+
 import AdminPage from '../AdminPage/AdminPage';
 import PostJobs from '../PostJob/PostJob';
+
 
 
 function App() {
@@ -135,10 +139,10 @@ function App() {
             }
           />
                <Route 
-              exact path="/post-job"
+              exact path="/post-job/:id"
               element={
              user?.is_organization ? (
-            <PostJobs />
+            <PostJob />
            ) : (
            <p>You must be an organization to post a job.</p>
           )
