@@ -29,6 +29,16 @@ const createOrganizationSlice = (set, get) => ({
             console.log('Error fetching organization info', error);
         }
     },
+
+    updateOrganization: async (organizationId, updatedData) => {
+        try {
+            const response = await axios.put(`/api/organizations/${organizationId}`, updatedData);
+            set({ organizationObj: response.data });  // Update the store with new data
+            console.log("Organization updated successfully:", response.data);
+        } catch (error) {
+            console.error("Error updating organization:", error);
+        }
+    },
 });
 
 
