@@ -21,7 +21,7 @@ const createIdeaSlice
             //newIdea: {artist_id, title, newIdea}
             console.log('newIdea', newIdea);
             try {
-                await axios.post(`/api/newIdeas`, newIdea);
+                await axios.post(`/api/ideas`, newIdea);
                 //wil need to update the artist idea list after this
                 //get().fetchAllArtistIdeas();
             } catch (err) {
