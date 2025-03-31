@@ -71,5 +71,4 @@ fetchArtistIdeas: async (artistId) => {
 
 
 
-export default createArtistSlice
-;
+export default createArtistSlice;

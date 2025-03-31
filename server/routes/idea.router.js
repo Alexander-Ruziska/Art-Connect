@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
-
+const { rejectIfNotArtist} = require('../modules/authentication-middleware');
 
 
 
 
 //POST to make a new artist idea
-router.post('/', (req, res) => {
+router.post('/', rejectIfNotArtist, (req, res) => {
     const query = `
    INSERT INTO "ideas"
    ("artist_id", "title", "idea")
