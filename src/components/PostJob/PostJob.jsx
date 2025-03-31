@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import useStore from '../../zustand/store';
 
 const PostJob = () => {
   const { createJob, user } = useStore();
   const navigate = useNavigate();
+  const orgId = useParams().id; 
+  console.log('orgId', orgId)
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [deadline, setDeadline] = useState('');
-  const [archived, setArchived] = useState(false);
+  const [is_archived, setArchived] = useState(false);
 
   if (!user?.is_organization) {
     return <p>You must be an organization to post jobs.</p>;
@@ -17,18 +20,19 @@ const PostJob = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log('Creating job:', { title, orgId, description, deadline, is_archived });
     try {
+     
       await createJob({
         title,
         description,
         deadline,
-        organization_id: user.organization_id,
-        archived,
+        organization_id: orgId,
+        is_archived,
       });
 
       alert('Job posted successfully!');
-      navigate('/jobList'); 
+      navigate('/job-list'); 
     } catch (err) {
       console.error('Job creation failed:', err);
       alert('There was an error posting the job.');
@@ -67,7 +71,7 @@ const PostJob = () => {
       <label>
         <input
           type="checkbox"
-          checked={archived}
+          checked={is_archived}
           onChange={(e) => setArchived(e.target.checked)}
         />
         Archived

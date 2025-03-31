@@ -25,9 +25,9 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   if (!isAuthenticated(req, res)) return;
-  const { title, description, deadline, organization_id, archived } = req.body;
-  const sqlText = 'INSERT INTO "jobs" ("title", "description", "deadline", "organization_id", "archived") VALUES ($1, $2, $3, $4, $5) RETURNING id';
-  pool.query(sqlText, [title, description, deadline, organization_id, archived])
+  const { title, description, deadline, organization_id, is_archived } = req.body;
+  const sqlText = 'INSERT INTO "jobs" ("title", "description", "deadline", "organization_id", "is_archived") VALUES ($1, $2, $3, $4, $5) RETURNING id';
+  pool.query(sqlText, [title, description, deadline, organization_id, is_archived])
     .then((result) => res.status(201).send(result.rows[0]))
     .catch((err) => res.sendStatus(500) && console.error('POST /api/jobs error:', err));
 });
