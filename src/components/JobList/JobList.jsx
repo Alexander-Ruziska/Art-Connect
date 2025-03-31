@@ -3,7 +3,7 @@ import useStore from "../../zustand/store";
 import { useNavigate } from "react-router-dom";
 
 const JobList = () => {
-  const { jobs, deleteJob } = useStore();
+  const { jobs } = useStore();
 
   return (
     <div>
@@ -17,7 +17,6 @@ const JobList = () => {
               <h3>{job.title}</h3>
               <p>{job.description}</p>
               <p>Deadline: {job.deadline}</p>
-              <button onClick={() => deleteJob(job.id)}>Delete</button>
             </li>
           ))}
         </ul>

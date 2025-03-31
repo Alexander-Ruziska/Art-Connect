@@ -18,6 +18,8 @@ const userRouter = require('./routes/user.router')
 const artistsRouter = require('./routes/artists.router')
 const ideasRouter = require('./routes/idea.router')
 const jobsRouter = require('./routes/jobs.router')
+const jobRequestRouter = require('./routes/job_requests.router')
+
 
 // Apply middleware:
 app.use(express.json());
@@ -34,6 +36,7 @@ app.use('/api/organizations', organizationRouter);
 app.use('/api/artists', artistsRouter);
 app.use('/api/ideas', ideasRouter);
 app.use('/api/jobs', jobsRouter);
+app.use('/api/job_requests', jobRequestRouter);
 
 // Start the server:
 app.listen(PORT, () => {
