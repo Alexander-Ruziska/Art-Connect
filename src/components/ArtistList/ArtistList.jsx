@@ -36,11 +36,11 @@ function ArtistList() {
 
             <div key={artist.artistId} id={artist.artistId}>
               <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src={artist.card_photo} />
+              <Card.Img variant="top" src='{artist.card_photo}' />
               <Card.Body>
               <Card.Title>{artist.name}</Card.Title>
               <Card.Text>{artist.headline_description}</Card.Text>
-             <Button id={artist.id} onClick={handleClick} variant="primary">Go somewhere</Button>
+             <Button id={artist.id} onClick={handleClick} variant="primary">Go to artist profile</Button>
             </Card.Body>
             </Card>
             </div>
