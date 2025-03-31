@@ -4,7 +4,7 @@ import organizationSlice from './slices/organization.slice.js';
 import ArtistSlice from "./slices/artist.slice.js";
 import jobsSlice from "./slices/jobs.slice.js";
 import jobRequestSlice from "./slices/jobRequests.slice.js";
-
+import adminSlice from './slices/admin.slice.js';
 
 // Combine all slices in the store:
 const useStore = create((...args) => ({
@@ -12,7 +12,8 @@ const useStore = create((...args) => ({
   ...jobsSlice(...args),
   ...organizationSlice(...args),
   ...ArtistSlice(...args),
-  ...jobRequestSlice(...args)
+  ...jobRequestSlice(...args),
+  ...adminSlice(...args)
 }))
 
 export default useStore;

@@ -21,13 +21,13 @@ function OrganizationPage() {
     useEffect(() => {
         if (organizationObj) {
             setEditedOrganization(organizationObj);
-            setImagePreview(organizationObj.card_photo);
+            setImagePreview(organizationObj.profile_pic);
         }
     }, [organizationObj]);
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
-        if (name === "card_photo" && files.length) {
+        if (name === "profile_pic" && files.length) {
             const file = files[0];
             const formData = new FormData();
             formData.append("file", file);
@@ -36,7 +36,7 @@ function OrganizationPage() {
             axios.post("https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", formData)
                 .then((response) => {
                     const imageUrl = response.data.secure_url;
-                    setEditedOrganization((prev) => ({ ...prev, card_photo: imageUrl }));
+                    setEditedOrganization((prev) => ({ ...prev, profile_pic: imageUrl }));
                     setImagePreview(imageUrl);
                 })
                 .catch((error) => console.error("Error uploading image:", error));
@@ -80,7 +80,7 @@ function OrganizationPage() {
                                 />
                                 <input
                                     type="file"
-                                    name="card_photo"
+                                    name="profile_pic"
                                     onChange={handleChange}
                                 />
                                 {imagePreview && (
@@ -108,9 +108,8 @@ function OrganizationPage() {
                                 <p>{organizationObj.description}</p>
                                 <p>{organizationObj.mission_statement}</p>
 
-                               
                                 {organizationObj?.is_member && (
-                                <button onClick={() => setIsEditing(true)}>Edit</button>
+                                  <button onClick={() => setIsEditing(true)}>Edit</button>
                                 )}
                             </>
                         )}
