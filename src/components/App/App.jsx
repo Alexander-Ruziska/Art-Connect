@@ -18,7 +18,13 @@ import JobList from '../JobList/JobList';
 import ArtistIdea from '../ArtistIdea/ArtistIdea';
 import OrganizationPage from '../OrganizationPage/OrganizationPage';
 import IdeaForm from '../IdeaForm/IdeaForm';
+
 import PostJob from '../PostJob/PostJob';
+
+import AdminPage from '../AdminPage/AdminPage';
+import PostJobs from '../PostJob/PostJob';
+
+
 
 function App() {
   const user = useStore((state) => state.user);
@@ -69,6 +75,16 @@ function App() {
                 <Navigate to="/" replace /> // Redirect authenticated user.
               ) : (
                 <RegisterPage /> // Render RegisterPage for unauthenticated user.
+              )
+            }
+          />
+          <Route 
+            exact path="/admin"
+            element={
+              user.id ? (
+                <AdminPage /> // Redirect authenticated user.
+              ) : (
+                <AdminPage /> // Render RegisterPage for unauthenticated user.
               )
             }
           />
