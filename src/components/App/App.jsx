@@ -17,6 +17,8 @@ import ArtistPage from '../ArtistPage/ArtistPage';
 import JobList from '../JobList/JobList';
 import ArtistIdea from '../ArtistIdea/ArtistIdea';
 import OrganizationPage from '../OrganizationPage/OrganizationPage';
+import IdeaForm from '../IdeaForm/IdeaForm';
+
 function App() {
   const user = useStore((state) => state.user);
   const fetchUser = useStore((state) => state.fetchUser);
@@ -89,17 +91,16 @@ function App() {
               )
             }
           />
-          {/* This will be added later to get all of the artists ideas */}
-          {/* <Route 
+          <Route 
             exact path="/ideas"
             element={
-              user.id ? (
-                <ArtistList /> // Redirect authenticated user.
+              user.artist_id ? (
+                <IdeaForm /> // Redirect authenticated users only if they're an artist.
               ) : (
-                <ArtistList /> // Render RegisterPage for unauthenticated user.
+                <RegisterPage /> // Render RegisterPage for unauthenticated user.
               )
             }
-          /> */}
+          />
           <Route 
             exact path="/organization-list/:organizationId"
             element={

@@ -1,0 +1,35 @@
+import axios from 'axios';
+
+// All requests made with axios will include credentials, which means
+// the cookie that corresponds with the session will be sent along
+// inside every request's header
+axios.defaults.withCredentials = true;
+
+const createIdeaSlice
+ = (set, get) => ({
+
+
+    //GET all artists ideas
+    allArtistIdeas: [],
+    //fetchAllArtistIdeas: async () => {
+        //}
+
+
+    //POST an artist's idea
+    addIdea: async (idea) => {
+        //idea: {artist_id, title, idea}
+        console.log('idea', idea);
+        try {
+            await axios.post(`/api/ideas`, idea);
+            //wil need to update the artist idea list after this
+            //get().fetchAllArtistIdeas();
+        } catch (err) {
+            console.error('Slice issue post the idea', err);
+        }
+    }
+
+
+
+});
+
+export default createIdeaSlice;
