@@ -13,7 +13,7 @@ function IdeaForm(props) {
   const [ideaInput, setIdeaInput] = useState('');
 
 
-
+//This is the form handler to add the new ideas once the submit button is clicked on
     const formHandler = (event) => {
       event.preventDefault();
 
