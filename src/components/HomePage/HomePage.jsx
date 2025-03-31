@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
     const { randomArtist, fetchArtists, getRandomArtist } = useStore();
+    const user = useStore((state) => state.user);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -29,7 +30,9 @@ function HomePage() {
             <p>{randomArtist.headline_description}</p>
             <p>Soundcloud ID: {randomArtist.soundcloud_id}</p>
             </div>
-            <button onClick={newIdeaNav}>Post new idea</button>
+            <div>
+            {user.artist_id && <button onClick={newIdeaNav}>Post new idea</button>}
+            </div>
         </div>
     );
 }
