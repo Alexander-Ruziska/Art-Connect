@@ -42,16 +42,27 @@ artistPhotos: [],
 
 
 Slice: "",//getting an artist by a specific id
-artistOBJ: [],
+artistOBJ: null,
 fetchArtist: async (artistId) => {
     try {
         const response = await axios.get(`/api/artists/${artistId}`);
         console.log('Response.data:', response.data);
-        set({ artistOBJ : response.data });
+        set({ artistOBJ: response.data }); 
     } catch (error) {
         console.log('Error fetching artists info', error);
     }
 },
+
+//Alecia's original get request for a specific artist
+// fetchArtist: async (artistId) => {
+//     try {
+//         const response = await axios.get(`/api/artists/${artistId}`);
+//         console.log('Response.data:', response.data);
+//         set({ artistOBJ : response.data });
+//     } catch (error) {
+//         console.log('Error fetching artists info', error);
+//     }
+// },
    
 
 //Getting a specific artist's idea list

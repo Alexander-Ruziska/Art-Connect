@@ -11,12 +11,12 @@ function ArtistList() {
   const artistList = useStore((state) => state.artistList);
   const navigate = useNavigate();
   const params = useParams();
-  const fetchArtist = useStore((state) => state.fetchArtist);
+  const fetchArtists = useStore((state) => state.fetchArtists);
 
   useEffect(() => {
     console.log(`Getting artistList`);
-    fetchArtist();
-  }, [fetchArtist]);
+    fetchArtists();
+  }, [fetchArtists]);
 
 
   const handleClick= (event) => {

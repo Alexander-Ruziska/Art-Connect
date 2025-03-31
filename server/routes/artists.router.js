@@ -19,55 +19,72 @@ router.get('/', (req, res) => {
     });
 });
 
-// GET ARTIST BY ID
+// GET ARTIST BY ID - alecia's original code before adding in the photos:
 
-// router.get('/:id', (req, res) => {
-//   const sqlText = 'SELECT * FROM "artists" WHERE id = $1';
-//   pool.query(sqlText, [req.params.id])
-//     .then((result) => res.send(result.rows[0]))
-//     .catch((err) => {
-//       console.error('GET /api/artists/:id error:', err);
+// router.get('/:artistId', (req, res) => {
+//   const query = `
+//     SELECT "artists"."id", "artists"."name", "artists"."headline_description", "artists"."card_photo", "artists"."soundcloud_id", "artists"."spotify_id", "user"."id" AS "user_id", "user"."is_banned", "user"."profile_pic", "user"."linkedin", "user"."facebook", "user"."insta", "user"."website" 
+//     FROM "user"
+//     JOIN "artists"
+//     ON "user"."id" = "artists"."user_id"
+//     WHERE "user"."is_banned" = FALSE
+//     AND "artists"."id" = $1;
+
+//   `;
+//   //I tried adding this in to the code and calling it below after query, and nothing worked.. I also have it's own get below
+//   // const photoQuery = `SELECT * FROM "photos"
+//   // WHERE "photos"."artist_id" = $1;`;
+//        pool.query(query, [req.params.artistId])
+//     .then(result => {
+//       res.send(result.rows);
+//     })
+//     .catch(err => {
+//       console.error('GET artist by id error:', err);
 //       res.sendStatus(500);
 //     });
 // });
 
-//GET an artist's uploaded photos
-// router.get('/:artistId', (req, res) => {
-//   const sqlText = `SELECT * FROM "photos"
-// WHERE "photos"."artist_id" = $1;`;
-//   pool.query(sqlText, [req.params.artistId])
-//   .then(result => {
-//     res.send(result.rows);
-//   })
-//   .catch(err => {
-//     console.error('Failed getting artists photos:', err)
-//     res.sendStatus(500);
-//   })
-// });
+router.get('/:artistId', async (req, res) => {
+  try {
+    const artistQuery = `
+      SELECT "artists"."id", "artists"."name", "artists"."headline_description", 
+             "artists"."card_photo", "artists"."soundcloud_id", "artists"."spotify_id",
+             "user"."id" AS "user_id", "user"."is_banned", "user"."profile_pic",
+             "user"."linkedin", "user"."facebook", "user"."insta", "user"."website"
+      FROM "user"
+      JOIN "artists" ON "user"."id" = "artists"."user_id"
+      WHERE "user"."is_banned" = FALSE
+      AND "artists"."id" = $1;
+    `;
 
-//
-router.get('/:artistId', (req, res) => {
-  const query = `
-    SELECT "artists"."id", "artists"."name", "artists"."headline_description", "artists"."card_photo", "artists"."soundcloud_id", "artists"."spotify_id", "user"."id" AS "user_id", "user"."is_banned", "user"."profile_pic", "user"."linkedin", "user"."facebook", "user"."insta", "user"."website" 
-    FROM "user"
-    JOIN "artists"
-    ON "user"."id" = "artists"."user_id"
-    WHERE "user"."is_banned" = FALSE
-    AND "artists"."id" = $1;
+    const photosQuery = `
+      SELECT id, image_url, title, description, created_at 
+      FROM photos 
+      WHERE artist_id = $1;
+    `;
 
-  `;
-  //I tried adding this in to the code and calling it below after query, and nothing worked.. I also have it's own get below
-  // const photoQuery = `SELECT * FROM "photos"
-  // WHERE "photos"."artist_id" = $1;`;
-       pool.query(query, [req.params.artistId])
-    .then(result => {
-      res.send(result.rows);
-    })
-    .catch(err => {
-      console.error('GET artist by id error:', err);
-      res.sendStatus(500);
-    });
+    // Running both queries in parallel
+    const [artistResult, photosResult] = await Promise.all([
+      pool.query(artistQuery, [req.params.artistId]),
+      pool.query(photosQuery, [req.params.artistId])
+    ]);
+
+    if (artistResult.rows.length === 0) {
+      return res.status(404).json({ error: "Artist not found" });
+    }
+
+    // Combine data
+    const artist = artistResult.rows[0];
+    artist.photos = photosResult.rows;
+
+    res.json(artist);
+  } catch (error) {
+    console.error('GET artist by id error:', error);
+    res.sendStatus(500);
+  }
 });
+
+
 
 // GET to grab all posted ideas by a specific artist
 router.get('/:artistId/ideas', (req, res) => {
