@@ -1,36 +1,6 @@
-
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import useStore from "../../zustand/store"; 
-import { useNavigate } from 'react-router-dom';
-import "./OrganizationItem.css"; 
-
-const OrganizationItem = ({ organization }) => {
-  
-  
-//navigate to post-job page
-  const navigate = useNavigate();
-
-  //function to navigate to post-job page
-
-  const handlePostJob = () => {   
-    console.log('organization', organization);
-    navigate(`/post-job/${organization.id}`);
-  }
-  
-
-  return (
-    
-  <div className="organization-card">
-    
-    <h3>{organization.name}</h3>
-    <h3>{organization.description}</h3>
-    <h3>{organization.mission_statement}</h3>
-    <button onClick={handlePostJob}>Post Job</button>
-  </div>
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import useStore from "../../zustand/store"; 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import "./OrganizationItem.css";
@@ -42,6 +12,10 @@ const OrganizationItem = ({ organization }) => {
     navigate(`/organization-list/${organization.id}`);
   };
 
+//   const handlePostJob = () => {   
+//     console.log('organization', organization);
+//     navigate(`/post-job/${organization.id}`);
+//   }
   return (
     <Card className="organization-card" style={{ width: '18rem' }}>
       {organization.profile_pic && (
@@ -54,6 +28,7 @@ const OrganizationItem = ({ organization }) => {
         <Button variant="primary" onClick={handleClick}>
           Go to organization profile
         </Button>
+        {/* <Button onClick={handlePostJob}>Post Job</Button> */}
       </Card.Body>
     </Card>
   );
