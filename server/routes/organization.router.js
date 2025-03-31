@@ -37,19 +37,26 @@ router.get('/:id', async (req, res) => {
 
   try {
     const sqlText = `
-      SELECT 
-        organizations.id,
-        organizations.name,
-        organizations.description,
-        organizations.mission_statement,
-        organizations.created_at,
-        "user".profile_pic
-      FROM organizations
-      JOIN user_organizations ON user_organizations.organization_id = organizations.id
-      JOIN "user" ON "user".id = user_organizations.user_id
-      WHERE organizations.id = $1
-      LIMIT 1;
-    `;
+  SELECT 
+    organizations.id,
+    organizations.name,
+    organizations.description,
+    organizations.mission_statement,
+    organizations.created_at,
+    "user".profile_pic,
+    "user".linkedin,
+    "user".facebook,
+    "user".insta,
+    "user".website,
+    "user".bio,
+    "user".phone
+  FROM organizations
+  JOIN user_organizations ON user_organizations.organization_id = organizations.id
+  JOIN "user" ON "user".id = user_organizations.user_id
+  WHERE organizations.id = $1
+  LIMIT 1;
+`;
+
 
     const result = await pool.query(sqlText, [orgId]);
     const organization = result.rows[0];
@@ -101,14 +108,23 @@ router.put('/:id', async (req, res) => {
     }
 
     const result = await pool.query(
-      `SELECT organizations.*, "user".profile_pic
-       FROM organizations
-       JOIN user_organizations ON user_organizations.organization_id = organizations.id
-       JOIN "user" ON "user".id = user_organizations.user_id
-       WHERE organizations.id = $1
-       LIMIT 1;`,
+      `SELECT 
+        organizations.*,
+        "user".profile_pic,
+        "user".linkedin,
+        "user".facebook,
+        "user".insta,
+        "user".website,
+        "user".bio,
+        "user".phone
+      FROM organizations
+      JOIN user_organizations ON user_organizations.organization_id = organizations.id
+      JOIN "user" ON "user".id = user_organizations.user_id
+      WHERE organizations.id = $1
+      LIMIT 1;`,
       [orgId]
     );
+    
 
     res.send({ ...result.rows[0], is_member: true });
   } catch (err) {
