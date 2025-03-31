@@ -4,7 +4,6 @@ const pool = require('../modules/pool');
 const {rejectUnauthenticated, rejectIfNotArtist} = require('../modules/authentication-middleware');
 
 // GET all artists
-//need to add in the photo
 router.get('/', (req, res) => {
   const query = `SELECT "artists"."id", "artists"."name", "artists"."headline_description", "user"."id" AS "user_id", "user"."is_banned"
        FROM "user"
@@ -20,30 +19,6 @@ router.get('/', (req, res) => {
 });
 
 // GET ARTIST BY ID - alecia's original code before adding in the photos:
-
-// router.get('/:artistId', (req, res) => {
-//   const query = `
-//     SELECT "artists"."id", "artists"."name", "artists"."headline_description", "artists"."card_photo", "artists"."soundcloud_id", "artists"."spotify_id", "user"."id" AS "user_id", "user"."is_banned", "user"."profile_pic", "user"."linkedin", "user"."facebook", "user"."insta", "user"."website" 
-//     FROM "user"
-//     JOIN "artists"
-//     ON "user"."id" = "artists"."user_id"
-//     WHERE "user"."is_banned" = FALSE
-//     AND "artists"."id" = $1;
-
-//   `;
-//   //I tried adding this in to the code and calling it below after query, and nothing worked.. I also have it's own get below
-//   // const photoQuery = `SELECT * FROM "photos"
-//   // WHERE "photos"."artist_id" = $1;`;
-//        pool.query(query, [req.params.artistId])
-//     .then(result => {
-//       res.send(result.rows);
-//     })
-//     .catch(err => {
-//       console.error('GET artist by id error:', err);
-//       res.sendStatus(500);
-//     });
-// });
-
 router.get('/:artistId', async (req, res) => {
   try {
     const artistQuery = `
@@ -105,7 +80,10 @@ WHERE "artist_id" = $1 AND "is_archived" = FALSE;
   })
 });
 
-router.put('/artists/:artistId', async (req, res) => {
+
+
+//option to change the artists info
+router.put('/:artistId', async (req, res) => {
   const artistId = req.user.artistId;
   const {
     name,
@@ -119,8 +97,7 @@ router.put('/artists/:artistId', async (req, res) => {
     facebook,
     insta,
     website,
-    bio,
-    phone,
+    bio
   } = req.body;
 
   try {
@@ -140,7 +117,7 @@ router.put('/artists/:artistId', async (req, res) => {
             WHERE id = $6;
         `;
 
-        await client.query(updateArtistQuery, [
+        await artistId.query(updateArtistQuery, [
             name, headline_description, card_photo, soundcloud_id, spotify_id, artistId
         ]);
 
@@ -148,20 +125,22 @@ router.put('/artists/:artistId', async (req, res) => {
         const updateUserQuery = `
             UPDATE "user"
             SET 
-                profile_pic = $1,
-                linkedin = $2,
-                facebook = $3,
-                insta = $4,
-                website = $5
-            WHERE id = (SELECT user_id FROM artists WHERE id = $6);
+                username = $1,
+                profile_pic = $2,
+                linkedin = $3,
+                facebook = $4,
+                insta = $5,
+                website = $6
+                bio = $7
+            WHERE id = (SELECT user_id FROM artists WHERE id = $8);
         `;
 
-        await client.query(updateUserQuery, [
-          profile_pic, linkedin, facebook, insta, website, artistId
+        await artistId.query(updateUserQuery, [
+          username, profile_pic, linkedin, facebook, insta, website, bio, artistId
         ]);
 
-        await client.query('COMMIT');
-        client.release();
+        await artistId.query('COMMIT');
+        artistId.release();
 
         res.status(200).json({ message: 'Artist and user updated successfully' });
   } catch (error) {
