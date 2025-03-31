@@ -18,6 +18,7 @@ import JobList from '../JobList/JobList';
 import ArtistIdea from '../ArtistIdea/ArtistIdea';
 import OrganizationPage from '../OrganizationPage/OrganizationPage';
 import IdeaForm from '../IdeaForm/IdeaForm';
+import PostJobs from '../PostJob/PostJob';
 
 function App() {
   const user = useStore((state) => state.user);
@@ -121,6 +122,17 @@ function App() {
               )
             }
           />
+               <Route 
+              exact path="/post-job"
+              element={
+             user?.is_organization ? (
+            <PostJobs />
+           ) : (
+           <p>You must be an organization to post a job.</p>
+          )
+           }
+         />
+
           <Route path='/artists/:artistId' element={<ArtistPage />} />
           <Route path='/artists/:artistId/ideas' element={<ArtistIdea />} />
 
