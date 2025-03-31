@@ -39,8 +39,8 @@ function ArtistPage() {
           {/* Code for soundcloud */}
           <div>
             {artistOBJ.soundcloud_id &&
-                <iframe width="100%" height="166" sallow="autoplay"
-                src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/${user.soundcloud_id}&amp;{ ADD YOUR PARAMETERS HERE }">
+                <iframe width="100%" height="465" sallow="autoplay"
+                src={`https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/${artistOBJ.soundcloud_id}&amp;`}>
         </iframe> }
           </div>
           {artistOBJ.photos && artistOBJ.photos.length > 0 && (

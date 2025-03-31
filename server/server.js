@@ -19,6 +19,7 @@ const artistsRouter = require('./routes/artists.router')
 const ideasRouter = require('./routes/idea.router')
 const jobsRouter = require('./routes/jobs.router')
 const jobRequestRouter = require('./routes/job_requests.router')
+const photosRouter = require('./routes/photos.router')
 
 
 
@@ -44,6 +45,7 @@ app.use('/api/artists', artistsRouter);
 app.use('/api/ideas', ideasRouter);
 app.use('/api/jobs', jobsRouter);
 app.use('/api/job_requests', jobRequestRouter);
+app.use('/api/photos', photosRouter);
 
 // Start the server:
 app.listen(PORT, () => {

@@ -105,8 +105,70 @@ WHERE "artist_id" = $1 AND "is_archived" = FALSE;
   })
 });
 
-router.put('artists/:artistId', async (req, res) => {
+router.put('/artists/:artistId', async (req, res) => {
+  const artistId = req.user.artistId;
+  const {
+    name,
+    soundcloud_id,
+    spotify_id,
+    headline_description,
+    card_photo,
+    username,
+    profile_pic,
+    linkedin,
+    facebook,
+    insta,
+    website,
+    bio,
+    phone,
+  } = req.body;
+
+  try {
+    const artistId = await pool.connect();
+
+    await artistId.query('BEGIN');
+
+        // Update artist table
+        const updateArtistQuery = `
+            UPDATE artists
+            SET 
+                name = $1,
+                headline_description = $2,
+                card_photo = $3,
+                soundcloud_id = $4,
+                spotify_id = $5
+            WHERE id = $6;
+        `;
+
+        await client.query(updateArtistQuery, [
+            name, headline_description, card_photo, soundcloud_id, spotify_id, artistId
+        ]);
+
+        // Update user table
+        const updateUserQuery = `
+            UPDATE "user"
+            SET 
+                profile_pic = $1,
+                linkedin = $2,
+                facebook = $3,
+                insta = $4,
+                website = $5
+            WHERE id = (SELECT user_id FROM artists WHERE id = $6);
+        `;
+
+        await client.query(updateUserQuery, [
+          profile_pic, linkedin, facebook, insta, website, artistId
+        ]);
+
+        await client.query('COMMIT');
+        client.release();
+
+        res.status(200).json({ message: 'Artist and user updated successfully' });
+  } catch (error) {
+    
+  }
   
+
 
 })
 
