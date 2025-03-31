@@ -9,6 +9,7 @@ const createJobsSlice = ((set, get) => ({
     try {
       const res = await axios.get('/api/jobs');
       set({ jobs: res.data });
+      console.log('Getting all of the jobs', res.data);
     } catch (err) {
       console.error('fetchJobs error:', err);
     }
