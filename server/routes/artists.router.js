@@ -105,6 +105,11 @@ WHERE "artist_id" = $1 AND "is_archived" = FALSE;
   })
 });
 
+router.put('artists/:artistId', async (req, res) => {
+  
+
+})
+
 // router.put('/artists/:id', rejectUnauthenticated, async (req, res) => {
 //   const artistId = req.params.id;        // 🟢 comes from URL like /update/5
 //   const userId = req.user.id;            // 🟢 comes from logged-in session
