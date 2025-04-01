@@ -18,11 +18,10 @@ import JobList from '../JobList/JobList';
 import ArtistIdea from '../ArtistIdea/ArtistIdea';
 import OrganizationPage from '../OrganizationPage/OrganizationPage';
 import IdeaForm from '../IdeaForm/IdeaForm';
-
 import PostJob from '../PostJob/PostJob';
-
 import AdminPage from '../AdminPage/AdminPage';
-import PostJobs from '../PostJob/PostJob';
+import ArtistJobRequests from '../ArtistJobRequests';
+import OrgJobRequests from '../OrgJobRequests';
 
 
 
@@ -148,6 +147,28 @@ function App() {
           )
            }
          />
+
+          <Route 
+          exact path="/my-job-requests"
+         element={
+        user.artist_id ? (
+          <ArtistJobRequests />
+       ) : (
+         <Navigate to="/login" />
+       )
+          }
+          />     
+             <Route 
+              exact path="/job-requests"
+            element={
+         user.organization_id ? (
+          <OrgJobRequests />
+         ) : (
+         <Navigate to="/login" />
+        )
+         }
+       />
+
 
           <Route path='/artists/:artistId' element={<ArtistPage />} />
           <Route path='/artists/:artistId/ideas' element={<ArtistIdea />} />
