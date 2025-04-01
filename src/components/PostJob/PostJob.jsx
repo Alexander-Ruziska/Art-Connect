@@ -22,24 +22,24 @@ const PostJob = () => {
     e.preventDefault();
     console.log('Creating job:', { title, orgId, description, deadline, is_archived });
     try {
-     
       await createJob({
-     organization_id: user.organization_id,
+        
+        organization_id: user.organization_id, 
 
         title,
         description,
         deadline,
-        organization_id: orgId,
         is_archived,
       });
-
+  
       alert('Job posted successfully!');
-      navigate('/job-list'); 
+      navigate('/job-list');
     } catch (err) {
       console.error('Job creation failed:', err);
       alert('There was an error posting the job.');
     }
   };
+  
 
   return (
     <form onSubmit={handleSubmit}>
