@@ -16,7 +16,7 @@ const useStore = create((...args) => ({
   ...organizationSlice(...args),
   ...ArtistSlice(...args),
   ...jobRequestSlice(...args),
-  ...PhotoSlice(...args)
+  ...PhotoSlice(...args),
   ...adminSlice(...args),
 }))
 
