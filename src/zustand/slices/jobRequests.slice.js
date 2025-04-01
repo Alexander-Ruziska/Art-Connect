@@ -6,6 +6,7 @@ const jobRequestSlice = (set, get) => ({
   expressInterest: async (job_id) => {
     try {
       await axios.post('/api/job_requests', { job_id });
+      get().fetchArtistRequests(); // <- Refresh the list
       alert('Interest submitted successfully!');
     } catch (err) {
       console.error('Error expressing interest:', err);
@@ -50,6 +51,17 @@ const jobRequestSlice = (set, get) => ({
       console.error('Error rejecting request:', err);
     }
   },  
+  
+  withdrawInterest: async (job_id) => {
+    try {
+      await axios.delete('/api/job_requests', { data: { job_id } });
+      get().fetchArtistRequests(); // <- Refresh the list
+      alert('Interest withdrawn.');
+    } catch (err) {
+      console.error('Error withdrawing interest:', err);
+      alert('Could not withdraw interest.');
+    }
+  }
   
 });
 
