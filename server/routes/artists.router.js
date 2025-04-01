@@ -3,6 +3,7 @@ const router = express.Router();
 const pool = require('../modules/pool');
 const { rejectUnauthenticated, rejectIfNotArtist } = require('../modules/authentication-middleware');
 
+
 router.get('/', (req, res) => {
   const query = `
     SELECT 
@@ -23,6 +24,7 @@ router.get('/', (req, res) => {
       res.sendStatus(500);
     });
 });
+
 
 router.get('/:id', async (req, res) => {
   const artistId = req.params.id;
@@ -53,6 +55,7 @@ router.get('/:id', async (req, res) => {
     SELECT * FROM "photos"
     WHERE "artist_id" = $1;
   `;
+
 
   try {
     const artistResult = await pool.query(artistQuery, [artistId]);
@@ -147,4 +150,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+
 module.exports = router;
+

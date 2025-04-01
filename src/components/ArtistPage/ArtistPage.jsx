@@ -136,16 +136,14 @@ function ArtistPage() {
           )}
           <h4>Projects</h4>
 
-          {artistOBJ.soundcloud_id && (
-            <iframe
-              width="100%"
-              height="166"
-              allow="autoplay"
-              src={`https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/${artistOBJ.soundcloud_id}`}
-            ></iframe>
-          )}
-
-          {artistOBJ.photos?.length > 0 && (
+          {/* Code for soundcloud */}
+          <div>
+            {artistOBJ.soundcloud_id &&
+                <iframe width="100%" height="465" sallow="autoplay"
+                src={`https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/${artistOBJ.soundcloud_id}&amp;`}>
+        </iframe> }
+          </div>
+          {artistOBJ.photos && artistOBJ.photos.length > 0 && (
             <div>
               {artistOBJ.photos.map((photo) => (
                 <div key={photo.id}>

@@ -40,22 +40,13 @@ const createArtistSlice = (set, get) => ({
     } catch (error) {
       console.log('Error fetching artists info', error);
     }
-  },
+},
+   
 
-  //Alecia's original get request for a specific artist
-  // fetchArtist: async (artistId) => {
-  //     try {
-  //         const response = await axios.get(`/api/artists/${artistId}`);
-  //         console.log('Response.data:', response.data);
-  //         set({ artistOBJ : response.data });
-  //     } catch (error) {
-  //         console.log('Error fetching artists info', error);
-  //     }
-  // },
+//Getting a specific artist's idea list
+artistIdeas: [],
+fetchArtistIdeas: async (artistId) => {
 
-  //Getting a specific artist's idea list
-  artistIdeas: [],
-  fetchArtistIdeas: async (artistId) => {
     try {
       const response = await axios.get(`/api/artists/${artistId}/ideas`);
       console.log(`Idea get response for specific artist:`, response.data);
@@ -63,7 +54,29 @@ const createArtistSlice = (set, get) => ({
     } catch (error) {
       console.log('Error fetching a specific artists ideas', error);
     }
+},
+
+
+//PUT to update the info
+artist: {
+    name: "",
+    headline_description: "",
+    card_photo: "",
+    soundcloud_id: "",
+    spotify_id: "",
+},
+
+user: {
+    username: "",
+    profile_pic: "",
+    linkedin: "",
+    facebook: "",
+    insta: "",
+    website: "",
+}
+
   },
+
 
   // Updating an artist
   updateArtist: async (artistId, updatedData) => {
