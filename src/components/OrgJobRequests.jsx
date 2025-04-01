@@ -1,5 +1,20 @@
 import React, { useEffect } from "react";
 import useStore from "../zustand/store";
+import { Badge, Button } from "react-bootstrap";
+
+
+const statusIcons = {
+  accepted: "✅",
+  rejected: "❌",
+  pending: "⏳",
+};
+
+const statusVariants = {
+  accepted: "success",
+  rejected: "danger",
+  pending: "warning",
+};
+
 
 const OrgJobRequests = () => {
   const {
@@ -13,27 +28,45 @@ const OrgJobRequests = () => {
     fetchRequestsForOrg();
   }, [fetchRequestsForOrg]);
 
+
   return (
-    <div>
+    <div className="mt-4">
       <h2>Job Requests</h2>
       {orgRequests.length === 0 ? (
         <p>No requests yet.</p>
       ) : (
-        <ul>
+        <ul className="list-group">
           {orgRequests.map((req) => (
-            <li key={req.request_id}>
-              <strong>{req.job_title}</strong> — Artist: {req.artist_name} — Status: <em>{req.status}</em>
+            <li key={req.request_id} className="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{req.job_title}</strong> — Artist: {req.artist_name}
+              </div>
 
-              {/* Show Accept/Reject buttons only if not already accepted or rejected */}
-              {req.status !== "accepted" && req.status !== "rejected" && (
-                <>
-                  <button onClick={() => acceptRequest(req.request_id)}>Accept</button>
-                  <button onClick={() => rejectRequest(req.request_id)} style={{ marginLeft: '10px' }}>Reject</button>
-                </>
-              )}
+              <div>
+                <Badge bg={statusVariants[req.status]} className="me-2">
+                  {statusIcons[req.status]} {req.status}
+                </Badge>
 
-              {req.status === "accepted" && <span style={{ color: "green", marginLeft: "10px" }}>✓ Accepted</span>}
-              {req.status === "rejected" && <span style={{ color: "red", marginLeft: "10px" }}>✕ Rejected</span>}
+                {req.status === "pending" && (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="outline-success"
+                      onClick={() => acceptRequest(req.request_id)}
+                      className="me-2"
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline-danger"
+                      onClick={() => rejectRequest(req.request_id)}
+                    >
+                      Reject
+                    </Button>
+                  </>
+                )}
+              </div>
             </li>
           ))}
         </ul>

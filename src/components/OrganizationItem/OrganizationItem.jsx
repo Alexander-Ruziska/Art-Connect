@@ -12,10 +12,10 @@ const OrganizationItem = ({ organization }) => {
     navigate(`/organization-list/${organization.id}`);
   };
 
-//   const handlePostJob = () => {   
-//     console.log('organization', organization);
-//     navigate(`/post-job/${organization.id}`);
-//   }
+  const handlePostJob = () => {   
+    console.log('organization', organization);
+    navigate(`/post-job/${organization.id}`);
+  }
   return (
     <Card className="organization-card" style={{ width: '18rem' }}>
       {organization.profile_pic && (
@@ -28,7 +28,7 @@ const OrganizationItem = ({ organization }) => {
         <Button variant="primary" onClick={handleClick}>
           Go to organization profile
         </Button>
-        {/* <Button onClick={handlePostJob}>Post Job</Button> */}
+        <Button onClick={handlePostJob}>Post Job</Button>
       </Card.Body>
     </Card>
   );

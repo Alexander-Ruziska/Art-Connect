@@ -8,7 +8,7 @@ const PostJob = () => {
   const navigate = useNavigate();
   const orgId = useParams().id; 
   console.log('orgId', orgId)
-
+  
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [deadline, setDeadline] = useState('');
@@ -24,6 +24,7 @@ const PostJob = () => {
     try {
      
       await createJob({
+        organization_id: req.user.organization_id,
         title,
         description,
         deadline,
