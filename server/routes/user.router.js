@@ -3,16 +3,58 @@ const encryptLib = require("../modules/encryption");
 const pool = require("../modules/pool");
 const userStrategy = require("../strategies/user.strategy");
 
-const {
-  rejectUnauthenticated,
-} = require("../modules/authentication-middleware");
+const { rejectUnauthenticated } = require("../modules/authentication-middleware");
 
 const router = express.Router();
 
-// If the request came from an authenticated user, this route
-// sends back an object containing that user's information.
-// Otherwise, it sends back an empty object to indicate there
-// is not an active session.
+// Check if user is banned during login
+router.post("/login", userStrategy.authenticate("local"), rejectUnauthenticated, async (req, res) => {
+  const userId = req.user.id;
+
+  // Check if the user is banned
+  const bannedCheckQuery = 'SELECT is_banned FROM "user" WHERE id = $1';
+  try {
+    const bannedCheckResult = await pool.query(bannedCheckQuery, [userId]);
+
+    if (bannedCheckResult.rows[0].is_banned) {
+      req.logout(); // Log the user out if they are banned
+      return res.status(403).send({ message: "Your account has been banned" });
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("Error checking banned status:", err);
+    res.sendStatus(500);
+  }
+});
+
+
+router.post("/register", async (req, res, next) => {
+  const username = req.body.username;
+  const hashedPassword = encryptLib.encryptPassword(req.body.password);
+  const isArtist = Boolean(req.body.is_artist);
+  const isOrganization = !isArtist;
+
+  const sqlText = `
+    INSERT INTO "user" 
+      ("username", "password", "is_artist", "is_organization")
+      VALUES
+      ($1, $2, $3, $4) RETURNING *;
+  `;
+
+  const sqlValues = [username, hashedPassword, isArtist, isOrganization];
+
+  pool
+    .query(sqlText, sqlValues)
+    .then((result) => { 
+      res.send(result.rows[0]);
+    })
+    .catch((err) => {
+      console.error("GET /api/register error", err);
+      res.sendStatus(500);
+    });
+});
+
 router.get("/", (req, res) => {
   if (req.isAuthenticated()) {
     res.send(req.user);
@@ -35,60 +77,6 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// Handles the logic for creating a new user. The one extra wrinkle here is
-// that we hash the password before inserting it into the database.
-router.post("/register", async (req, res, next) => {
-  const username = req.body.username;
-  const hashedPassword = encryptLib.encryptPassword(req.body.password);
-  const isArtist = Boolean(req.body.is_artist);
-  const isOrganization = !isArtist;
-  const sqlText = `
-    INSERT INTO "user" 
-      ("username", "password", "is_artist", "is_organization")
-      VALUES
-      ($1, $2, $3, $4) RETURNING *;
-  `;
-
-  const sqlValues = [username, hashedPassword, isArtist, isOrganization];
-
-  // TODO: If the user wants to join an existing organization, add an INSERT here
-  // to add an entry to the user_organizations table - that way the automatic
-  // profile creation that happens later won't create a new organization for them
-
-  pool
-    .query(sqlText, sqlValues)
-    .then((result) => { 
-      res.send(result.rows[0]);
-    })
-
-    .catch((err) => {
-      console.error("GET /api/register error", err);
-      res.sendStatus(500);
-    });
-});
-
-// Handles the logic for logging in a user. When this route receives
-// a request, it runs a middleware function that leverages the Passport
-// library to instantiate a session if the request body's useruser_name and
-// password are correct.
-// You can find this middleware function in /server/strategies/user.strategy.js.
-// Note we are calling rejectUnauthenticated to make sure the profile is created.
-router.post("/login", userStrategy.authenticate("local"), rejectUnauthenticated, (req, res) => {
-  res.sendStatus(200);
-});
-
-// Clear all server session information about this user:
-router.post("/logout", (req, res, next) => {
-  // Use passport's built-in method to log out the user.
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.sendStatus(200);
-  });
-});
-
-// Update user by ID (might not need this?)
 router.put("/:id", (req, res) => {
   if (req.isAuthenticated()) {
     const userId = req.params.id;
@@ -102,7 +90,6 @@ router.put("/:id", (req, res) => {
       userId,
     ];
 
-    // Check if there are fields to update
     if (updates.length === 0) {
       return res.status(400).send("No valid fields to update.");
     }
@@ -142,6 +129,15 @@ router.delete("/:id", (req, res) => {
   } else {
     res.send({});
   }
+});
+
+router.post("/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).send({ message: "Logout failed." });
+    }
+    res.sendStatus(200);
+  });
 });
 
 module.exports = router;

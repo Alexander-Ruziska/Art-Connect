@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import useStore from "../../zustand/store";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +7,8 @@ const JobList = () => {
   const user = useStore((state) => state.user);
   const navigate = useNavigate();
 
-console.log('user', user)
+  console.log('user', user);
+
   return (
     <div>
       <h2>Job Listings</h2>
@@ -16,18 +17,20 @@ console.log('user', user)
       ) : (
         <ul>
           {jobs.map((job) => (
-            <div>
-            <li key={job.id}>
-              <h3>{job.title}</h3>
-              <p>{job.description}</p>
-              <p>Deadline: {job.deadline}</p>
-            </li>
-            <div>
-              {user.artist_id &&
-           <button onClick={() => expressInterest(job.id)}>I'm Interested</button>}
-           </div>
-           </div>
-
+            <div key={job.id}> 
+              <li>
+                <h3>{job.title}</h3>
+                <p>{job.description}</p>
+                <p>Deadline: {job.deadline}</p>
+              </li>
+              <div>
+                {user.artist_id && (
+                  <button onClick={() => expressInterest(job.id)}>
+                    I'm Interested
+                  </button>
+                )}
+              </div>
+            </div>
           ))}
         </ul>
       )}

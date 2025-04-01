@@ -23,8 +23,6 @@ import AdminPage from '../AdminPage/AdminPage';
 import ArtistJobRequests from '../ArtistJobRequests';
 import OrgJobRequests from '../OrgJobRequests';
 
-
-
 function App() {
   const user = useStore((state) => state.user);
   const fetchUser = useStore((state) => state.fetchUser);
@@ -35,14 +33,12 @@ function App() {
     fetchUser();
     fetchArtists();
     fetchJobs();
-  }, [fetchUser, fetchArtists, fetchJobs]); 
+  }, [fetchUser, fetchArtists, fetchJobs]);
 
   return (
     <>
      <Container>
       <header>
- 
-        
         <Nav />
       </header>
       <main>
@@ -51,9 +47,9 @@ function App() {
             exact path="/"
             element={
               user.id ? (
-                <HomePage /> // Render HomePage for authenticated user.
+                <HomePage />
               ) : (
-                <HomePage /> // Redirect unauthenticated user.
+                <HomePage />
               )
             }
           />
@@ -61,9 +57,9 @@ function App() {
             exact path="/login"
             element={
               user.id ? (
-                <Navigate to="/" replace /> // Redirect authenticated user.
+                <Navigate to="/" replace />
               ) : (
-                <LoginPage /> // Render LoginPage for unauthenticated user.
+                <LoginPage />
               )
             }
           />
@@ -71,29 +67,30 @@ function App() {
             exact path="/registration"
             element={
               user.id ? (
-                <Navigate to="/" replace /> // Redirect authenticated user.
+                <Navigate to="/" replace />
               ) : (
-                <RegisterPage /> // Render RegisterPage for unauthenticated user.
+                <RegisterPage />
               )
             }
           />
           <Route 
             exact path="/admin"
             element={
-              user.id ? (
-                <AdminPage /> // Redirect authenticated user.
+              user?.is_admin ? (
+                <AdminPage />
               ) : (
-                <AdminPage /> // Render RegisterPage for unauthenticated user.
+                <Navigate to="/" replace />
               )
             }
           />
-           <Route 
+
+          <Route 
             exact path="/artists"
             element={
               user.id ? (
-                <ArtistList /> // Redirect authenticated user.
+                <ArtistList />
               ) : (
-                <ArtistList /> // Render RegisterPage for unauthenticated user.
+                <ArtistList />
               )
             }
           />
@@ -101,9 +98,9 @@ function App() {
             exact path="/job-list"
             element={
               user.id ? (
-                <JobList /> // Redirect authenticated user.
+                <JobList />
               ) : (
-                <LoginPage/> // Render RegisterPage for unauthenticated user.
+                <LoginPage/>
               )
             }
           />
@@ -111,9 +108,9 @@ function App() {
             exact path="/ideas"
             element={
               user.artist_id ? (
-                <IdeaForm /> // Redirect authenticated users only if they're an artist.
+                <IdeaForm />
               ) : (
-                <RegisterPage /> // Render RegisterPage for unauthenticated user.
+                <RegisterPage />
               )
             }
           />
@@ -121,9 +118,9 @@ function App() {
             exact path="/organization-list/:organizationId"
             element={
               user.id ? (
-                <OrganizationPage /> // Redirect authenticated user.
+                <OrganizationPage />
               ) : (
-                <OrganizationPage /> // Render RegisterPage for unauthenticated user.
+                <OrganizationPage />
               )
             }
           />
@@ -131,44 +128,44 @@ function App() {
             exact path="/organization-list"
             element={
               user.id ? (
-                <OrganizationList /> // Redirect authenticated user.
+                <OrganizationList />
               ) : (
-                <OrganizationList /> // Render RegisterPage for unauthenticated user.
+                <OrganizationList />
               )
             }
           />
-               <Route 
-              exact path="/post-job/:id"
-              element={
-             user?.is_organization ? (
-            <PostJob />
-           ) : (
-           <p>You must be an organization to post a job.</p>
-          )
-           }
-         />
+          <Route 
+            exact path="/post-job/:id"
+            element={
+              user?.is_organization ? (
+                <PostJob />
+              ) : (
+                <p>You must be an organization to post a job.</p>
+              )
+            }
+          />
 
           <Route 
-          exact path="/my-job-requests"
-         element={
-        user.artist_id ? (
-          <ArtistJobRequests />
-       ) : (
-         <Navigate to="/login" />
-       )
-          }
-          />     
-             <Route 
-              exact path="/job-requests"
+            exact path="/my-job-requests"
             element={
-         user.organization_id ? (
-          <OrgJobRequests />
-         ) : (
-         <Navigate to="/login" />
-        )
-         }
-       />
+              user.artist_id ? (
+                <ArtistJobRequests />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />     
 
+          <Route 
+            exact path="/job-requests"
+            element={
+              user.organization_id ? (
+                <OrgJobRequests />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
 
           <Route path='/artists/:artistId' element={<ArtistPage />} />
           <Route path='/artists/:artistId/ideas' element={<ArtistIdea />} />
@@ -217,10 +214,9 @@ function App() {
       <footer>
         <p>Copyright © {new Date().getFullYear()}</p>
       </footer>
-      </Container>
+     </Container>
     </>
   );
 }
-
 
 export default App;
