@@ -9,25 +9,23 @@ const createIdeaSlice
  = (set, get) => ({
 
 
-    //GET all artists ideas
+  
     allArtistIdeas: [],
-    //fetchAllArtistIdeas: async () => {
-        //}
 
 
 
-        //POST an artist's idea
-        addIdea: async (newIdea) => {
-            //newIdea: {artist_id, title, newIdea}
-            console.log('newIdea', newIdea);
-            try {
+    //POST an artist's idea
+    addIdea: async (newIdea) => {
+        //newIdea: {artist_id, title, newIdea}
+        console.log('newIdea', newIdea);
+        try {
                 await axios.post(`/api/ideas`, newIdea);
                 //wil need to update the artist idea list after this
                 //get().fetchAllArtistIdeas();
-            } catch (err) {
+        } catch (err) {
                 console.error('Slice issue post the idea', err);
-            }
         }
+    }
 
 
 });

@@ -73,9 +73,7 @@ user: {
     facebook: "",
     insta: "",
     website: "",
-}
-
-  },
+},
 
 
   // Updating an artist
