@@ -68,17 +68,7 @@ const PostJob = () => {
         value={deadline}
         onChange={(e) => setDeadline(e.target.value)}
       />
-      <br />
-
-      <label>
-        <input
-          type="checkbox"
-          checked={is_archived}
-          onChange={(e) => setArchived(e.target.checked)}
-        />
-        Archived
-      </label>
-      <br />
+     
 
       <button type="submit">Post Job</button>
     </form>
