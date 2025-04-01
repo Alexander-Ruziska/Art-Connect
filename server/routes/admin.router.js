@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../modules/pool');
 const {
   rejectUnauthenticated,
-  rejectIfNotAdmin // ✅ Properly imported from middleware
+  rejectIfNotAdmin
 } = require('../modules/authentication-middleware');
 
 router.get('/users', rejectUnauthenticated, async (req, res) => {
@@ -11,6 +11,7 @@ router.get('/users', rejectUnauthenticated, async (req, res) => {
     const query = `
       SELECT id, username, is_artist, is_organization, phone, is_banned
       FROM "user"
+      WHERE is_admin = FALSE
       ORDER BY username;
     `;
     const result = await pool.query(query);
@@ -24,7 +25,7 @@ router.get('/users', rejectUnauthenticated, async (req, res) => {
 router.put('/ban/:id', rejectIfNotAdmin, async (req, res) => {
   const userId = Number(req.params.id);
   try {
-    await pool.query(`UPDATE "user" SET is_banned = true WHERE id = $1`, [userId]);
+    await pool.query(`UPDATE "user" SET is_banned = true WHERE id = $1 AND is_admin = FALSE`, [userId]);
     res.sendStatus(200);
   } catch (err) {
     console.error('Error banning user:', err);
@@ -35,7 +36,7 @@ router.put('/ban/:id', rejectIfNotAdmin, async (req, res) => {
 router.put('/unban/:id', rejectIfNotAdmin, async (req, res) => {
   const userId = Number(req.params.id);
   try {
-    await pool.query(`UPDATE "user" SET is_banned = false WHERE id = $1`, [userId]);
+    await pool.query(`UPDATE "user" SET is_banned = false WHERE id = $1 AND is_admin = FALSE`, [userId]);
     res.sendStatus(200);
   } catch (err) {
     console.error('Error unbanning user:', err);

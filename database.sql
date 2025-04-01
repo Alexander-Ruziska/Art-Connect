@@ -189,4 +189,4 @@ ALTER TABLE
 ADD COLUMN "card_photo" TEXT;
     /*Added the extra column to idea table*/
     ALTER TABLE "ideas" 
-DD COLUMN "title" TEXT NOT NULL;
+ADD COLUMN "title" TEXT NOT NULL;

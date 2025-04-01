@@ -9,34 +9,28 @@ const {
 
 const router = express.Router();
 
-// If the request came from an authenticated user, this route
-// sends back an object containing that user's information.
-// Otherwise, it sends back an empty object to indicate there
-// is not an active session.
-router.get("/", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.send(req.user);
-  } else {
-    res.send({});
+// Check if user is banned during login
+router.post("/login", userStrategy.authenticate("local"), rejectUnauthenticated, async (req, res) => {
+  const userId = req.user.id;
+
+  // Check if the user is banned
+  const bannedCheckQuery = 'SELECT is_banned FROM "user" WHERE id = $1';
+  try {
+    const bannedCheckResult = await pool.query(bannedCheckQuery, [userId]);
+
+    if (bannedCheckResult.rows[0].is_banned) {
+      req.logout(); // Log the user out if they are banned
+      return res.status(403).send({ message: "Your account has been banned" });
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("Error checking banned status:", err);
+    res.sendStatus(500);
   }
 });
 
-router.get("/:id", (req, res) => {
-  const sqlText = 'SELECT * FROM "user" WHERE id = $1';
-  const sqlValues = [req.params.id];
-  pool
-    .query(sqlText, sqlValues)
-    .then((result) => {
-      res.send(result.rows[0]);
-    })
-    .catch((err) => {
-      console.error("GET /api/user/:id error:", err);
-      res.sendStatus(500);
-    });
-});
-
-// Handles the logic for creating a new user. The one extra wrinkle here is
-// that we hash the password before inserting it into the database.
+// Register route (prevent duplicate usernames)
 router.post("/register", async (req, res, next) => {
   const username = req.body.username;
   const hashedPassword = encryptLib.encryptPassword(req.body.password);
@@ -67,28 +61,31 @@ router.post("/register", async (req, res, next) => {
     });
 });
 
-// Handles the logic for logging in a user. When this route receives
-// a request, it runs a middleware function that leverages the Passport
-// library to instantiate a session if the request body's useruser_name and
-// password are correct.
-// You can find this middleware function in /server/strategies/user.strategy.js.
-// Note we are calling rejectUnauthenticated to make sure the profile is created.
-router.post("/login", userStrategy.authenticate("local"), rejectUnauthenticated, (req, res) => {
-  res.sendStatus(200);
+// If user is authenticated, return user info
+router.get("/", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.send(req.user);
+  } else {
+    res.send({});
+  }
 });
 
-// Clear all server session information about this user:
-router.post("/logout", (req, res, next) => {
-  // Use passport's built-in method to log out the user.
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.sendStatus(200);
-  });
+// Get user by ID
+router.get("/:id", (req, res) => {
+  const sqlText = 'SELECT * FROM "user" WHERE id = $1';
+  const sqlValues = [req.params.id];
+  pool
+    .query(sqlText, sqlValues)
+    .then((result) => {
+      res.send(result.rows[0]);
+    })
+    .catch((err) => {
+      console.error("GET /api/user/:id error:", err);
+      res.sendStatus(500);
+    });
 });
 
-// Update user by ID (might not need this?)
+// Update user by ID
 router.put("/:id", (req, res) => {
   if (req.isAuthenticated()) {
     const userId = req.params.id;
@@ -125,6 +122,7 @@ router.put("/:id", (req, res) => {
   }
 });
 
+// Delete user by ID
 router.delete("/:id", (req, res) => {
   if (req.isAuthenticated()) {
     const sqlText = 'DELETE FROM "user" WHERE id = $1';
