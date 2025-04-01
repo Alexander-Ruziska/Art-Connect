@@ -18,6 +18,7 @@ import JobList from '../JobList/JobList';
 import ArtistIdea from '../ArtistIdea/ArtistIdea';
 import OrganizationPage from '../OrganizationPage/OrganizationPage';
 import IdeaForm from '../IdeaForm/IdeaForm';
+import EditMedia from '../EditMedia/EditMedia';
 
 function App() {
   const user = useStore((state) => state.user);
@@ -123,6 +124,7 @@ function App() {
           />
           <Route path='/artists/:artistId' element={<ArtistPage />} />
           <Route path='/artists/:artistId/ideas' element={<ArtistIdea />} />
+          <Route path='/photos' element={<EditMedia />} />
 
           <Route 
             exact path="/about"

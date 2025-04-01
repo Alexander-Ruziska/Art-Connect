@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const organizationRouter = require('./routes/organization.router');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 // Instantiate an express server:
 const app = express();
 
@@ -22,11 +21,6 @@ const jobRequestRouter = require('./routes/job_requests.router')
 const photosRouter = require('./routes/photos.router')
 
 
-
-app.use(cors({
-  origin: 'http://localhost:5173',  // Update to your frontend URL
-  credentials: true  // Allow cookies to be sent with requests
-}));
 
 // Apply middleware:
 app.use(express.json());
