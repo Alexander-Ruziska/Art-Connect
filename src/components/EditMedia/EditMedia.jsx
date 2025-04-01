@@ -1,9 +1,15 @@
-import React from "react"
+import React from "react";
 import { useState } from "react";
+import { Cloudinary } from "@cloudinary/url-gen/index";
+// import { AdvancedImage } from "@cloudinary/react";
+import { fill } from "@cloudinary/url-gen/actions/resize";
 import useStore from "../../zustand/store";
 import { useNavigate } from "react-router-dom";
+import UploadWidget from "../UploadWidget/UploadWidget";
+import { image } from "@cloudinary/url-gen/qualifiers/source";
 
-function EditMedia(props) {
+
+function EditMedia() {
     const user = useStore((state) => state.user);
     const addPhoto = useStore((state) => state.addPhoto);
     const navigate = useNavigate();
@@ -18,6 +24,7 @@ function EditMedia(props) {
     const cld = new Cloudinary({
         cloud: {
           cloudName: 'dwqjkxlqe'
+
         }
       });
   
@@ -61,12 +68,8 @@ function EditMedia(props) {
         <h3>Just add art!</h3>
         <p>Upload a photo to your artist profile below:</p>   
         <section>
-            <form onSubmit={photoHandler} >
-            {/* Adding photo */}
-            <UploadWidget setPhotoInput={setPhotoInput}/>
-            <label>Uploaded Photo:</label>
-            <input placeholder={photoInput} /> 
-            {photoInput && <img id="uploadedPhoto" src={photoInput} height={200} width={200} />}
+            <form id="form" onSubmit={photoHandler} >
+
 
             {/* Title */}
             <label>Title of piece:</label>
@@ -75,8 +78,16 @@ function EditMedia(props) {
             {/* Description */}
             <label>Description of piece:</label>
             <input type="text" placeholder="Description" value={descriptionInput} onChange={(e) => setDescriptionInput(e.target.value)} required/>
+            
+            {/* Adding photo */}
+            <UploadWidget setImageInput={setImageInput}/>
+            <div>
+            <label>Uploaded Photo:</label>
+            <input placeholder={imageInput} /> 
+            {imageInput && <img id="uploadedPhoto" src={imageInput} height={200} width={200} />}
+            </div>
 
-            <button type="button">Submit</button>
+            <button type='submit'>Submit</button>
             </form>
         </section>   
     </div>

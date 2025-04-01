@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import useStore from "../../zustand/store";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
