@@ -40,7 +40,18 @@ const jobRequestSlice = (set, get) => ({
     } catch (err) {
       console.error('Error accepting request:', err);
     }
-  }
+  },
+  rejectRequest: async (requestId) => {
+    try {
+      await axios.put(`/api/job_requests/${requestId}/reject`);
+      alert('Request rejected!');
+      get().fetchRequestsForOrg(); // Refresh the list
+    } catch (err) {
+      console.error('Error rejecting request:', err);
+    }
+  },  
+  
 });
+
 
 export default jobRequestSlice;
