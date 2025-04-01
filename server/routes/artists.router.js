@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../modules/pool');
 const { rejectUnauthenticated, rejectIfNotArtist } = require('../modules/authentication-middleware');
 
-
+//get all artists to render
 router.get('/', (req, res) => {
   const query = `
     SELECT 
@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
     });
 });
 
-
+//get specific artist
 router.get('/:id', async (req, res) => {
   const artistId = req.params.id;
   const loggedInUserId = req.user?.id;
@@ -80,6 +80,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+
+//Updating user profile
 router.put('/:id', async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).send({ error: "Unauthorized" });
@@ -148,6 +150,25 @@ router.put('/:id', async (req, res) => {
     console.error('PUT /api/artists/:id error:', err.message);
     res.status(500).send({ error: "Internal Server Error" });
   }
+});
+
+
+//get artist ideas for specific artist
+router.get('/:artistId/ideas', (req, res) => {
+  const query = `
+     SELECT "ideas"."id", "ideas"."artist_id", "ideas"."created_at", "ideas"."is_archived", "ideas"."idea", "artists"."id" AS "art_id", "artists"."name"
+  	FROM "ideas"
+  	JOIN "artists"
+  	ON "ideas"."artist_id" = "artists"."id"
+	WHERE "artist_id" = $1 AND "is_archived" = FALSE;
+  `;
+
+  pool.query(query, [req.params.artistId])
+    .then((result) => res.send(result.rows))
+    .catch((err) => {
+      console.error('GET /api/artists/:artistId/ideas error:', err);
+      res.sendStatus(500);
+    });
 });
 
 
