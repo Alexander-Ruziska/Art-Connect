@@ -23,7 +23,9 @@ const PostJob = () => {
     console.log('Creating job:', { title, orgId, description, deadline, is_archived });
     try {
       await createJob({
+        
         organization_id: user.organization_id, 
+
         title,
         description,
         deadline,

@@ -18,6 +18,7 @@ const useStore = create((...args) => ({
   ...jobRequestSlice(...args),
   ...PhotoSlice(...args),
   ...adminSlice(...args),
+  ...IdeaSlice(...args)
 }))
 
 export default useStore;

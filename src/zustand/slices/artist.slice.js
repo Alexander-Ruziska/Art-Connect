@@ -76,8 +76,6 @@ user: {
 },
 
 
-
-
   // Updating an artist
   updateArtist: async (artistId, updatedData) => {
     try {

@@ -143,6 +143,31 @@ router.put('/:id/reject', rejectUnauthenticated, async (req, res) => {
   }
 });
 
+// PUT /api/job_requests/:id/archive
+// router.put('/:id/reject', rejectUnauthenticated, async (req, res) => {
+//   const orgId = req.user.organization_id;
+
+//   if (!orgId) {
+//     return res.status(403).send({ message: 'Only organizations can reject requests.' });
+//   }
+
+//   const requestId = req.params.id;
+
+//   const sqlText = `
+//     UPDATE "job_requests"
+//     SET status = 'rejected'
+//     WHERE id = $1
+//     RETURNING *;
+//   `;
+
+//   try {
+//     const result = await pool.query(sqlText, [requestId]);
+//     res.send(result.rows[0]);
+//   } catch (err) {
+//     console.error('Error rejecting job request:', err);
+//     res.sendStatus(500);
+//   }
+// });
 // DELETE /api/job_requests
 router.delete('/', rejectUnauthenticated, async (req, res) => {
   const { job_id } = req.body;
