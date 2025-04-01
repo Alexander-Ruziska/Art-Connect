@@ -28,6 +28,15 @@ console.log('user', user)
 return (
   <div>
     <h2>Job Listings</h2>
+    {user.is_organization && (
+    <button
+    className="btn btn-success mb-3"
+    onClick={() => navigate(`/post-job/${user.organization_id}`)}
+     >
+    Post New Job
+    </button>
+    )}
+ 
 
     {jobs.length === 0 ? (
       <p>No jobs available.</p>
@@ -55,6 +64,7 @@ return (
                 >
                   {hasRequested ? "Withdraw Interest" : "I'm Interested"}
                 </button>
+                
               )}
             </li>
           );
