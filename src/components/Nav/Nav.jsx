@@ -66,6 +66,22 @@ function Navi() {
                       <NavLink className="nav-link" to="/admin" onClick={() => setExpanded(false)}>Admin</NavLink>
                     </Nav.Item>
                     )}
+                          {user.artist_id && (
+                          <Nav.Item>
+                           <NavLink className="nav-link" to="/my-job-requests" onClick={() => setExpanded(false)}>
+                            My Job Requests
+                           </NavLink>
+                           </Nav.Item>
+                           )}
+
+                   {user.organization_id && (
+                   <Nav.Item>
+                   <NavLink className="nav-link" to="/job-requests" onClick={() => setExpanded(false)}>
+                   View Requests
+                   </NavLink>
+                   </Nav.Item>
+                     )}
+
               </>
               )}
                 </>
