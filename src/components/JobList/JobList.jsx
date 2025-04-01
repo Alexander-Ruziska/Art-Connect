@@ -11,7 +11,6 @@ console.log('user', user)
   return (
     <div>
       <h2>Job Listings</h2>
-      {user?.is_organization && <button onClick={() => navigate(`/post-job/${orgId}`)}>Post a Job</button>}
       {jobs.length === 0 ? (
         <p>No jobs available.</p>
       ) : (
