@@ -24,7 +24,8 @@ const PostJob = () => {
     try {
      
       await createJob({
-        organization_id: req.user.organization_id,
+     organization_id: user.organization_id,
+
         title,
         description,
         deadline,
