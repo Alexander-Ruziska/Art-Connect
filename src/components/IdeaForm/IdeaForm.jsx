@@ -6,7 +6,7 @@ import { useState } from "react";
 
 function IdeaForm(props) {
   //Zustand store info
-    const addIdea = useStore((store) => store.addIdea);
+    const addIdea = useStore((state) => state.addIdea);
 
   //State changes
   const [titleInput, setTitleInput] = useState('');
