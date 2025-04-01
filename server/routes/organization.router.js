@@ -1,8 +1,8 @@
 const express = require('express');
+const path = require('path');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-// Utility: check if user is authenticated
 const isAuthenticated = (req, res) => {
   if (!req.isAuthenticated()) {
     res.sendStatus(403);
@@ -11,17 +11,30 @@ const isAuthenticated = (req, res) => {
   return true;
 };
 
-// GET all organizations
-router.get('/', (req, res) => {
-  pool.query('SELECT * FROM "organizations"')
-    .then((result) => res.send(result.rows))
-    .catch((err) => {
-      console.error('GET /api/organizations error:', err);
-      res.sendStatus(500);
-    });
+const app = express();
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../../dist')));
+}
+
+router.get('/', async (req, res) => {
+  // Only get organizations where the associated user is not banned
+  const query = `
+    SELECT organizations.* 
+    FROM organizations
+    JOIN user_organizations ON user_organizations.organization_id = organizations.id
+    JOIN "user" ON "user".id = user_organizations.user_id
+    WHERE "user".is_banned = FALSE;
+  `;
+  try {
+    const result = await pool.query(query);
+    res.send(result.rows);
+  } catch (err) {
+    console.error('GET /api/organizations error:', err);
+    res.sendStatus(500);
+  }
 });
 
-// GET organization by ID, plus profile_pic from associated user
 router.get('/:id', async (req, res) => {
   const orgId = Number(req.params.id);
   const userId = req.user?.id;
@@ -38,11 +51,17 @@ router.get('/:id', async (req, res) => {
         organizations.description,
         organizations.mission_statement,
         organizations.created_at,
-        "user".profile_pic
+        "user".profile_pic,
+        "user".linkedin,
+        "user".facebook,
+        "user".insta,
+        "user".website,
+        "user".bio,
+        "user".phone
       FROM organizations
       JOIN user_organizations ON user_organizations.organization_id = organizations.id
       JOIN "user" ON "user".id = user_organizations.user_id
-      WHERE organizations.id = $1
+      WHERE organizations.id = $1 AND "user".is_banned = FALSE
       LIMIT 1;
     `;
 
@@ -50,10 +69,9 @@ router.get('/:id', async (req, res) => {
     const organization = result.rows[0];
 
     if (!organization) {
-      return res.status(404).send({ error: "Organization not found" });
+      return res.status(404).send({ error: "Organization not found or user is banned" });
     }
 
-    // Check if the logged-in user is a member of the org
     let isMember = false;
     if (userId) {
       const memberCheckQuery = `
@@ -71,107 +89,56 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-
+// PUT route to update organization info (Only if user is authorized and not banned)
 router.put('/:id', async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).send({ error: "Unauthorized" });
   }
 
-  const organizationId = Number(req.params.id);
+  const orgId = Number(req.params.id);
   const userId = req.user.id;
+
   const { name, description, mission_statement, profile_pic } = req.body;
 
   try {
-    // Confirm the user is a member of the organization
-    const membershipResult = await pool.query(
-      `
-      SELECT 1 
-      FROM user_organizations 
-      WHERE user_id = $1 AND organization_id = $2
-      `,
-      [userId, organizationId]
+    const membershipCheck = await pool.query(
+      `SELECT 1 FROM user_organizations WHERE user_id = $1 AND organization_id = $2`,
+      [userId, orgId]
     );
+    if (membershipCheck.rowCount === 0) return res.status(403).send({ error: "Forbidden" });
 
-    if (membershipResult.rowCount === 0) {
-      return res.status(403).send({ error: "Forbidden: You are not a member of this organization" });
-    }
-
-    // Update organization data
     await pool.query(
-      `
-      UPDATE organizations 
-      SET name = $1, description = $2, mission_statement = $3 
-      WHERE id = $4
-      `,
-      [name, description, mission_statement, organizationId]
+      `UPDATE organizations SET name = $1, description = $2, mission_statement = $3 WHERE id = $4`,
+      [name, description, mission_statement, orgId]
     );
 
-    // Update user profile picture if provided
     if (profile_pic) {
-      await pool.query(
-        `
-        UPDATE "user" 
-        SET profile_pic = $1 
-        WHERE id = $2
-        `,
-        [profile_pic, userId]
-      );
+      await pool.query(`UPDATE "user" SET profile_pic = $1 WHERE id = $2`, [profile_pic, userId]);
     }
 
-    // Fetch and return updated organization data including profile picture
     const result = await pool.query(
-      `
-      SELECT 
-        organizations.id,
-        organizations.name,
-        organizations.description,
-        organizations.mission_statement,
-        organizations.created_at,
-        "user".profile_pic
+      `SELECT 
+        organizations.*,
+        "user".profile_pic,
+        "user".linkedin,
+        "user".facebook,
+        "user".insta,
+        "user".website,
+        "user".bio,
+        "user".phone
       FROM organizations
-      JOIN user_organizations 
-        ON user_organizations.organization_id = organizations.id
-      JOIN "user" 
-        ON "user".id = user_organizations.user_id
-      WHERE organizations.id = $1
-      LIMIT 1
-      `,
-      [organizationId]
+      JOIN user_organizations ON user_organizations.organization_id = organizations.id
+      JOIN "user" ON "user".id = user_organizations.user_id
+      WHERE organizations.id = $1 AND "user".is_banned = FALSE
+      LIMIT 1`,
+      [orgId]
     );
 
     res.send({ ...result.rows[0], is_member: true });
-
-  } catch (error) {
-    console.error('PUT /api/organizations/:id error:', error.message);
+  } catch (err) {
+    console.error('PUT /api/organizations/:id error:', err.message);
     res.status(500).send({ error: "Internal Server Error" });
   }
 });
 
-
-
-// router.delete('/:id', (req, res) => {
-//   if (!isAuthenticated(req, res)) return;
-//   const sqlText = 'DELETE FROM "organizations" WHERE id = $1';
-//   pool.query(sqlText, [req.params.id])
-//     .then(() => res.sendStatus(200))
-//     .catch((err) => {
-//       console.error('DELETE /api/organizations/:id error:', err);
-//       res.sendStatus(500);
-//     });
-// });
-
 module.exports = router;
-
-/*
-  Refactor organization:
-    - Add a new table `user_organizations` that ties a user to an organization
-    - Add a user.is_organization
-    - Add a unique constraint to (user_id, organization_id) so each user can only belong to one org
-
-    Backend Updates:
-    {x} - Update the user strategy to check for an organization that the user belongs to
-    {x} - Create an organization on user registration if user.is_organization is true
-    {x} - Update the rejectIfNotOrganization middleware
-    {x} - If user is an organization but no profile exists, create it
-    {x} - If user is an artist but no artist profile exists, create it
-*/

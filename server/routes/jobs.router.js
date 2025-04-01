@@ -1,58 +1,104 @@
 const express = require('express');
 const pool = require('../modules/pool');
-
 const router = express.Router();
-
 
 const isAuthenticated = (req, res) => req.isAuthenticated() ? true : (res.sendStatus(403), false);
 
-
-router.get('/', (req, res) => {
+// GET all jobs (excluding those from banned users/orgs)
+router.get('/', async (req, res) => {
   if (!isAuthenticated(req, res)) return;
-  pool.query('SELECT * FROM "jobs"')
-    .then((result) => res.send(result.rows))
-    .catch((err) => res.sendStatus(500) && console.error('GET /api/jobs error:', err));
+
+  const sql = `
+    SELECT j.*
+    FROM jobs j
+    JOIN organizations o ON j.organization_id = o.id
+    JOIN user_organizations uo ON uo.organization_id = o.id
+    JOIN "user" u ON u.id = uo.user_id
+    WHERE u.is_banned = FALSE;
+  `;
+
+  try {
+    const result = await pool.query(sql);
+    res.send(result.rows);
+  } catch (err) {
+    console.error('GET /api/jobs error:', err);
+    res.sendStatus(500);
+  }
 });
 
-
-router.get('/:id', (req, res) => {
+// GET job by ID (only if org user is not banned)
+router.get('/:id', async (req, res) => {
   if (!isAuthenticated(req, res)) return;
-  pool.query('SELECT * FROM "jobs" WHERE id = $1', [req.params.id])
-    .then((result) => res.send(result.rows[0]))
-    .catch((err) => res.sendStatus(500) && console.error('GET /api/jobs/:id error:', err));
+
+  const sql = `
+    SELECT j.*
+    FROM jobs j
+    JOIN organizations o ON j.organization_id = o.id
+    JOIN user_organizations uo ON uo.organization_id = o.id
+    JOIN "user" u ON u.id = uo.user_id
+    WHERE j.id = $1 AND u.is_banned = FALSE;
+  `;
+
+  try {
+    const result = await pool.query(sql, [req.params.id]);
+    res.send(result.rows[0]);
+  } catch (err) {
+    console.error('GET /api/jobs/:id error:', err);
+    res.sendStatus(500);
+  }
 });
 
-
-router.post('/', (req, res) => {
+// POST new job
+router.post('/', async (req, res) => {
   if (!isAuthenticated(req, res)) return;
-  const { title, description, deadline, organization_id, archived } = req.body;
-  const sqlText = 'INSERT INTO "jobs" ("title", "description", "deadline", "organization_id", "archived") VALUES ($1, $2, $3, $4, $5) RETURNING id';
-  pool.query(sqlText, [title, description, deadline, organization_id, archived])
-    .then((result) => res.status(201).send(result.rows[0]))
-    .catch((err) => res.sendStatus(500) && console.error('POST /api/jobs error:', err));
+
+  const { title, description, deadline, organization_id, is_archived } = req.body;
+  const sql = `
+    INSERT INTO jobs (title, description, deadline, organization_id, is_archived)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING id;
+  `;
+
+  try {
+    const result = await pool.query(sql, [title, description, deadline, organization_id, is_archived]);
+    res.status(201).send(result.rows[0]);
+  } catch (err) {
+    console.error('POST /api/jobs error:', err);
+    res.sendStatus(500);
+  }
 });
 
-
-router.put('/:id', (req, res) => {
+// PUT update job
+router.put('/:id', async (req, res) => {
   if (!isAuthenticated(req, res)) return;
+
   const fields = Object.entries(req.body).filter(([_, value]) => value !== null && value !== undefined);
   if (!fields.length) return res.status(400).send('No valid fields to update.');
 
   const updates = fields.map(([key], index) => `"${key}" = $${index + 1}`).join(', ');
   const sqlValues = [...fields.map(([, value]) => value), req.params.id];
-  const sqlText = `UPDATE "jobs" SET ${updates} WHERE "id" = $${sqlValues.length}`;
+  const sqlText = `UPDATE jobs SET ${updates} WHERE id = $${sqlValues.length}`;
 
-  pool.query(sqlText, sqlValues)
-    .then(() => res.sendStatus(200))
-    .catch((err) => res.sendStatus(500) && console.error('PUT /api/jobs/:id error:', err));
+  try {
+    await pool.query(sqlText, sqlValues);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error('PUT /api/jobs/:id error:', err);
+    res.sendStatus(500);
+  }
 });
 
-
-router.delete('/:id', (req, res) => {
+// DELETE job
+router.delete('/:id', async (req, res) => {
   if (!isAuthenticated(req, res)) return;
-  pool.query('DELETE FROM "jobs" WHERE id = $1', [req.params.id])
-    .then(() => res.sendStatus(200))
-    .catch((err) => res.sendStatus(500) && console.error('DELETE /api/jobs/:id error:', err));
+
+  try {
+    await pool.query('DELETE FROM jobs WHERE id = $1', [req.params.id]);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error('DELETE /api/jobs/:id error:', err);
+    res.sendStatus(500);
+  }
 });
 
 module.exports = router;

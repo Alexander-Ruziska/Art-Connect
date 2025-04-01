@@ -4,18 +4,17 @@ import axios from 'axios';
 
 const createJobsSlice = ((set, get) => ({
   jobs: [],
-  // Fetch all jobs
+
   fetchJobs: async () => {
     try {
       const res = await axios.get('/api/jobs');
       set({ jobs: res.data });
       console.log('Getting all of the jobs', res.data);
     } catch (err) {
-      console.error('fetchJobs error:', err);
+      // console.error('fetchJobs error:', err);
     }
   },
 
-  // Fetch job by ID
   fetchJobById: async (id) => {
     try {
       const res = await axios.get(`/api/jobs/${id}`);
@@ -24,7 +23,7 @@ const createJobsSlice = ((set, get) => ({
       console.error('fetchJobById error:', err);
     }
   },
-  // Create a new job
+
 createJob: async (newJob) => {
   try {
     const res = await axios.post('/api/jobs', newJob);
@@ -34,7 +33,7 @@ createJob: async (newJob) => {
     console.error('createJob error:', err);
   }
 },
-// Update a job
+
 updateJob: async (id, updates) => {
   try {
     await axios.put(`/api/jobs/${id}`, updates);
@@ -43,7 +42,7 @@ updateJob: async (id, updates) => {
     console.error('updateJob error:', err);
   }
 },
- // Delete a job
+
  deleteJob: async (id) => {
   try {
     await axios.delete(`/api/jobs/${id}`);

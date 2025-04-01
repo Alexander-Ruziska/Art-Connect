@@ -1,41 +1,141 @@
-import React from "react"
+import React, { useState, useEffect } from "react";
 import useStore from "../../zustand/store";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-// add this once the idea page has been completed
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function ArtistPage() {
-    const artistOBJ = useStore((state) => state.artistOBJ);
-    const fetchArtist = useStore((state) => state.fetchArtist);
-    const params = useParams();
-    const navigate = useNavigate();
+  const { artistId } = useParams();
+  const navigate = useNavigate();
+  const artistOBJ = useStore((state) => state.artistOBJ);
+  const fetchArtist = useStore((state) => state.fetchArtist);
+  const updateArtist = useStore((state) => state.updateArtist); 
+  const user = useStore((state) => state.user);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedArtist, setEditedArtist] = useState({});
+  const [imagePreview, setImagePreview] = useState(null);
 
-    useEffect(() => {
-        console.log(`Getting artist by id ${params.artistId}`);
-        fetchArtist(params.artistId);
+  useEffect(() => {
+    fetchArtist(artistId);
+  }, [artistId]);
 
-    }, [params.artistId]);
-
-    // useEffect(() => {
-    //     console.log('updated artistobj:', artistOBJ);
-    // }, [artistOBJ]);
-
-    const ideaButton= (event) => {
-        const artistId = event.target.id;
-        navigate(`/artists/${artistId}/ideas`);
+  useEffect(() => {
+    if (artistOBJ) {
+      setEditedArtist(artistOBJ);
+      setImagePreview(artistOBJ.profile_pic);
     }
+  }, [artistOBJ]);
 
-  return (
-    
-      artistOBJ ? (
-        <div id='artistPage'>
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "profile_pic" && files.length) {
+      const file = files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "your_upload_preset");
+
+      axios
+        .post("https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", formData)
+        .then((response) => {
+          const imageUrl = response.data.secure_url;
+          setEditedArtist((prev) => ({ ...prev, profile_pic: imageUrl }));
+          setImagePreview(imageUrl);
+        })
+        .catch((error) => console.error("Image upload failed:", error));
+    } else {
+      setEditedArtist((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleSave = async () => {
+    await updateArtist(artistId, editedArtist); // make sure this works
+    setIsEditing(false);
+  };
+
+  const ideaButton = () => {
+    navigate(`/artists/${artistOBJ.id}/ideas`);
+  };
+
+  const isMember = artistOBJ?.is_member;
+
+  return artistOBJ ? (
+    <div id="artistPage">
+      {isEditing ? (
+        <>
+          <input
+            type="text"
+            name="name"
+            value={editedArtist.name || ""}
+            onChange={handleChange}
+            placeholder="Artist Name"
+          />
+          <textarea
+            name="headline_description"
+            value={editedArtist.headline_description || ""}
+            onChange={handleChange}
+            placeholder="Headline Description"
+          />
+          <input
+            type="file"
+            name="profile_pic"
+            onChange={handleChange}
+          />
+          {imagePreview && (
+            <img src={imagePreview} alt="Preview" style={{ width: 200, height: "auto" }} />
+          )}
+          <input
+            type="text"
+            name="linkedin"
+            value={editedArtist.linkedin || ""}
+            onChange={handleChange}
+            placeholder="LinkedIn"
+          />
+          <input
+            type="text"
+            name="facebook"
+            value={editedArtist.facebook || ""}
+            onChange={handleChange}
+            placeholder="Facebook"
+          />
+          <input
+            type="text"
+            name="insta"
+            value={editedArtist.insta || ""}
+            onChange={handleChange}
+            placeholder="Instagram"
+          />
+          <input
+            type="text"
+            name="website"
+            value={editedArtist.website || ""}
+            onChange={handleChange}
+            placeholder="Website"
+          />
+          <textarea
+            name="bio"
+            value={editedArtist.bio || ""}
+            onChange={handleChange}
+            placeholder="Bio"
+          />
+          <input
+            type="text"
+            name="phone"
+            value={editedArtist.phone || ""}
+            onChange={handleChange}
+            placeholder="Phone"
+          />
+          <button onClick={handleSave}>Save</button>
+          <button onClick={() => setIsEditing(false)}>Cancel</button>
+        </>
+      ) : (
+        <>
           <h1>{artistOBJ.name}</h1>
           <p>{artistOBJ.headline_description}</p>
-          <img smg={artistOBJ.card_photo} />
+          {artistOBJ.profile_pic && (
+            <img src={artistOBJ.profile_pic} alt="Artist" style={{ width: 200, height: "auto" }} />
+          )}
           <h4>Projects</h4>
+
           {/* Code for soundcloud */}
           <div>
             {artistOBJ.soundcloud_id &&
@@ -45,17 +145,16 @@ function ArtistPage() {
           </div>
           {artistOBJ.photos && artistOBJ.photos.length > 0 && (
             <div>
-              {artistOBJ.photos.map(photo => (
+              {artistOBJ.photos.map((photo) => (
                 <div key={photo.id}>
-                  <img src={photo.image_url} alt={photo.title}/>
+                  <img src={photo.image_url} alt={photo.title} />
                   <h5>{photo.title}</h5>
                   <p>{photo.description}</p>
                 </div>
               ))}
             </div>
           )}
-          
-          <img src={artistOBJ.profile_pic} />
+
           <p>{artistOBJ.bio}</p>
           <h5>Links:</h5>
           <p>{artistOBJ.website}</p>
@@ -63,17 +162,21 @@ function ArtistPage() {
           <p>{artistOBJ.linkedin}</p>
           <p>{artistOBJ.facebook}</p>
           <p>{artistOBJ.insta}</p>
+          <p>{artistOBJ.phone}</p>
 
-          <button id={artistOBJ.id} onClick={ideaButton}>Artist Ideas</button>
-          </div>
-        ) : (
-          <p>Loading...</p>
-        )
-      
+          <button id={artistOBJ.id} onClick={ideaButton}>
+            Artist Ideas
+          </button>
 
-  
-
+          {isMember && (
+            <button onClick={() => setIsEditing(true)}>Edit</button>
+          )}
+        </>
+      )}
+    </div>
+  ) : (
+    <p>Loading...</p>
   );
-};
+}
 
 export default ArtistPage;

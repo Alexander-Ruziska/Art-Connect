@@ -19,6 +19,9 @@ const ideasRouter = require('./routes/idea.router')
 const jobsRouter = require('./routes/jobs.router')
 const jobRequestRouter = require('./routes/job_requests.router')
 const photosRouter = require('./routes/photos.router')
+const adminRouter = require('./routes/admin.router');
+
+
 
 
 
@@ -40,7 +43,7 @@ app.use('/api/ideas', ideasRouter);
 app.use('/api/jobs', jobsRouter);
 app.use('/api/job_requests', jobRequestRouter);
 app.use('/api/photos', photosRouter);
-
+app.use('/api/admin', adminRouter);
 // Start the server:
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
