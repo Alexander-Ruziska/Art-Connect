@@ -143,5 +143,27 @@ router.put('/:id/reject', rejectUnauthenticated, async (req, res) => {
   }
 });
 
+// DELETE /api/job_requests
+router.delete('/', rejectUnauthenticated, async (req, res) => {
+  const { job_id } = req.body;
+  const artist_id = req.user.artist_id;
+
+  if (!artist_id) {
+    return res.status(400).send({ message: 'Artist ID missing.' });
+  }
+
+  try {
+    const sqlText = `
+      DELETE FROM "job_requests"
+      WHERE job_id = $1 AND artist_id = $2
+    `;
+    await pool.query(sqlText, [job_id, artist_id]);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error('Error withdrawing job request:', err);
+    res.sendStatus(500);
+  }
+});
+
 
 module.exports = router;
