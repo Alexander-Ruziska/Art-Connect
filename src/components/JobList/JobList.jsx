@@ -1,6 +1,6 @@
 
 import React, { useEffect } from "react";
-
+import moment from "moment/moment";
 
 import useStore from "../../zustand/store";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +51,7 @@ return (
             <li key={job.id} className="mb-3 border p-3 rounded">
               <h4>{job.title}</h4>
               <p>{job.description}</p>
-              <p><strong>Deadline:</strong> {job.deadline}</p>
+              <p><strong>Deadline:</strong> {moment(job.deadline).format("MMM Do YYYY")}</p>
 
               {user.artist_id && (
                 <button
