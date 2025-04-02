@@ -26,7 +26,7 @@ const UploadArtistProfileWidget = ({setProfilePhoto}) => {
 
   return (
     <Button variant="dark" type='button' onClick={() => widgetRef.current.open()}>
-      Upload photo
+      Upload Artist photo
     </Button>
   );
 };
