@@ -4,13 +4,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Cloudinary } from "@cloudinary/url-gen/index";
 // import { AdvancedImage } from "@cloudinary/react";
 import { fill } from "@cloudinary/url-gen/actions/resize";
-import UploadWidget from "../UploadWidget/UploadWidget";
+import UploadWidget from "../UploadGalleryWidget/UploadGalleryWidget";
 import { image } from "@cloudinary/url-gen/qualifiers/source";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import "./ArtistPage.css";
+import UploadArtistProfileWidget from "../UploadArtistProfileWidget/UploadArtistProfileWidget";
 
 function ArtistPage() {
   const { artistId } = useParams();
@@ -24,6 +25,8 @@ function ArtistPage() {
   const [editedArtist, setEditedArtist] = useState({});
   const [profilePhoto, setProfilePhoto] = useState(null);
 
+//UPDATE THE GALLERY MAPPING
+
   useEffect(() => {
     fetchArtist(artistId);
   }, [artistId]);
@@ -31,7 +34,7 @@ function ArtistPage() {
   useEffect(() => {
     if (artistOBJ) {
       setEditedArtist(artistOBJ);
-      setProfilePhoto(artistOBJ.profile_pic);
+      // setProfilePhoto(artistOBJ.profile_pic);
     }
   }, [artistOBJ]);
 
@@ -54,28 +57,13 @@ function ArtistPage() {
 //----------------------//
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "profile_pic" && files.length) {
-      const file = files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "your_upload_preset");
-
-      axios
-        .post("https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", formData)
-        .then((response) => {
-          const imageUrl = response.info.secure_url;
-          setEditedArtist((prev) => ({ ...prev, profile_pic: imageUrl }));
-          setProfilePhoto(imageUrl);
-        })
-        .catch((error) => console.error("Image upload failed:", error));
-    } else {
-      setEditedArtist((prev) => ({ ...prev, [name]: value }));
-    }
+    const { name, value } = e.target;
+  setEditedArtist((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = async () => {
-    await updateArtist(artistId, editedArtist);
+  const handleSave = () => {
+const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
+    updateArtist(artistId, myNewArtist);
     setIsEditing(false);
   };
 
@@ -116,9 +104,9 @@ function ArtistPage() {
           name="profile_pic"
           onChange={handleChange}
         />
-        {isEditing && (<UploadWidget />)}
-        {imagePreview && (
-          <img src={imagePreview} alt="Preview" style={{ width: 200, height: "auto" }} />
+        {isEditing && (<UploadArtistProfileWidget setProfilePhoto={setProfilePhoto}/>)}
+        {editedArtist.profile_pic && (
+          <img src={editedArtist.profile_pic} alt="Preview" style={{ width: 200, height: "auto" }} />
         )}
       </Form.Group>
       <Form.Group className="mb-3">
@@ -209,12 +197,15 @@ function ArtistPage() {
               {artistOBJ.photos.map((photo) => (
                 <div key={photo.id}>
                   <img src={photo.image_url} alt={photo.title} />
+                  <p>Title:</p>
                   <h5>{photo.title}</h5>
+                  <p>Piece description:</p>
                   <p>{photo.description}</p>
                 </div>
               ))}
             </div>
           )}
+          <img src="{artistOBJ.profile_pic}" />
           <p>{artistOBJ.bio}</p>
           <h5>Links:</h5>
           <p>{artistOBJ.website}</p>

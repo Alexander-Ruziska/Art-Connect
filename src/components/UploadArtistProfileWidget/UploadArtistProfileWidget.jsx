@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import Button from 'react-bootstrap/Button';
 
-const UploadWidget = ({setImageInput, setProfilePhoto}) => {
+const UploadArtistProfileWidget = ({setProfilePhoto}) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
 
@@ -15,13 +15,13 @@ const UploadWidget = ({setImageInput, setProfilePhoto}) => {
       // folder: ''
     }, function(error, result) {
       if (!error && result && result.event === "success") {
-        console.log(result);
-        
-        setProfilePhoto(result.info.secure_url);
-        // setImageInput(result.info.secure_url);
-        console.log('Done! Here is the public ID: ', result.info.public_id);
+        console.log('results', result);
+        const imageUrl = result.info.secure_url;
+        // setEditedArtist((prev) => ({ ...prev, profile_pic: imageUrl }));
+        setProfilePhoto(imageUrl);
       }
-    });
+    }
+  );
   }, []);
 
   return (
@@ -33,4 +33,4 @@ const UploadWidget = ({setImageInput, setProfilePhoto}) => {
 
 
 
-export default UploadWidget;
+export default UploadArtistProfileWidget;
