@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import useStore from "../../zustand/store";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import UploadOrgProfileWidget from "../UploadOrgProfileWidget/UploadOrgProfileWidget";
+import { Cloudinary } from "@cloudinary/url-gen/index";
+// import { AdvancedImage } from "@cloudinary/react";
+import { fill } from "@cloudinary/url-gen/actions/resize";
+import UploadWidget from "../UploadGalleryWidget/UploadGalleryWidget";
+import { image } from "@cloudinary/url-gen/qualifiers/source";
 
 function OrganizationPage() {
   const { organizationId } = useParams();
@@ -21,33 +27,37 @@ function OrganizationPage() {
   useEffect(() => {
     if (organizationObj) {
       setEditedOrganization(organizationObj);
-      setImagePreview(organizationObj.profile_pic);
+      // setImagePreview(organizationObj.profile_pic);
     }
   }, [organizationObj]);
 
+  //----CLOUDINARY INFO----//
+
+    // Create a Cloudinary instance and set your cloud name.
+    const cld = new Cloudinary({
+      cloud: {
+        cloudName: 'dwqjkxlqe'
+
+      }
+    });
+
+      // Instantiate a CloudinaryImage object for the image with the public ID, 'docs/models'.
+  const myImage = cld.image('docs/result.info.public_id'); 
+
+  // Resize to 250 x 250 pixels using the 'fill' crop mode.
+  myImage.resize(fill().width(150).height(150));  
+
+//----------------------//
+
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "profile_pic" && files.length) {
-      const file = files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "your_upload_preset");
-
-      axios
-        .post("https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", formData)
-        .then((response) => {
-          const imageUrl = response.data.secure_url;
-          setEditedOrganization((prev) => ({ ...prev, profile_pic: imageUrl }));
-          setImagePreview(imageUrl);
-        })
-        .catch((error) => console.error("Error uploading image:", error));
-    } else {
+    const { name, value } = e.target;
       setEditedOrganization((prev) => ({ ...prev, [name]: value }));
-    }
-  };
+    };
 
-  const handleSave = async () => {
-    await updateOrganization(organizationId, editedOrganization);
+  const handleSave = () => {
+    const myNewOrg = {...editedOrganization, profile_pic: imagePreview}
+    console.log(myNewOrg);
+     updateOrganization(organizationId, myNewOrg);
     setIsEditing(false);
   };
 
@@ -84,9 +94,10 @@ function OrganizationPage() {
                   name="profile_pic"
                   onChange={handleChange}
                 />
-                {imagePreview && (
+                {isEditing &&(<UploadOrgProfileWidget setImagePreview={setImagePreview}/>)}
+                {editedOrganization.profile_pic && (
                   <img
-                    src={imagePreview}
+                    src={editedOrganization.profile_pic}
                     alt="Preview"
                     style={{ width: "200px", height: "auto" }}
                   />
