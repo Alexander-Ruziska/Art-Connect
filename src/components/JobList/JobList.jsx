@@ -1,9 +1,9 @@
-
-import React, { useEffect } from "react";
-import moment from "moment/moment";
-
+import React, { useEffect, useState } from "react";
+import moment from "moment";
 import useStore from "../../zustand/store";
 import { useNavigate } from "react-router-dom";
+import { Badge, Button, Form, Card } from "react-bootstrap";
+import { FaArchive, FaTrashRestoreAlt } from "react-icons/fa";
 
 const JobList = () => {
   const {
@@ -11,10 +11,12 @@ const JobList = () => {
     expressInterest,
     withdrawInterest,
     fetchArtistRequests,
+    updateJob,
     artistRequests = [],
-    user
+    user,
   } = useStore();
 
+  const [showArchived, setShowArchived] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,69 +25,116 @@ const JobList = () => {
     }
   }, [fetchArtistRequests, user.artist_id]);
 
+  const filteredJobs = jobs.filter((job) => {
+    if (user.artist_id) return !job.is_archived;
+    if (user.is_organization) {
+      return (
+        job.organization_id === user.organization_id &&
+        job.is_archived === showArchived
+      );
+    }
+    return false;
+  } );    
 
-console.log('user', user)
-return (
-  <div>
-    <h2>Job Listings</h2>
-    {user.is_organization && (
-    <button
-    className="btn btn-success mb-3"
-    onClick={() => navigate(`/post-job/${user.organization_id}`)}
-     >
-    Post New Job
-    </button>
-    )}
- 
+  return (
+    <div className="container mt-4">
+      <h2 className="mb-4 text-center">📋  Job Listings</h2>
 
-    {jobs.length === 0 ? (
-      <p>No jobs available.</p>
-    ) : (
-      <ul>
-      {jobs
-        .filter((job) => {
-          // If artist, show all jobs
-          if (user.artist_id) return true;
-    
-          // If organization, show only their own jobs
-          if (user.is_organization && job.organization_id === user.organization_id) {
-            return true;
-          }
-    
-          return false;
-        })
-        .map((job) => {
-          const hasRequested = artistRequests.some(
-            (req) => req.job_id === job.id
-          );
+      {user.is_organization && (
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <Button
+            variant="success"
+            onClick={() => navigate(`/post-job/${user.organization_id}`)}
+          >
+            ➕ Post New Job
+          </Button>
 
-          return (
-            <li key={job.id} className="mb-3 border p-3 rounded">
-              <h4>{job.title}</h4>
-              <p>{job.description}</p>
-              <p><strong>Deadline:</strong> {moment(job.deadline).format("MMM Do YYYY")}</p>
+          <Form.Check
+            type="switch"
+            id="archive-switch"
+            label={showArchived ? "🔴 Viewing Archived" : "🟢 Viewing Active"}
+            checked={showArchived}
+            onChange={() => setShowArchived(!showArchived)}
+          />
+        </div>
+      )}
 
-              {user.artist_id && (
-                <button
-                  className={`btn btn-sm ${hasRequested ? "btn-outline-danger" : "btn-primary"}`}
-                  onClick={() =>
-                    hasRequested
-                      ? withdrawInterest(job.id)
-                      : expressInterest(job.id)
-                  }
+      {filteredJobs.length === 0 ? (
+        <p className="text-muted">No jobs available.</p>
+      ) : (
+        <div className="row">
+          {filteredJobs.map((job) => {
+            const hasRequested = artistRequests.some(
+              (req) => req.job_id === job.id
+            );
+
+            return (
+              <div key={job.id} className="col-md-6 mb-4">
+                <Card
+                  className={`shadow-sm ${
+                    job.is_archived ? "bg-light border-warning" : ""
+                  }`}
                 >
-                  {hasRequested ? "Withdraw Interest" : "I'm Interested"}
-                </button>
-                
-              )}
-            </li>
-          );
-        })}
-      </ul>
-    )}
-  </div>
-);
+                  <Card.Body>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <Card.Title className="mb-0">
+                        {job.title}
+                        {job.is_archived && (
+                          <Badge bg="warning" className="ms-2">
+                            Archived
+                          </Badge>
+                        )}
+                      </Card.Title>
+                      <small className="text-muted">
+                        🗓 {moment(job.deadline).format("MMM Do YYYY")}
+                      </small>
+                    </div>
 
+                    <Card.Text className="mt-2">{job.description}</Card.Text>
+
+                    {user.artist_id && !job.is_archived && (
+                      <Button
+                        size="sm"
+                        variant={hasRequested ? "outline-danger" : "primary"}
+                        onClick={() =>
+                          hasRequested
+                            ? withdrawInterest(job.id)
+                            : expressInterest(job.id)
+                        }
+                      >
+                        {hasRequested ? "Withdraw Interest" : "I'm Interested"}
+                      </Button>
+                    )}
+
+                    {user.is_organization && (
+                      <Button
+                        variant={job.is_archived ? "secondary" : "outline-secondary"}
+                        size="sm"
+                        className="ms-2"
+                        onClick={() =>
+                          updateJob(job.id, { is_archived: !job.is_archived })
+                        }
+                      >
+                        {job.is_archived ? (
+                          <>
+                            <FaTrashRestoreAlt className="me-1" /> Unarchive
+                          </>
+                        ) : (
+                          <>
+                            <FaArchive className="me-1" /> Archive
+                          </>
+                        )}
+                      </Button>
+                    )}
+                  </Card.Body>
+                </Card>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default JobList;
