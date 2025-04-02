@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Cloudinary } from "@cloudinary/url-gen/index";
 // import { AdvancedImage } from "@cloudinary/react";
 import { fill } from "@cloudinary/url-gen/actions/resize";
-import UploadWidget from "../UploadWidget/UploadWidget";
+import UploadWidget from "../UploadGalleryWidget/UploadWidget";
 import { image } from "@cloudinary/url-gen/qualifiers/source";
 import axios from "axios";
 import Button from "react-bootstrap/Button";

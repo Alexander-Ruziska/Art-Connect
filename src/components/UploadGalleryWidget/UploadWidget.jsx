@@ -3,13 +3,13 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import Button from 'react-bootstrap/Button';
 
-const UploadWidget = ({setImageInput, setProfilePhoto}) => {
+const UploadGalleryWidget = ({setImageInput, setProfilePhoto}) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
 
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
-    widgetRef.current = cloudinaryRef.current.createUploadWidget({
+    widgetRef.current = cloudinaryRef.current.createUploadGalleryWidget({
       cloudName: 'dwqjkxlqe',
       uploadPreset: 'my_first_preset',
       // folder: ''
@@ -33,4 +33,4 @@ const UploadWidget = ({setImageInput, setProfilePhoto}) => {
 
 
 
-export default UploadWidget;
+export default UploadGalleryWidget;

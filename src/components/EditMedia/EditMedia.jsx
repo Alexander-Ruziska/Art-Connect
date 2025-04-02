@@ -5,7 +5,7 @@ import { Cloudinary } from "@cloudinary/url-gen/index";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import useStore from "../../zustand/store";
 import { useNavigate } from "react-router-dom";
-import UploadWidget from "../UploadWidget/UploadWidget";
+import UploadWidget from "../UploadGalleryWidget/UploadWidget";
 import { image } from "@cloudinary/url-gen/qualifiers/source";
 
 
@@ -80,7 +80,7 @@ function EditMedia() {
             <input type="text" placeholder="Description" value={descriptionInput} onChange={(e) => setDescriptionInput(e.target.value)} required/>
             
             {/* Adding photo */}
-            <UploadWidget setImageInput={setImageInput}/>
+            <UploadGalleryWidget setImageInput={setImageInput}/>
             <div>
             <label>Uploaded Photo:</label>
             <input placeholder={imageInput} /> 
