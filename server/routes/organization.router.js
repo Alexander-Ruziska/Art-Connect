@@ -141,4 +141,25 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+
+// GET /api/organizations/:id/jobs - List jobs created by this organization
+router.get('/:id/jobs', async (req, res) => {
+  const orgId = Number(req.params.id);
+  if (isNaN(orgId)) return res.status(400).send({ error: 'Invalid organization ID' });
+
+  try {
+    const result = await pool.query(`
+      SELECT * FROM jobs 
+      WHERE organization_id = $1
+      ORDER BY created_at DESC
+    `, [orgId]);
+
+    res.send(result.rows);
+  } catch (err) {
+    console.error('Error fetching jobs for organization:', err);
+    res.sendStatus(500);
+  }
+});
+
+
 module.exports = router;
