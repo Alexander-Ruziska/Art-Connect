@@ -42,7 +42,7 @@ return (
       <p>No jobs available.</p>
     ) : (
       <ul>
-        {jobs.map((job) => {
+        {jobs.filter((j) => Number(j.organization_id) === Number(user.organization_id)).map((job) => {
           const hasRequested = artistRequests.some(
             (req) => req.job_id === job.id
           );
