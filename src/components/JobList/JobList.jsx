@@ -42,7 +42,19 @@ return (
       <p>No jobs available.</p>
     ) : (
       <ul>
-        {jobs.filter((j) => Number(j.organization_id) === Number(user.organization_id)).map((job) => {
+      {jobs
+        .filter((job) => {
+          // If artist, show all jobs
+          if (user.artist_id) return true;
+    
+          // If organization, show only their own jobs
+          if (user.is_organization && job.organization_id === user.organization_id) {
+            return true;
+          }
+    
+          return false;
+        })
+        .map((job) => {
           const hasRequested = artistRequests.some(
             (req) => req.job_id === job.id
           );
