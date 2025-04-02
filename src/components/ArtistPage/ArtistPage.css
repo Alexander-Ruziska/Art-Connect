@@ -1,0 +1,100 @@
+#artistPage {
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 0 !important; /* Ensure no rounded edges for container */
+}
+
+#artistPage h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#artistPage h4 {
+    font-size: 1.75rem;
+    margin-top: 30px;
+}
+
+#artistPage p {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+#artistPage .btn {
+    font-size: 1rem;
+    padding: 8px 15px;
+    border-radius: 3px !important; /* Slightly rounded corners for buttons */
+}
+
+#artistPage .btn-primary {
+    background-color: #0066cc;
+    border-color: #0066cc;
+    border-radius: 3px !important; /* Slightly rounded corners */
+}
+
+#artistPage .btn-secondary {
+    background-color: #f0f0f0;
+    border-color: #ccc;
+    border-radius: 3px !important; /* Slightly rounded corners */
+}
+
+#artistPage .ms-2 {
+    margin-left: 0.5rem;
+}
+
+#artistPage .card-body img {
+    width: 200px;
+    height: auto;
+    border-radius: 0 !important; /* Ensure no rounded edges for images */
+    margin-top: 10px;
+}
+
+#artistPage input,
+#artistPage textarea {
+    border-radius: 0 !important; /* No rounded corners for input fields */
+    margin-bottom: 1rem;
+}
+
+#artistPage textarea {
+    resize: vertical;
+}
+
+#artistPage .form-control {
+    font-size: 1rem;
+    border-radius: 0 !important; /* No rounded corners for form control fields */
+}
+
+#artistPage .form-group label {
+    font-weight: bold;
+    color: #333;
+}
+
+#artistPage .form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(38, 143, 255, 0.5);
+}
+
+#artistPage button {
+    font-size: 1rem;
+    border-radius: 4px !important; /* Slightly rounded corners */
+    padding: 8px 15px;
+}
+
+#artistPage .idea-button {
+    font-size: 1rem;
+    padding: 8px 15px;
+    border-radius: 3px !important; /* Slightly rounded corners */
+    background-color: #0066cc;
+    border-color: #0066cc;
+    color: white;
+}
+
+#artistPage .image-preview {
+    margin-top: 10px;
+}
+
+#artistPage .image-preview img {
+    border-radius: 0 !important; /* No rounded corners for image preview */
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+}

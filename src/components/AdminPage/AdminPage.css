@@ -1,0 +1,55 @@
+
+.admin-dashboard {
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 0; 
+  }
+  
+  .admin-dashboard h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .admin-dashboard h4 {
+    font-size: 1.75rem;
+    margin-top: 30px;
+  }
+  
+  .admin-dashboard table {
+    width: 100%;
+    margin-bottom: 30px;
+    border-collapse: collapse;
+  }
+  
+  .admin-dashboard th, .admin-dashboard td {
+    padding: 15px;
+    text-align: left;
+    font-size: 1rem;
+  }
+  
+  .admin-dashboard th {
+    background-color: #f1f1f1;
+  }
+  
+  .admin-dashboard td {
+    background-color: #ffffff;
+  }
+  
+  .admin-dashboard button {
+    margin-top: 10px;
+    border-radius: 3px !important; 
+  }
+  
+  .admin-dashboard .btn-danger {
+    background-color: #dc3545;
+  }
+  
+  .admin-dashboard .btn-success {
+    background-color: #28a745;
+  }
+  
+  button:hover, .btn:hover {
+    cursor: pointer;
+  }
+  

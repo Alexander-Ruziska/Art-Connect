@@ -7,6 +7,10 @@ import { fill } from "@cloudinary/url-gen/actions/resize";
 import UploadWidget from "../UploadWidget/UploadWidget";
 import { image } from "@cloudinary/url-gen/qualifiers/source";
 import axios from "axios";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
+import "./ArtistPage.css";
 
 function ArtistPage() {
   const { artistId } = useParams();
@@ -71,7 +75,7 @@ function ArtistPage() {
   };
 
   const handleSave = async () => {
-    await updateArtist(artistId, editedArtist); // make sure this works
+    await updateArtist(artistId, editedArtist);
     setIsEditing(false);
   };
 
@@ -82,8 +86,9 @@ function ArtistPage() {
   const isMember = artistOBJ?.is_member;
 
   return artistOBJ ? (
-    <div id="artistPage">
+    <div id="artistPage" className="mt-4">
       {isEditing ? (
+
         <>
           <input
             type="text"
@@ -151,50 +156,162 @@ function ArtistPage() {
           <button onClick={handleSave}>Save</button>
           <button onClick={() => setIsEditing(false)}>Cancel</button>
         </>
+
+        <Form>
+          <Form.Group className="mb-3">
+            <Form.Label>Artist Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="name"
+              value={editedArtist.name || ""}
+              onChange={handleChange}
+              placeholder="Artist Name"
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Headline Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="headline_description"
+              value={editedArtist.headline_description || ""}
+              onChange={handleChange}
+              placeholder="Headline Description"
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Profile Picture</Form.Label>
+            <Form.Control
+              type="file"
+              name="profile_pic"
+              onChange={handleChange}
+            />
+            {imagePreview && (
+              <img src={imagePreview} alt="Preview" style={{ width: 200, height: "auto" }} />
+            )}
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>LinkedIn</Form.Label>
+            <Form.Control
+              type="text"
+              name="linkedin"
+              value={editedArtist.linkedin || ""}
+              onChange={handleChange}
+              placeholder="LinkedIn"
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Facebook</Form.Label>
+            <Form.Control
+              type="text"
+              name="facebook"
+              value={editedArtist.facebook || ""}
+              onChange={handleChange}
+              placeholder="Facebook"
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Instagram</Form.Label>
+            <Form.Control
+              type="text"
+              name="insta"
+              value={editedArtist.insta || ""}
+              onChange={handleChange}
+              placeholder="Instagram"
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Website</Form.Label>
+            <Form.Control
+              type="text"
+              name="website"
+              value={editedArtist.website || ""}
+              onChange={handleChange}
+              placeholder="Website"
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Bio</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="bio"
+              value={editedArtist.bio || ""}
+              onChange={handleChange}
+              placeholder="Bio"
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Phone</Form.Label>
+            <Form.Control
+              type="text"
+              name="phone"
+              value={editedArtist.phone || ""}
+              onChange={handleChange}
+              placeholder="Phone"
+            />
+          </Form.Group>
+
+          <div className="mt-3">
+            <Button variant="success" onClick={handleSave}>Save</Button>
+            <Button variant="secondary" onClick={() => setIsEditing(false)} className="ms-2">Cancel</Button>
+          </div>
+        </Form>
+
       ) : (
         <>
-          <h1>{artistOBJ.name}</h1>
-          <p>{artistOBJ.headline_description}</p>
-          {artistOBJ.profile_pic && (
-            <img src={artistOBJ.profile_pic} alt="Artist" style={{ width: 200, height: "auto" }} />
-          )}
-          <h4>Projects</h4>
+          <Card className="mb-3">
+            <Card.Header>{artistOBJ.name}</Card.Header>
+            <Card.Body>
+              <p>{artistOBJ.headline_description}</p>
+              {artistOBJ.profile_pic && (
+                <img src={artistOBJ.profile_pic} alt="Artist" className="rounded-3" style={{ width: 200, height: "auto" }} />
+              )}
+              <h4>Projects</h4>
 
-          {/* Code for soundcloud */}
-          <div>
-            {artistOBJ.soundcloud_id &&
-                <iframe width="100%" height="465" sallow="autoplay"
-                src={`https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/${artistOBJ.soundcloud_id}&amp;`}>
-        </iframe> }
-          </div>
-          {artistOBJ.photos && artistOBJ.photos.length > 0 && (
-            <div>
-              {artistOBJ.photos.map((photo) => (
-                <div key={photo.id}>
-                  <img src={photo.image_url} alt={photo.title} />
-                  <h5>{photo.title}</h5>
-                  <p>{photo.description}</p>
+              {/* Soundcloud */}
+              <div>
+                {artistOBJ.soundcloud_id && (
+                  <iframe width="100%" height="465" sallow="autoplay"
+                    src={`https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/${artistOBJ.soundcloud_id}&amp;`} />
+                )}
+              </div>
+
+              {/* Artist Photos */}
+              {artistOBJ.photos && artistOBJ.photos.length > 0 && (
+                <div>
+                  {artistOBJ.photos.map((photo) => (
+                    <div key={photo.id}>
+                      <img src={photo.image_url} alt={photo.title} />
+                      <h5>{photo.title}</h5>
+                      <p>{photo.description}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          )}
+              )}
 
-          <p>{artistOBJ.bio}</p>
-          <h5>Links:</h5>
-          <p>{artistOBJ.website}</p>
-          <p>{artistOBJ.spotify_id}</p>
-          <p>{artistOBJ.linkedin}</p>
-          <p>{artistOBJ.facebook}</p>
-          <p>{artistOBJ.insta}</p>
-          <p>{artistOBJ.phone}</p>
+              <p>{artistOBJ.bio}</p>
+              <h5>Links:</h5>
+              <p>{artistOBJ.website}</p>
+              <p>{artistOBJ.spotify_id}</p>
+              <p>{artistOBJ.linkedin}</p>
+              <p>{artistOBJ.facebook}</p>
+              <p>{artistOBJ.insta}</p>
+              <p>{artistOBJ.phone}</p>
 
-          <button id={artistOBJ.id} onClick={ideaButton}>
-            Artist Ideas
-          </button>
+              <Button className="idea-button" onClick={ideaButton}>Artist Ideas</Button>
 
-          {isMember && (
-            <button onClick={() => setIsEditing(true)}>Edit</button>
-          )}
+              {isMember && (
+                <Button variant="secondary" onClick={() => setIsEditing(true)} className="ms-2">Edit</Button>
+              )}
+            </Card.Body>
+          </Card>
         </>
       )}
     </div>
