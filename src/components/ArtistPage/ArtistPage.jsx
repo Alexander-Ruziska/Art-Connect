@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import useStore from "../../zustand/store";
 import { useParams, useNavigate } from "react-router-dom";
+import { Cloudinary } from "@cloudinary/url-gen/index";
+// import { AdvancedImage } from "@cloudinary/react";
+import { fill } from "@cloudinary/url-gen/actions/resize";
+import UploadWidget from "../UploadWidget/UploadWidget";
+import { image } from "@cloudinary/url-gen/qualifiers/source";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -12,12 +17,12 @@ function ArtistPage() {
   const navigate = useNavigate();
   const artistOBJ = useStore((state) => state.artistOBJ);
   const fetchArtist = useStore((state) => state.fetchArtist);
-  const updateArtist = useStore((state) => state.updateArtist); 
+  const updateArtist = useStore((state) => state.updateArtist);
   const user = useStore((state) => state.user);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedArtist, setEditedArtist] = useState({});
-  const [imagePreview, setImagePreview] = useState(null);
+  const [profilePhoto, setProfilePhoto] = useState(null);
 
   useEffect(() => {
     fetchArtist(artistId);
@@ -26,9 +31,27 @@ function ArtistPage() {
   useEffect(() => {
     if (artistOBJ) {
       setEditedArtist(artistOBJ);
-      setImagePreview(artistOBJ.profile_pic);
+      setProfilePhoto(artistOBJ.profile_pic);
     }
   }, [artistOBJ]);
+
+//----CLOUDINARY INFO----//
+
+    // Create a Cloudinary instance and set your cloud name.
+    const cld = new Cloudinary({
+        cloud: {
+          cloudName: 'dwqjkxlqe'
+
+        }
+      });
+  
+        // Instantiate a CloudinaryImage object for the image with the public ID, 'docs/models'.
+    const myImage = cld.image('docs/result.info.public_id'); 
+  
+    // Resize to 250 x 250 pixels using the 'fill' crop mode.
+    myImage.resize(fill().width(150).height(150));  
+
+//----------------------//
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -41,9 +64,9 @@ function ArtistPage() {
       axios
         .post("https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", formData)
         .then((response) => {
-          const imageUrl = response.data.secure_url;
+          const imageUrl = response.info.secure_url;
           setEditedArtist((prev) => ({ ...prev, profile_pic: imageUrl }));
-          setImagePreview(imageUrl);
+          setProfilePhoto(imageUrl);
         })
         .catch((error) => console.error("Image upload failed:", error));
     } else {
@@ -65,6 +88,75 @@ function ArtistPage() {
   return artistOBJ ? (
     <div id="artistPage" className="mt-4">
       {isEditing ? (
+
+        <>
+          <input
+            type="text"
+            name="name"
+            value={editedArtist.name || ""}
+            onChange={handleChange}
+            placeholder="Artist Name"
+          />
+          <textarea
+            name="headline_description"
+            value={editedArtist.headline_description || ""}
+            onChange={handleChange}
+            placeholder="Headline Description"
+          />
+          <input
+            type="file"
+            name="profile_pic"
+            onChange={handleChange}
+          />
+          {isEditing && (<UploadWidget />)}
+          {profilePhoto && (
+            <img src={profilePhoto} alt="Preview" style={{ width: 200, height: "auto" }} />
+          )}
+          <input
+            type="text"
+            name="linkedin"
+            value={editedArtist.linkedin || ""}
+            onChange={handleChange}
+            placeholder="LinkedIn"
+          />
+          <input
+            type="text"
+            name="facebook"
+            value={editedArtist.facebook || ""}
+            onChange={handleChange}
+            placeholder="Facebook"
+          />
+          <input
+            type="text"
+            name="insta"
+            value={editedArtist.insta || ""}
+            onChange={handleChange}
+            placeholder="Instagram"
+          />
+          <input
+            type="text"
+            name="website"
+            value={editedArtist.website || ""}
+            onChange={handleChange}
+            placeholder="Website"
+          />
+          <textarea
+            name="bio"
+            value={editedArtist.bio || ""}
+            onChange={handleChange}
+            placeholder="Bio"
+          />
+          <input
+            type="text"
+            name="phone"
+            value={editedArtist.phone || ""}
+            onChange={handleChange}
+            placeholder="Phone"
+          />
+          <button onClick={handleSave}>Save</button>
+          <button onClick={() => setIsEditing(false)}>Cancel</button>
+        </>
+
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>Artist Name</Form.Label>
@@ -171,6 +263,7 @@ function ArtistPage() {
             <Button variant="secondary" onClick={() => setIsEditing(false)} className="ms-2">Cancel</Button>
           </div>
         </Form>
+
       ) : (
         <>
           <Card className="mb-3">
