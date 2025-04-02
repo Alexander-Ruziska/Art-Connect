@@ -39,6 +39,15 @@ const createOrganizationSlice = (set, get) => ({
             console.error("Error updating organization:", error);
         }
     },
+    fetchJobsForOrganization: async (orgId) => {
+        try {
+          const res = await axios.get(`/api/organizations/${orgId}/jobs`);
+          set({ orgJobs: res.data });
+        } catch (err) {
+          console.error("Error fetching organization's jobs:", err);
+        }
+      },
+      
 });
 
 
