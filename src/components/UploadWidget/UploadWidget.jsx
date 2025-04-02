@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import Button from 'react-bootstrap/Button';
 
-const UploadWidget = ({setImageInput}) => {
+const UploadWidget = ({setImageInput, setProfilePhoto}) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
 
@@ -16,7 +16,9 @@ const UploadWidget = ({setImageInput}) => {
     }, function(error, result) {
       if (!error && result && result.event === "success") {
         console.log(result);
-        setImageInput(result.info.secure_url);
+        
+        setProfilePhoto(result.info.secure_url);
+        // setImageInput(result.info.secure_url);
         console.log('Done! Here is the public ID: ', result.info.public_id);
       }
     });

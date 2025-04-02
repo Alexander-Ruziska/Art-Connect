@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import useStore from "../../zustand/store";
 import { useParams, useNavigate } from "react-router-dom";
+import { Cloudinary } from "@cloudinary/url-gen/index";
+// import { AdvancedImage } from "@cloudinary/react";
+import { fill } from "@cloudinary/url-gen/actions/resize";
+import UploadWidget from "../UploadWidget/UploadWidget";
+import { image } from "@cloudinary/url-gen/qualifiers/source";
 import axios from "axios";
 
 function ArtistPage() {
@@ -8,12 +13,12 @@ function ArtistPage() {
   const navigate = useNavigate();
   const artistOBJ = useStore((state) => state.artistOBJ);
   const fetchArtist = useStore((state) => state.fetchArtist);
-  const updateArtist = useStore((state) => state.updateArtist); 
+  const updateArtist = useStore((state) => state.updateArtist);
   const user = useStore((state) => state.user);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedArtist, setEditedArtist] = useState({});
-  const [imagePreview, setImagePreview] = useState(null);
+  const [profilePhoto, setProfilePhoto] = useState(null);
 
   useEffect(() => {
     fetchArtist(artistId);
@@ -22,9 +27,27 @@ function ArtistPage() {
   useEffect(() => {
     if (artistOBJ) {
       setEditedArtist(artistOBJ);
-      setImagePreview(artistOBJ.profile_pic);
+      setProfilePhoto(artistOBJ.profile_pic);
     }
   }, [artistOBJ]);
+
+//----CLOUDINARY INFO----//
+
+    // Create a Cloudinary instance and set your cloud name.
+    const cld = new Cloudinary({
+        cloud: {
+          cloudName: 'dwqjkxlqe'
+
+        }
+      });
+  
+        // Instantiate a CloudinaryImage object for the image with the public ID, 'docs/models'.
+    const myImage = cld.image('docs/result.info.public_id'); 
+  
+    // Resize to 250 x 250 pixels using the 'fill' crop mode.
+    myImage.resize(fill().width(150).height(150));  
+
+//----------------------//
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -37,9 +60,9 @@ function ArtistPage() {
       axios
         .post("https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", formData)
         .then((response) => {
-          const imageUrl = response.data.secure_url;
+          const imageUrl = response.info.secure_url;
           setEditedArtist((prev) => ({ ...prev, profile_pic: imageUrl }));
-          setImagePreview(imageUrl);
+          setProfilePhoto(imageUrl);
         })
         .catch((error) => console.error("Image upload failed:", error));
     } else {
@@ -80,8 +103,9 @@ function ArtistPage() {
             name="profile_pic"
             onChange={handleChange}
           />
-          {imagePreview && (
-            <img src={imagePreview} alt="Preview" style={{ width: 200, height: "auto" }} />
+          {isEditing && (<UploadWidget />)}
+          {profilePhoto && (
+            <img src={profilePhoto} alt="Preview" style={{ width: 200, height: "auto" }} />
           )}
           <input
             type="text"
