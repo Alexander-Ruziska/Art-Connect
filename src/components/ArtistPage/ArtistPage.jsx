@@ -16,7 +16,6 @@ function ArtistPage() {
   const artistOBJ = useStore((state) => state.artistOBJ);
   const fetchArtist = useStore((state) => state.fetchArtist);
   const updateArtist = useStore((state) => state.updateArtist);
-  const user = useStore((state) => state.user);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedArtist, setEditedArtist] = useState({});
@@ -26,14 +25,16 @@ function ArtistPage() {
 
   useEffect(() => {
     fetchArtist(artistId);
+
+    console.log('Artist obj in useEffect:', artistOBJ)
   }, [artistId]);
 
-  useEffect(() => {
-    if (artistOBJ) {
-      setEditedArtist(artistOBJ);
-      // setProfilePhoto(artistOBJ.profile_pic);
-    }
-  }, [artistOBJ]);
+  // useEffect(() => {
+  //   if (artistOBJ) {
+  //     setEditedArtist(artistOBJ);
+  //     // setProfilePhoto(artistOBJ.profile_pic);
+  //   }
+  // }, [artistOBJ]);
 
 //----CLOUDINARY INFO----//
 
@@ -191,7 +192,7 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
           {/* Artist Photos */}
           {artistOBJ.photos && artistOBJ.photos.length > 0 && (
             <div>
-              {artistOBJ.photos.map((photo) => (
+              {artistOBJ?.photos?.map((photo) => (
                 <div key={photo.id}>
                   <img src={photo.image_url} alt={photo.title} />
                   <p>Title:</p>
