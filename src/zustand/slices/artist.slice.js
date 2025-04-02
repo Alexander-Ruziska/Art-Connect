@@ -78,10 +78,12 @@ user: {
 
   // Updating an artist
   updateArtist: async (artistId, updatedData) => {
+    console.log('updated artist', updatedData);
     try {
       const response = await axios.put(`/api/artists/${artistId}`, updatedData);
       set({ artistOBJ: response.data }); // Update the store with new data
       console.log("Artist updated successfully:", response.data);
+      get().fetchArtists();
     } catch (error) {
       console.error("Error updating artist:", error);
     }

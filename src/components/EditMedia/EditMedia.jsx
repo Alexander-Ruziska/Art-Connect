@@ -5,7 +5,7 @@ import { Cloudinary } from "@cloudinary/url-gen/index";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import useStore from "../../zustand/store";
 import { useNavigate } from "react-router-dom";
-import UploadWidget from "../UploadGalleryWidget/UploadWidget";
+import UploadWidget from "../UploadGalleryWidget/UploadGalleryWidget";
 import { image } from "@cloudinary/url-gen/qualifiers/source";
 
 

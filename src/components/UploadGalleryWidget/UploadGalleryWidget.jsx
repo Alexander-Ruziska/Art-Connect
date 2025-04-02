@@ -3,13 +3,13 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import Button from 'react-bootstrap/Button';
 
-const UploadGalleryWidget = ({setImageInput, setProfilePhoto}) => {
+const UploadGalleryWidget = ({setImageInput}) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
 
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
-    widgetRef.current = cloudinaryRef.current.createUploadGalleryWidget({
+    widgetRef.current = cloudinaryRef.current.createUploadWidget({
       cloudName: 'dwqjkxlqe',
       uploadPreset: 'my_first_preset',
       // folder: ''
@@ -17,8 +17,7 @@ const UploadGalleryWidget = ({setImageInput, setProfilePhoto}) => {
       if (!error && result && result.event === "success") {
         console.log(result);
         
-        setProfilePhoto(result.info.secure_url);
-        // setImageInput(result.info.secure_url);
+        setImageInput(result.info.secure_url);
         console.log('Done! Here is the public ID: ', result.info.public_id);
       }
     });
