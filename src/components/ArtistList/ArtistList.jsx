@@ -1,24 +1,24 @@
 import React, { useEffect } from "react";
 import useStore from "../../zustand/store";
-import { useParams } from "react-router-dom";
 import ArtistItem from "../ArtistItem/ArtistItem";
+import "./ArtistList.css";
 
 function ArtistList() {
   const artistList = useStore((state) => state.artistList);
   const fetchArtists = useStore((state) => state.fetchArtists);
 
   useEffect(() => {
-    console.log("Getting artistList");
     fetchArtists();
   }, [fetchArtists]);
 
   return (
-    <div>
-      <section className="artists">
+    <div id="artistList" className="mt-4">
+      <h2 className="text-center mb-4">Artist List</h2>
+      <div className="image-container">
         {artistList?.map((artist) => (
-          <ArtistItem key={artist.id} artist={artist} /> 
+          <ArtistItem key={artist.id} artist={artist} />
         ))}
-      </section>
+      </div>
     </div>
   );
 }

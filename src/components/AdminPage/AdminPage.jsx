@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import useStore from "../../zustand/store";
-
+import "./AdminPage.css"; 
 function AdminPage() {
   const users = useStore((state) => state.adminUsers);
   const fetchAdminUsers = useStore((state) => state.fetchAdminUsers);
@@ -25,11 +25,11 @@ function AdminPage() {
   const activeUsers = users.filter(user => !user.is_banned);
 
   return (
-    <div className="container mt-4">
-      <h2 className="mb-4">Admin Dashboard</h2>
+    <div className="admin-dashboard container mt-4">
+      <h2 className="text-center mb-4">Admin Dashboard</h2>
 
       <section className="mb-5">
-        <h4>Active Users</h4>
+        <h4 className="mb-3">Active Users</h4>
         <table className="table table-striped table-bordered table-hover">
           <thead className="table-light">
             <tr>
@@ -57,7 +57,7 @@ function AdminPage() {
       </section>
 
       <section>
-        <h4>Banned Users</h4>
+        <h4 className="mb-3">Banned Users</h4>
         <table className="table table-striped table-bordered table-hover">
           <thead className="table-danger">
             <tr>
