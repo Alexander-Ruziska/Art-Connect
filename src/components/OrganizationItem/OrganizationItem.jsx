@@ -14,7 +14,7 @@ const OrganizationItem = ({ organization }) => {
   return (
     <Card id="organizationItem" className="mb-3">
       {organization.profile_pic && (
-        <Card.Img variant="top" src={organization.profile_pic} alt={`${organization.name} logo`} />
+        <Card.Img variant="top" src="{organization.profile_pic}" alt={`${organization.name} logo`} />
       )}
       <Card.Body>
         <Card.Title>{organization.name}</Card.Title>

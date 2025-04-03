@@ -178,9 +178,7 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
         <Card.Header>{artistOBJ.name}</Card.Header>
         <Card.Body>
           <p>{artistOBJ.headline_description}</p>
-          {artistOBJ.profile_pic && (
-            <img src={artistOBJ.profile_pic} alt="Artist" className="rounded-3" style={{ width: 200, height: "auto" }} />
-          )}
+         
           <h4>Projects</h4>
           {/* Soundcloud */}
           <div>
@@ -204,12 +202,19 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
             </div>
           )}
           <img src="{artistOBJ.profile_pic}" />
+          {artistOBJ.profile_pic && (
+            <img src={artistOBJ.profile_pic} alt="Artist" className="rounded-3" style={{ width: 200, height: "auto" }} />
+          )}
           <p>{artistOBJ.bio}</p>
           <h5>Links:</h5>
+          <p>Personal website:</p>
           <p>{artistOBJ.website}</p>
           <p>{artistOBJ.spotify_id}</p>
+          <p>LinkedIn:</p>
           <p>{artistOBJ.linkedin}</p>
+          <p>Facebook:</p>
           <p>{artistOBJ.facebook}</p>
+          <p>Instagram:</p>
           <p>{artistOBJ.insta}</p>
           <p>{artistOBJ.phone}</p>
           <Button className="idea-button" onClick={ideaButton}>Artist Ideas</Button>
