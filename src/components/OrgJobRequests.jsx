@@ -31,7 +31,7 @@ const OrgJobRequests = () => {
 
   return (
     <div className="mt-4">
-      <h2>Job Requests</h2>
+      <h2>Manage Requests</h2>
       {orgRequests.length === 0 ? (
         <p>No requests yet.</p>
       ) : (

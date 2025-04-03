@@ -49,12 +49,6 @@ function Navi() {
                 <NavLink className="nav-link" to="/organization-list" onClick={() => setExpanded(false)}>Organizations List</NavLink>
               </Nav.Item>
 
-              {user?.is_admin && (
-                <Nav.Item>
-                  <NavLink className="nav-link" to="/admin" onClick={() => setExpanded(false)}>Admin</NavLink>
-                </Nav.Item>
-              )}
-
               {user.id && (
                 <>
                   <Nav.Item>
@@ -75,6 +69,11 @@ function Navi() {
                       </NavLink>
                     </Nav.Item>
                   )}
+                                {user?.is_admin && (
+                <Nav.Item>
+                  <NavLink className="nav-link" to="/admin" onClick={() => setExpanded(false)}>Admin</NavLink>
+                </Nav.Item>
+              )}
                     <Nav.Item>
                     <NavLink className="nav-link" to="/login" onClick={logOutFunction}>Logout</NavLink>
                   </Nav.Item>
