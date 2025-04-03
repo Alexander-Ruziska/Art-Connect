@@ -1,55 +1,103 @@
-
 .admin-dashboard {
-    padding: 30px;
-    background-color: #f8f9fa;
-    border-radius: 0; 
-  }
-  
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 2px;
+}
+
+.admin-dashboard table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  table-layout: fixed; 
+}
+
+.admin-dashboard h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.admin-dashboard h4 {
+  font-size: 1.75rem;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.admin-dashboard section {
+  margin-bottom: 40px;
+}
+
+.admin-dashboard .table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-dashboard table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+}
+
+.admin-dashboard th,
+.admin-dashboard td {
+  padding: 15px;
+  text-align: left;
+  font-size: 1rem;
+  white-space: nowrap; 
+}
+
+.admin-dashboard th {
+  background-color: #f1f1f1;
+}
+
+.admin-dashboard td {
+  background-color: #ffffff;
+}
+
+.admin-dashboard td:last-child {
+  text-align: center;
+}
+
+.admin-dashboard button {
+  width: 90px;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  border-radius: 3px !important;
+}
+
+.admin-dashboard .btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.admin-dashboard .btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+button:hover,
+.btn:hover {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
   .admin-dashboard h2 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-size: 2rem;
   }
-  
+
   .admin-dashboard h4 {
-    font-size: 1.75rem;
-    margin-top: 30px;
+    font-size: 1.25rem;
   }
-  
-  .admin-dashboard table {
-    width: 100%;
-    margin-bottom: 30px;
-    border-collapse: collapse;
-  }
-  
-  .admin-dashboard th, .admin-dashboard td {
-    padding: 15px;
-    text-align: left;
-    font-size: 1rem;
-  }
-  
-  .admin-dashboard th {
-    background-color: #f1f1f1;
-  }
-  
+
+  .admin-dashboard th,
   .admin-dashboard td {
-    background-color: #ffffff;
+    font-size: 0.9rem;
+    padding: 10px 12px;
   }
-  
-  .admin-dashboard button {
-    margin-top: 10px;
-    border-radius: 3px !important; 
+
+  .admin-dashboard table {
+    min-width: 100%;
   }
-  
-  .admin-dashboard .btn-danger {
-    background-color: #dc3545;
-  }
-  
-  .admin-dashboard .btn-success {
-    background-color: #28a745;
-  }
-  
-  button:hover, .btn:hover {
-    cursor: pointer;
-  }
-  
+}

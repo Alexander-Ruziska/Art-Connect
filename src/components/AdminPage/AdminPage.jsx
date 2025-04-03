@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import useStore from "../../zustand/store";
 import "./AdminPage.css"; 
+
 function AdminPage() {
   const users = useStore((state) => state.adminUsers);
   const fetchAdminUsers = useStore((state) => state.fetchAdminUsers);
@@ -30,59 +31,69 @@ function AdminPage() {
 
       <section className="mb-5">
         <h4 className="mb-3">Active Users</h4>
-        <table className="table table-striped table-bordered table-hover">
-          <thead className="table-light">
-            <tr>
-              <th>Username</th>
-              <th>Is Artist</th>
-              <th>Is Organization</th>
-              <th>Phone</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {activeUsers.map((user) => (
-              <tr key={user.id}>
-                <td>{user.username}</td>
-                <td>{String(user.is_artist)}</td>
-                <td>{String(user.is_organization)}</td>
-                <td>{user.phone || "N/A"}</td>
-                <td>
-                  <button className="btn btn-danger btn-sm" onClick={() => handleBan(user.id)}>Ban</button>
-                </td>
+        <div className="table-wrapper">
+          <table className="table table-striped table-bordered table-hover">
+            <thead className="table-light">
+              <tr>
+                <th>Username</th>
+                <th>Is Artist</th>
+                <th>Is Organization</th>
+                <th>Phone</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {activeUsers.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.username}</td>
+                  <td>{String(user.is_artist)}</td>
+                  <td>{String(user.is_organization)}</td>
+                  <td>{user.phone || "N/A"}</td>
+                  <td>
+                    <button className="btn btn-danger btn-sm" onClick={() => handleBan(user.id)}>Ban</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section>
-        <h4 className="mb-3">Banned Users</h4>
-        <table className="table table-striped table-bordered table-hover">
-          <thead className="table-danger">
-            <tr>
-              <th>Username</th>
-              <th>Is Artist</th>
-              <th>Is Organization</th>
-              <th>Phone</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bannedUsers.map((user) => (
-              <tr key={user.id}>
-                <td>{user.username}</td>
-                <td>{String(user.is_artist)}</td>
-                <td>{String(user.is_organization)}</td>
-                <td>{user.phone || "N/A"}</td>
-                <td>
-                  <button className="btn btn-success btn-sm" onClick={() => handleUnban(user.id)}>Unban</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+  <h4 className="mb-3">Banned Users</h4>
+  <div className="table-wrapper">
+    <table className="table table-striped table-bordered table-hover">
+      <thead className="table-danger">
+        <tr>
+          <th>Username</th>
+          <th>Is Artist</th>
+          <th>Is Organization</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {bannedUsers.map((user) => (
+          <tr key={user.id}>
+            <td>{user.username}</td>
+            <td>{String(user.is_artist)}</td>
+            <td>{String(user.is_organization)}</td>
+            <td>{user.phone || "N/A"}</td>
+            <td>
+              <button
+                className="btn btn-success btn-sm"
+                onClick={() => handleUnban(user.id)}
+              >
+                Unban
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
+
     </div>
   );
 }

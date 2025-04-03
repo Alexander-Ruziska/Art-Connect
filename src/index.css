@@ -1,6 +1,4 @@
 
-
-
 @import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
 /* Box-Sizing Fix: */
   /* https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
@@ -13,7 +11,7 @@
 /* Remove Margin/Padding: */
 html, body {
   margin: 0;
-  margin-top: 100px;
+  margin-top: 50px;
   padding: 0;
 }
 
@@ -23,6 +21,10 @@ body {
   background-color: #f0f0f0;
   color: rgba(0, 0, 0, 0.75);
   font-family: "Italiana", sans-serif;
+  background-image: url("public/images/ChatGPT Image Apr 2, 2025, 11_17_47 AM.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  
 }
 /* Basic Header/Main/Footer Flexbox Layout: */
 #root {
