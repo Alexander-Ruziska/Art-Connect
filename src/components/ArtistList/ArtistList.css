@@ -14,13 +14,13 @@
   #artistList .image-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 40px;
     justify-content: center; 
   }
   
   #artistList .card {
-    width: 18rem !important; 
-    height: 20rem !important; 
+    width: 23rem !important; 
+    height: 25rem !important; 
     display: flex;
     flex-direction: column; 
     margin-bottom: 20px;

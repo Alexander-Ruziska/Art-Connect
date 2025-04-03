@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import useStore from "../../zustand/store";
 import { useNavigate } from 'react-router-dom';
+import "./HomePage.css";
 
 function HomePage() {
     const { randomArtist, fetchArtists, getRandomArtist } = useStore();
