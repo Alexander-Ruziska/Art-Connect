@@ -43,10 +43,10 @@ function Navi() {
                 <NavLink className="nav-link" to="/" onClick={() => setExpanded(false)}>Home</NavLink>
               </Nav.Item>
               <Nav.Item>
-                <NavLink className="nav-link" to="/artists" onClick={() => setExpanded(false)}>Artists</NavLink>
+                <NavLink className="nav-link" to="/artists" onClick={() => setExpanded(false)}>Artists List</NavLink>
               </Nav.Item>
               <Nav.Item>
-                <NavLink className="nav-link" to="/organization-list" onClick={() => setExpanded(false)}>Organizations</NavLink>
+                <NavLink className="nav-link" to="/organization-list" onClick={() => setExpanded(false)}>Organizations List</NavLink>
               </Nav.Item>
 
               {user?.is_admin && (
@@ -58,16 +58,12 @@ function Navi() {
               {user.id && (
                 <>
                   <Nav.Item>
-                    <NavLink className="nav-link" to="/job-list" onClick={() => setExpanded(false)}>Jobs</NavLink>
+                    <NavLink className="nav-link" to="/job-list" onClick={() => setExpanded(false)}>Jobs Listings</NavLink>
                   </Nav.Item>
-                  <Nav.Item>
-                    <NavLink className="nav-link" to="/login" onClick={logOutFunction}>Logout</NavLink>
-                  </Nav.Item>
-
                   {user.artist_id && (
                     <Nav.Item>
                       <NavLink className="nav-link" to="/my-job-requests" onClick={() => setExpanded(false)}>
-                        My Job Requests
+                        My Jobs
                       </NavLink>
                     </Nav.Item>
                   )}
@@ -75,10 +71,13 @@ function Navi() {
                   {user.organization_id && (
                     <Nav.Item>
                       <NavLink className="nav-link" to="/job-requests" onClick={() => setExpanded(false)}>
-                        View Requests
+                        Manage Requests
                       </NavLink>
                     </Nav.Item>
                   )}
+                    <Nav.Item>
+                    <NavLink className="nav-link" to="/login" onClick={logOutFunction}>Logout</NavLink>
+                  </Nav.Item>
                 </>
               )}
             </Nav>

@@ -94,14 +94,6 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
           onChange={handleChange}
           placeholder="Headline Description"
         />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Profile Picture</Form.Label>
-        <Form.Control
-          type="file"
-          name="profile_pic"
-          onChange={handleChange}
-        />
         {isEditing && (<UploadArtistProfileWidget setProfilePhoto={setProfilePhoto}/>)}
         {editedArtist.profile_pic && (
           <img src={editedArtist.profile_pic} alt="Preview" style={{ width: 200, height: "auto" }} />
