@@ -1,7 +1,7 @@
 #organizationList {
     padding: 30px;
     background-color: #f8f9fa;
-    border-radius: 0 !important; /* Ensure no rounded edges for container */
+    border-radius: 2px !important; 
 }
 
 #organizationList h2 {
@@ -15,21 +15,21 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: center; /* Ensure items are centered in the container */
+    justify-content: center; 
 }
 
 #organizationList .card {
-    width: 18rem !important; /* Fixed width for all cards */
-    height: 20rem !important; /* Fixed height for all cards */
+    width: 18rem !important; 
+    height: 20rem !important; 
     display: flex;
-    flex-direction: column; /* Ensure content stacks vertically */
+    flex-direction: column; 
     margin-bottom: 20px;
-    border-radius: 0 !important; /* Ensure no rounded corners for cards */
+    border-radius: 2px !important; 
 }
 
 #organizationList .card-body {
     padding: 15px;
-    flex-grow: 1; /* Make sure body takes available space and adjusts to fixed height */
+    flex-grow: 1; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -37,28 +37,28 @@
 
 #organizationList .card-body img {
     width: 100%;
-    height: 200px; /* Set fixed height for images to maintain uniformity */
-    object-fit: cover; /* Ensures images don't stretch or skew */
-    border-radius: 0 !important; /* No rounded corners for images */
+    height: 200px; 
+    object-fit: cover; 
+    border-radius: 2px !important; 
     margin-top: 10px;
 }
 
 #organizationList .btn {
     font-size: 1rem;
     padding: 8px 15px;
-    border-radius: 3px !important; /* Slightly rounded corners for buttons */
+    border-radius: 3px !important; 
 }
 
 #organizationList .btn-primary {
     background-color: #0066cc;
     border-color: #0066cc;
-    border-radius: 3px !important; /* Slightly rounded corners */
+    border-radius: 3px !important; 
 }
 
 #organizationList .btn-secondary {
     background-color: #f0f0f0;
     border-color: #ccc;
-    border-radius: 3px !important; /* Slightly rounded corners */
+    border-radius: 3px !important; 
 }
 
 #organizationList .ms-2 {
@@ -67,7 +67,7 @@
 
 #organizationList .card-body input,
 #organizationList .card-body textarea {
-    border-radius: 0 !important; /* No rounded corners for input fields */
+    border-radius: 0 !important;
     margin-bottom: 1rem;
 }
 
@@ -77,7 +77,7 @@
 
 #organizationList .form-control {
     font-size: 1rem;
-    border-radius: 0 !important; /* No rounded corners for form control fields */
+    border-radius: 0 !important; 
 }
 
 #organizationList .form-group label {
@@ -91,14 +91,14 @@
 
 #organizationList button {
     font-size: 1rem;
-    border-radius: 4px !important; /* Slightly rounded corners */
+    border-radius: 4px !important; 
     padding: 8px 15px;
 }
 
 #organizationList .idea-button {
     font-size: 1rem;
     padding: 8px 15px;
-    border-radius: 3px !important; /* Slightly rounded corners */
+    border-radius: 3px !important; 
     background-color: #0066cc;
     border-color: #0066cc;
     color: white;
@@ -109,7 +109,7 @@
 }
 
 #organizationList .image-preview img {
-    border-radius: 0 !important; /* No rounded corners for image preview */
+    border-radius: 0 !important;
     width: 100%;
     max-width: 250px;
     height: auto;
