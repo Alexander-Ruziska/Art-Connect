@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import useStore from '../../zustand/store';
+import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 
 function RegisterPage() {
   const [username, setUsername] = useState('');
@@ -10,7 +11,6 @@ function RegisterPage() {
   const setAuthErrorMessage = useStore((state) => state.setAuthErrorMessage);
 
   useEffect(() => {
-    // Clear the auth error message when the component unmounts:
     return () => {
       setAuthErrorMessage('');
     };
@@ -18,56 +18,86 @@ function RegisterPage() {
 
   const handleRegister = (event) => {
     event.preventDefault();
-
     register({
-      username: username,
-      password: password,
+      username,
+      password,
       is_artist: role === 'artist',
       is_organization: role === 'organization',
     });
   };
 
+  const inputStyle = { borderRadius: '3px' };
+
   return (
-    <>
-      <h2>Register Page</h2>
-      <form onSubmit={handleRegister}>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          required
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <label htmlFor="role">User Type:</label>
-        <select
-          id="role"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          required
-        >
-          <option value="">Select User Type</option>
-          <option value="artist">Artist</option>
-          <option value="organization">Organization</option>
-        </select>
-        <button type="submit">
-          Register
-        </button>
-      </form>
-      { // Conditionally render registration error:
-        errorMessage && (
-          <h3>{errorMessage}</h3>
-        )
-      }
-    </>
+    <Container className="mt-5">
+      <Row className="justify-content-center">
+        <Col xs={12} sm={8} md={6} lg={5}>
+          <div className="text-center mb-4">
+            <h2 className="fw-bold">Register</h2>
+            <p className="text-muted">Create your account</p>
+          </div>
+
+          {errorMessage && (
+            <Alert variant="danger" className="text-center">
+              {errorMessage}
+            </Alert>
+          )}
+
+          <Form
+            onSubmit={handleRegister}
+            className="border p-5 shadow-sm bg-light"
+            style={{ borderRadius: '3px' }}
+          >
+            <Form.Group className="mb-3" controlId="username">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                placeholder="Enter username"
+                style={inputStyle}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Enter password"
+                style={inputStyle}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-4" controlId="role">
+              <Form.Label>Select Role</Form.Label>
+              <Form.Select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                required
+                style={inputStyle}
+              >
+                <option value="">-- Choose Role --</option>
+                <option value="artist">Artist</option>
+                <option value="organization">Organization</option>
+              </Form.Select>
+            </Form.Group>
+
+            <Button
+              type="submit"
+              variant="success"
+              className="w-100 fw-semibold px-4 py-2"
+              style={{ borderRadius: '3px' }}
+            >
+              Create Account
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

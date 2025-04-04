@@ -4,10 +4,12 @@ import axios from 'axios';
 
 const jobRequestSlice = (set, get) => ({
   expressInterest: async (job_id) => {
+    const confirmed = window.confirm("Do you want to express interest in this job?");
+  if (!confirmed) return; // If user presses Cancel, exit early
     try {
       await axios.post('/api/job_requests', { job_id });
       get().fetchArtistRequests(); // <- Refresh the list
-      alert('Interest submitted successfully!');
+      // alert('Interest submitted successfully!');
     } catch (err) {
       console.error('Error expressing interest:', err);
       alert('You must be logged in as an artist to express interest.');
