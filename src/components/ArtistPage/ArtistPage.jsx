@@ -193,7 +193,7 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
               ))}
             </div>
           )}
-          <img src="{artistOBJ.profile_pic}" />
+          {/* <img src="{artistOBJ.profile_pic}" /> */}
           {artistOBJ.profile_pic && (
             <img src={artistOBJ.profile_pic} alt="Artist" className="rounded-3" style={{ width: 200, height: "auto" }} />
           )}
