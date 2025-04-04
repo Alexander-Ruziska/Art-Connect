@@ -29,7 +29,7 @@ const ArtistJobRequests = () => {
 
   return (
     <div className="mt-4">
-      <h2>My Job Requests</h2>
+      <h2>My Jobs</h2>
       {artistRequests.length === 0 ? (
         <p>No job requests yet.</p>
       ) : (
