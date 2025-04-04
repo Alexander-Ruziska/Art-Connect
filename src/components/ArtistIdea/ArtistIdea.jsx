@@ -22,24 +22,29 @@ function ArtistIdea() {
   return (
     <div>
       <section>
-        {artistIdeas?.map((idea) => {
-          return(
+        {artistIdeas?.length === 0 ? (
+          <p className="text-muted">Artist has not posted any ideas.</p>
+        ) : (
+          artistIdeas.map((idea) => (
             <div key={idea.id} id={idea.id}>
               <Card className="mb-3">
                 <Card.Header>{idea.title}</Card.Header>
                 <Card.Body>
                   <blockquote className="blockquote mb-0">
                     <p><b>Idea:</b> {idea.idea}</p>
-                    <footer className="blockquote-footer"><b>Created on:</b>{moment(idea.created_at).format("MMM Do YYYY")}</footer>
+                    <footer className="blockquote-footer">
+                      <b>Created on:</b> {moment(idea.created_at).format("MMM Do YYYY")}
+                    </footer>
                   </blockquote>
                 </Card.Body>
               </Card>
             </div>
-          )
-        })}
+          ))
+        )}
       </section>
     </div>
-  )
+  );
+  
 };
 
 export default ArtistIdea;
