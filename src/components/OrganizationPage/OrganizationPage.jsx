@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import "./OrganizationPage.css";
+import { FaArchive, FaTrashRestoreAlt } from "react-icons/fa";
 
 function OrganizationPage() {
   const { organizationId } = useParams();
@@ -196,9 +197,9 @@ function OrganizationPage() {
 
                 {organizationObj?.is_member && (
                   <Button
-                    variant="secondary"
+                  variant="secondary"
                     onClick={() => setIsEditing(true)}
-                    className="mt-2"
+                    className="ms-2"
                   >
                     Edit
                   </Button>
