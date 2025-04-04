@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import useStore from "../../zustand/store";
 import { useNavigate } from 'react-router-dom';
+import "./HomePage.css";
 
 function HomePage() {
     const { randomArtist, fetchArtists, getRandomArtist } = useStore();
@@ -33,6 +34,7 @@ function HomePage() {
         <div>
             <div id='featuredArtist'>
             <h2>{randomArtist.name}</h2>
+            <img src={randomArtist.card_photo} alt="Artist photo" />
             <p>{randomArtist.headline_description}</p>
             <p>Soundcloud ID: {randomArtist.soundcloud_id}</p>
             </div>

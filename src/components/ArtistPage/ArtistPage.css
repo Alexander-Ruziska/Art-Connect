@@ -43,8 +43,8 @@
 }
 
 #artistPage .card-body img {
-    width: 200px;
-    height: auto;
+    width: 1180px;
+    height: 700px;
     border-radius: 0 !important; /* Ensure no rounded edges for images */
     margin-top: 10px;
 }
