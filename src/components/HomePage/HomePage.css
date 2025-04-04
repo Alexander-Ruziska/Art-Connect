@@ -1,0 +1,37 @@
+#homePage {
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 0 !important;
+}
+
+#homePage h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#homePage h2 {
+    font-size: 2rem;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+#homePage p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-top: 10px;
+}
+
+#homePage .card-body img {
+    width: 100%;
+    max-width: 900px; /* Adjusted size */
+    height: 500px;
+    object-fit: cover;
+    border-radius: 0 !important;
+    margin-top: 10px;
+}
+
+#homePage .text-muted {
+    color: #6c757d !important;
+    margin-top: 10px;
+}
