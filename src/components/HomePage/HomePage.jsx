@@ -34,6 +34,7 @@ function HomePage() {
         <div>
             <div id='featuredArtist'>
             <h2>{randomArtist.name}</h2>
+            <img src={randomArtist.card_photo} alt="Artist photo" />
             <p>{randomArtist.headline_description}</p>
             <p>Soundcloud ID: {randomArtist.soundcloud_id}</p>
             </div>
