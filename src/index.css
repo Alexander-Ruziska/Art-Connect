@@ -18,14 +18,15 @@ html, body {
 /* Typography: */
 body {
   font-family: Italiana;
-  background-color: #f0f0f0;
   color: rgba(0, 0, 0, 0.75);
   font-family: "Italiana", sans-serif;
   background-image: url("public/images/ChatGPT Image Apr 2, 2025, 11_17_47 AM.png");
   background-repeat: no-repeat;
   background-size: cover;
-  
+  background-position: center;
+  background-attachment: fixed; /* This is the key */
 }
+
 /* Basic Header/Main/Footer Flexbox Layout: */
 #root {
   display: flex;

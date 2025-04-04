@@ -20,7 +20,7 @@
   
   #artistList .card {
     width: 23rem !important; 
-    height: 25rem !important; 
+    height: rem !important; 
     display: flex;
     flex-direction: column; 
     margin-bottom: 20px;
