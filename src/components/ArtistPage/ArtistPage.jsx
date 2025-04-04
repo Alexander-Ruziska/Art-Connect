@@ -10,12 +10,15 @@ import Card from "react-bootstrap/Card";
 import "./ArtistPage.css";
 import UploadArtistProfileWidget from "../UploadArtistProfileWidget/UploadArtistProfileWidget";
 
+
 function ArtistPage() {
   const { artistId } = useParams();
   const navigate = useNavigate();
   const artistOBJ = useStore((state) => state.artistOBJ);
   const fetchArtist = useStore((state) => state.fetchArtist);
   const updateArtist = useStore((state) => state.updateArtist);
+  const user = useStore((state) => state.user);
+  
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedArtist, setEditedArtist] = useState({});
@@ -69,6 +72,16 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
     navigate(`/artists/${artistOBJ.id}/ideas`);
   };
 
+      //navigation for an artist to add a new idea
+      const newIdeaNav= () => {
+        navigate(`/ideas`);
+    }
+
+        //navigation to add photos to an artist's profile
+        const newPhotoNav= () => {
+          navigate(`/photos`);
+      }
+  
   const isMember = artistOBJ?.is_member;
 
   return artistOBJ ? (
@@ -94,6 +107,8 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
           onChange={handleChange}
           placeholder="Headline Description"
         />
+      </Form.Group>
+      <Form.Group className="mb-3">
         {isEditing && (<UploadArtistProfileWidget setProfilePhoto={setProfilePhoto}/>)}
         {editedArtist.profile_pic && (
           <img src={editedArtist.profile_pic} alt="Preview" style={{ width: 200, height: "auto" }} />
@@ -193,13 +208,11 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
               ))}
             </div>
           )}
-
           <img src="{artistOBJ.profile_pic}" />
           {/* <img src="{artistOBJ.profile_pic}" /> */}
           {artistOBJ.profile_pic && (
             <img src={artistOBJ.profile_pic} alt="Artist" className="rounded-3" style={{ width: 200, height: "auto" }} />
-          )}
-          
+          )}          
           <p>{artistOBJ.bio}</p>
           <h5>Links:</h5>
           <p>{artistOBJ.website}</p>
@@ -212,6 +225,12 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
           {isMember && (
             <Button variant="secondary" onClick={() => setIsEditing(true)} className="ms-2">Edit</Button>
           )}
+                      <div>
+                {user.artist_id && <button onClick={newPhotoNav} >Add art to profile</button>}
+            </div>
+            <div>
+            {user.artist_id && <button onClick={newIdeaNav}>Post new idea</button>}
+            </div>
         </Card.Body>
       </Card>
     </>

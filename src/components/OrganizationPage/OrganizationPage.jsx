@@ -93,15 +93,14 @@ function OrganizationPage() {
 
                 <Form.Group className="mb-3">
                   <Form.Label>Profile Picture</Form.Label>
-                  <Form.Control type="file" name="profile_pic" onChange={handleChange} />
                   <UploadOrgProfileWidget setImagePreview={setImagePreview} />
-                  {editedOrganization.profile_pic && (
+                  {/* {editedOrganization.profile_pic && (
                     <img
                       src={editedOrganization.profile_pic}
                       alt="Preview"
                       style={{ width: 200, height: "auto" }}
                     />
-                  )}
+                  )} */}
                 </Form.Group>
 
                 <Form.Group className="mb-3">
