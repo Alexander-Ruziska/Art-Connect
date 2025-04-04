@@ -215,10 +215,15 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
           )}          
           <p>{artistOBJ.bio}</p>
           <h5>Links:</h5>
+          <p>Personal website:</p>
           <p>{artistOBJ.website}</p>
+        {/* if they have  */}
           <p>{artistOBJ.spotify_id}</p>
+          <p>LinkedIn:</p>
           <p>{artistOBJ.linkedin}</p>
+          <p>Facebook:</p>
           <p>{artistOBJ.facebook}</p>
+          <p>Instagram:</p>
           <p>{artistOBJ.insta}</p>
           <p>{artistOBJ.phone}</p>
           <Button className="idea-button" onClick={ideaButton}>Artist Ideas</Button>

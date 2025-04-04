@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
       "artists"."name",
       "artists"."headline_description",
       "artists"."card_photo",
+      "artists"."soundcloud_id",
       "user"."id" AS "user_id"
     FROM "user"
     JOIN "artists" ON "user"."id" = "artists"."user_id"
