@@ -130,3 +130,7 @@ nav a.active {
   text-decoration-thickness: 2px;
   transition: 0.7s;
 }
+footer {
+  position: relative;
+  bottom: 0;
+}

@@ -22,8 +22,8 @@ import IdeaForm from '../IdeaForm/IdeaForm';
 import EditMedia from '../EditMedia/EditMedia';
 import PostJob from '../PostJob/PostJob';
 import AdminPage from '../AdminPage/AdminPage';
-import ArtistJobRequests from '../ArtistJobRequests';
-import OrgJobRequests from '../OrgJobRequests';
+import ArtistJobRequests from '../ArtistJobRequests/ArtistJobRequests';
+import OrgJobRequests from '../OrgJobRequests/OrgJobRequests';
 
 function App() {
   const location = useLocation(); 
@@ -135,7 +135,7 @@ function App() {
           </Routes>
         </main>
         <footer>
-        <p style={{ position: 'relative', bottom: 0, marginTop: '20px' }}>Copyright © {new Date().getFullYear()}</p>
+        <p style={{ bottom: 1, marginTop: '20px' }}>Copyright © {new Date().getFullYear()}</p>
         </footer>
       </Container>
     </>
