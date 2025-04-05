@@ -49,7 +49,7 @@ function RegisterPage() {
             style={{ borderRadius: '3px' }}
           >
             <Form.Group className="mb-3" controlId="username">
-              <Form.Label>Username</Form.Label>
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 type="text"
                 value={username}

@@ -29,7 +29,7 @@ function LoginPage() {
     <>
       <h2>Login Page</h2>
       <form onSubmit={handleLogIn}>
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="username">Email:</label>
         <input
           type="text"
           id="username"
