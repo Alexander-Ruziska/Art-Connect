@@ -1,116 +1,116 @@
 #organizationList {
     padding: 30px;
     background-color: #f8f9fa;
-    border-radius: 2px !important; 
-}
-
-#organizationList h2 {
+    border-radius: 2px !important;
+  }
+  
+  #organizationList h2 {
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 20px;
     text-align: center;
-}
-
-#organizationList .image-container {
+  }
+  
+  #organizationList .image-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center; 
-}
-
-#organizationList .card {
-    width: 18rem !important; 
-    height: 20rem !important; 
+    gap: 40px; /* ✅ Match artistList gap */
+    justify-content: center;
+  }
+  
+  #organizationList .card {
+    width: 23rem !important; /* ✅ Match artist card width */
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     margin-bottom: 20px;
-    border-radius: 2px !important; 
-}
-
-#organizationList .card-body {
+    border-radius: 2px !important;
+  }
+  
+  #organizationList .card-body {
     padding: 15px;
-    flex-grow: 1; 
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-#organizationList .card-body img {
+  }
+  
+  #organizationList .card-body img {
     width: 100%;
-    height: 200px; 
-    object-fit: cover; 
-    border-radius: 2px !important; 
+    height: 200px;
+    object-fit: cover;
+    border-radius: 2px !important;
     margin-top: 10px;
-}
-
-#organizationList .btn {
+  }
+  
+  #organizationList .btn {
     font-size: 1rem;
     padding: 8px 15px;
-    border-radius: 3px !important; 
-}
-
-#organizationList .btn-primary {
+    border-radius: 3px !important;
+  }
+  
+  #organizationList .btn-primary {
     background-color: #0066cc;
     border-color: #0066cc;
-    border-radius: 3px !important; 
-}
-
-#organizationList .btn-secondary {
+    border-radius: 3px !important;
+  }
+  
+  #organizationList .btn-secondary {
     background-color: #f0f0f0;
     border-color: #ccc;
-    border-radius: 3px !important; 
-}
-
-#organizationList .ms-2 {
+    border-radius: 3px !important;
+  }
+  
+  #organizationList .ms-2 {
     margin-left: 0.5rem;
-}
-
-#organizationList .card-body input,
-#organizationList .card-body textarea {
-    border-radius: 0 !important;
+  }
+  
+  #organizationList .card-body input,
+  #organizationList .card-body textarea {
+    border-radius: 2px !important; /* ✅ Match artistList input radius */
     margin-bottom: 1rem;
-}
-
-#organizationList .card-body textarea {
+  }
+  
+  #organizationList .card-body textarea {
     resize: vertical;
-}
-
-#organizationList .form-control {
+  }
+  
+  #organizationList .form-control {
     font-size: 1rem;
-    border-radius: 0 !important; 
-}
-
-#organizationList .form-group label {
+    border-radius: 2px !important;
+  }
+  
+  #organizationList .form-group label {
     font-weight: bold;
     color: #333;
-}
-
-#organizationList .form-control:focus {
+  }
+  
+  #organizationList .form-control:focus {
     box-shadow: 0 0 0 0.25rem rgba(38, 143, 255, 0.5);
-}
-
-#organizationList button {
+  }
+  
+  #organizationList button {
     font-size: 1rem;
-    border-radius: 4px !important; 
+    border-radius: 4px !important;
     padding: 8px 15px;
-}
-
-#organizationList .idea-button {
+  }
+  
+  #organizationList .idea-button {
     font-size: 1rem;
     padding: 8px 15px;
-    border-radius: 3px !important; 
+    border-radius: 3px !important;
     background-color: #0066cc;
     border-color: #0066cc;
     color: white;
-}
-
-#organizationList .image-preview {
+  }
+  
+  #organizationList .image-preview {
     margin-top: 10px;
-}
-
-#organizationList .image-preview img {
+  }
+  
+  #organizationList .image-preview img {
     border-radius: 0 !important;
     width: 100%;
     max-width: 250px;
     height: auto;
-}
+  }
+  

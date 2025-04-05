@@ -1,0 +1,36 @@
+#postJobPage {
+    margin-top: 40px;
+    padding: 30px;
+    background-color: #f8f9fa; 
+    border-radius: 0 !important;
+    max-width: 800px !important;
+  }
+  
+  #postJobPage .form-wrapper {
+    max-width: 800px !important; 
+    margin: 0 auto;
+  }
+  
+  #postJobPage h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  #postJobPage p {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  #postJobPage .form-control {
+    font-size: 1rem;
+    border-radius: 3px;
+  }
+  
+  #postJobPage form {
+    background-color: #ffffff;
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+  }
+  
