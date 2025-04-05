@@ -1,8 +1,7 @@
 #homePage {
     margin-top: 24px;
     padding: 30px;
-    background-color: #f8f9fa;
-    border-radius: 0 !important;
+    /* ❌ Removed background and border radius */
   }
   
   #homePage h1 {
@@ -15,15 +14,6 @@
     font-size: 1.2rem;
     color: #333;
     margin-top: 10px;
-  }
-  
-  #homePage .card {
-    border-radius: 0 !important;
-    padding: 20px;
-  }
-  
-  #homePage .card-body {
-    padding: 20px;
   }
   
   #homePage .list-group-item {
@@ -40,4 +30,6 @@
     font-size: 0.9rem;
     padding: 6px 10px;
   }
+  
+ 
   

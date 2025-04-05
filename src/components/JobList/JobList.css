@@ -1,10 +1,6 @@
-/* JobList styles identical to HomePage container */
-
 #homePage {
     margin-top: 24px;
     padding: 30px;
-    background-color: #f8f9fa;
-    border-radius: 0 !important;
   }
   
   #homePage h1 {

@@ -1,8 +1,6 @@
 #homePage {
     margin-top: 24px;
     padding: 30px;
-    background-color: #f8f9fa;
-    border-radius: 0 !important;
   }
   
   #homePage h1 {
@@ -15,15 +13,6 @@
     font-size: 1.2rem;
     color: #333;
     margin-top: 10px;
-  }
-  
-  #homePage .card {
-    border-radius: 0 !important;
-    padding: 20px;
-  }
-  
-  #homePage .card-body {
-    padding: 20px;
   }
   
   #homePage .list-group-item {
@@ -46,4 +35,6 @@
     padding: 6px 12px;
     border-radius: 4px !important;
   }
+  
+
   

@@ -50,7 +50,7 @@ function AdminPage() {
                   <td>{String(user.is_organization)}</td>
                   <td>{user.phone || "N/A"}</td>
                   <td>
-                    <button className="btn btn-danger btn-sm" onClick={() => handleBan(user.id)}>Ban</button>
+                    <button className="btn btn-danger btn-sm" onClick={() => handleBan(user.id)}>Disable</button>
                   </td>
                 </tr>
               ))}
@@ -60,7 +60,7 @@ function AdminPage() {
       </section>
 
       <section>
-  <h4 className="mb-3">Banned Users</h4>
+  <h4 className="mb-3">Disabled Users</h4>
   <div className="table-wrapper">
     <table className="table table-striped table-bordered table-hover">
       <thead className="table-danger">
@@ -84,7 +84,7 @@ function AdminPage() {
                 className="btn btn-success btn-sm"
                 onClick={() => handleUnban(user.id)}
               >
-                Unban
+                Enable
               </button>
             </td>
           </tr>

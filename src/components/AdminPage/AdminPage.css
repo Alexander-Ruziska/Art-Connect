@@ -4,13 +4,6 @@
   border-radius: 2px;
 }
 
-.admin-dashboard table {
-  width: 100%;
-  min-width: 600px;
-  border-collapse: collapse;
-  table-layout: fixed; 
-}
-
 .admin-dashboard h2 {
   font-size: 2.5rem;
   font-weight: bold;
@@ -30,21 +23,26 @@
 
 .admin-dashboard .table-wrapper {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: auto; 
 }
 
 .admin-dashboard table {
   width: 100%;
-  min-width: 600px;
+  min-width: 700px;
+  table-layout: fixed;
   border-collapse: collapse;
 }
+
+
 
 .admin-dashboard th,
 .admin-dashboard td {
   padding: 15px;
   text-align: left;
   font-size: 1rem;
-  white-space: nowrap; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .admin-dashboard th {
@@ -57,13 +55,21 @@
 
 .admin-dashboard td:last-child {
   text-align: center;
+  white-space: nowrap;
+}
+
+.admin-dashboard td:last-child > div {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .admin-dashboard button {
-  width: 90px;
+  width: 90px; 
   padding: 8px 0;
   font-size: 0.9rem;
-  margin-top: 10px;
+  margin: 4px 2px;
   border-radius: 3px !important;
 }
 
@@ -94,10 +100,18 @@ button:hover,
   .admin-dashboard th,
   .admin-dashboard td {
     font-size: 0.9rem;
-    padding: 10px 12px;
+    padding: 10px;
   }
 
-  .admin-dashboard table {
-    min-width: 100%;
+  .admin-dashboard button {
+    width: 90px;
+    font-size: 0.85rem;
+    padding: 6px 0;
+  }
+
+  .admin-dashboard td:last-child > div {
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
