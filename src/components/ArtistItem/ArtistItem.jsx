@@ -17,7 +17,8 @@ const ArtistItem = ({ artist }) => {
     {artist.soundcloud_id ? (
       <iframe
         width="100%"
-        height="465"
+        height="220
+        "
         allow="autoplay"
         src={`https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/${artist.soundcloud_id}`}
         frameBorder="0"
