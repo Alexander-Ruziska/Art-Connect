@@ -135,7 +135,7 @@ function App() {
           </Routes>
         </main>
         <footer>
-          <p>Copyright © {new Date().getFullYear()}</p>
+        <p style={{ position: 'relative', bottom: 0, marginTop: '20px' }}>Copyright © {new Date().getFullYear()}</p>
         </footer>
       </Container>
     </>

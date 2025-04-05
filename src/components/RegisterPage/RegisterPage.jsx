@@ -88,7 +88,7 @@ function RegisterPage() {
 
             <Button
               type="submit"
-              variant="success"
+              variant="primary"
               className="w-100 fw-semibold px-4 py-2"
               style={{ borderRadius: '3px' }}
             >
