@@ -25,8 +25,21 @@ const createIdeaSlice
         } catch (err) {
                 console.error('Slice issue post the idea', err);
         }
-    }
+    },
 
+
+    //archive ideas
+    archiveIdeaFun: async (ideaId, artistId) => {
+        try {
+                await axios.put(`/api/ideas/archive`, { id: ideaId });
+                alert('archived idea!');
+                console.log('ideaID', ideaId);
+                //refreshing the list of artist ideas
+                get().fetchArtistIdeas(artistId);
+        } catch (error) {
+                console.error(`error archiving idea`, error);
+        }
+    }
 
 });
 
