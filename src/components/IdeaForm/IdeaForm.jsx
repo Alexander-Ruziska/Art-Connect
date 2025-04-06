@@ -7,7 +7,7 @@ import { useState } from "react";
 function IdeaForm(props) {
   //Zustand store info
     const addIdea = useStore((state) => state.addIdea);
-
+    const navigate = useNavigate();
   //State changes
   const [titleInput, setTitleInput] = useState('');
   const [ideaInput, setIdeaInput] = useState('');
@@ -30,6 +30,8 @@ function IdeaForm(props) {
       setTitleInput('');
       setIdeaInput('');
 
+      //navigating back to their idea list
+      navigate(-1);
     }
 
 
