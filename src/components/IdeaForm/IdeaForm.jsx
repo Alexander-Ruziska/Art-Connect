@@ -1,14 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useStore from "../../zustand/store";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import "./IdeaForm.css";
 
+function IdeaForm() {
+  // Zustand store info
+  const addIdea = useStore((state) => state.addIdea);
+  const navigate = useNavigate();
 
-function IdeaForm(props) {
-  //Zustand store info
-    const addIdea = useStore((state) => state.addIdea);
-    const navigate = useNavigate();
-
+  // State changes
   const [titleInput, setTitleInput] = useState('');
   const [ideaInput, setIdeaInput] = useState('');
 
@@ -25,16 +26,13 @@ function IdeaForm(props) {
 
     addIdea(newIdea);
 
-
     // This is getting rid of the prior inputs in the form
     setTitleInput('');
     setIdeaInput('');
+
+    // Navigating back to their idea list
+    navigate(-1);
   };
-
-      //navigating back to their idea list
-      navigate(-1);
-    }
-
 
   const inputStyle = { borderRadius: '3px' };
 
@@ -96,6 +94,6 @@ function IdeaForm(props) {
       </div>
     </div>
   );
-};
+}
 
 export default IdeaForm;
