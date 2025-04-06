@@ -198,16 +198,41 @@ function ArtistPage() {
                 <img src={artistOBJ.profile_pic} alt="Artist" className="rounded-3" style={{ width: 200, height: "auto" }} />
               )}
               <p>{artistOBJ.bio}</p>
+              {(artistOBJ.website || artistOBJ.spotify_id || artistOBJ.linkedin || artistOBJ.facebook || artistOBJ.insta) && (
+              <div>
               <h5>Links:</h5>
+              </div>
+                )}
+              {artistOBJ.website && (
+                <div>
               <p>Personal website:</p>
-              <p>{artistOBJ.website}</p>
-              <p>{artistOBJ.spotify_id}</p>
+              <p><a href={artistOBJ.website} target="_blank" rel="noopener noreferrer">  {artistOBJ.website}</a></p>
+              </div>
+                )}
+              {artistOBJ.spotify_id && (
+                <div>
+              <p>Spotify:</p>
+              <p><a href={artistOBJ.spotify_id} target="_blank" rel="noopener noreferrer">  {artistOBJ.spotify_id}</a></p>
+              </div>
+                )}
+              {artistOBJ.linkedin && (
+                <div>
               <p>LinkedIn:</p>
-              <p>{artistOBJ.linkedin}</p>
+              <p><a href={artistOBJ.linkedin} target="_blank" rel="noopener noreferrer">  {artistOBJ.linkedin}</a></p>
+              </div>
+                )}
+              {artistOBJ.facebook && (
+                <div>
               <p>Facebook:</p>
-              <p>{artistOBJ.facebook}</p>
+              <p><a href={artistOBJ.facebook} target="_blank" rel="noopener noreferrer">  {artistOBJ.facebook}</a></p>
+              </div>
+                )}
+              {artistOBJ.insta && (
+                <div>
               <p>Instagram:</p>
-              <p>{artistOBJ.insta}</p>
+              <p><a href={artistOBJ.insta} target="_blank" rel="noopener noreferrer">  {artistOBJ.insta}</a></p>
+              </div>
+                )}
               <p>{artistOBJ.phone}</p>
               <Button className="idea-button" onClick={ideaButton}>Artist Ideas</Button>
               {isMember && (
