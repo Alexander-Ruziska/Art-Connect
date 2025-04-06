@@ -98,3 +98,73 @@
     max-width: 250px;
     height: auto;
 }
+
+#artistPage .artist-feature-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin-top: 20px;
+    border-radius: 2px;
+}
+
+#artistPage .artist-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+#artistPage .artist-photo-grid img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+#artistPage .photo-tile p {
+    margin: 5px 0;
+}
+
+/* Custom modal size */
+.custom-modal-size .modal-dialog {
+    max-width: 80%; /* Modal width is 80% of the viewport */
+    margin: 24px auto; /* Add 24px margin around the modal to give more space */
+}
+
+.custom-modal-size .modal-body {
+    padding: 36px; /* Add 12px padding around the image */
+}
+
+.custom-modal-size .modal-body .modal-image {
+    width: 100vw; /* Make the image fill the entire viewport width */
+    height: 100%; /* Make the image fill the entire viewport height */
+    object-fit: cover; /* Ensure the image covers the whole area, cropping if necessary */
+    margin: 0; /* Remove any default margin */
+}
+
+/* Custom modal header */
+.custom-modal-header {
+    padding: 0; /* Remove extra padding around the header */
+    margin: 0; /* Ensure there's no margin */
+    position: relative; /* Allows positioning of the close button */
+}
+
+/* Close button at the very top */
+.close-button {
+    font-size: 30px; /* Size of the X */
+    color: #000; /* Default color */
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: absolute; /* Overlaying at the very top */
+    top: 0px; /* Adjust the distance from the top */
+    right: 12px; /* Adjust the distance from the right */
+    font-weight: bold;
+    z-index: 1050; /* Ensure the button is on top of the modal content */
+    margin: 0;
+}
+
+.close-button:hover {
+    color: red; /* Change color to red when hovered */
+}
