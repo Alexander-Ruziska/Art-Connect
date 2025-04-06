@@ -57,6 +57,7 @@ fetchArtistIdeas: async (artistId) => {
 },
 
 
+
 //PUT to update the info
 artist: {
     name: "",

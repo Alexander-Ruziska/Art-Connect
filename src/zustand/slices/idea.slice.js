@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 // All requests made with axios will include credentials, which means
 // the cookie that corresponds with the session will be sent along
@@ -7,7 +8,6 @@ axios.defaults.withCredentials = true;
 
 const createIdeaSlice
  = (set, get) => ({
-
 
   
     allArtistIdeas: [],
@@ -25,8 +25,20 @@ const createIdeaSlice
         } catch (err) {
                 console.error('Slice issue post the idea', err);
         }
-    }
+    },
 
+
+    //archive ideas
+    archiveIdeaFun: async (ideaId, artistId) => {
+        try {
+                await axios.put(`/api/ideas/archive`, { id: ideaId });
+                console.log('ideaID', ideaId);
+                //refreshing the list of artist ideas
+                get().fetchArtistIdeas(artistId);
+        } catch (error) {
+                console.error(`error archiving idea`, error);
+        }
+    }
 
 });
 
