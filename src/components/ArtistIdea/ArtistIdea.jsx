@@ -4,11 +4,15 @@ import { useParams } from "react-router-dom";
 import moment from "moment";
 import Card from "react-bootstrap/Card";
 import "./ArtistIdea.css"; 
+import { Button } from "react-bootstrap";
+
+
 
 function ArtistIdea() {
   const artistIdeas = useStore((state) => state.artistIdeas);
   const params = useParams();
   const fetchArtistIdeas = useStore((state) => state.fetchArtistIdeas);
+  const archiveIdeaFun = useStore((state) => state.archiveIdeaFun);
 
   useEffect(() => {
     console.log(`Getting artist by id on the ideas page ${params.artistId}`);
@@ -18,6 +22,10 @@ function ArtistIdea() {
   useEffect(() => {
     console.log('updated artistIdeas array:', artistIdeas);
   }, [artistIdeas]);
+  
+  // archiveIdea((idea.id) => {
+  //   archiveIdeaFun(idea.id);
+  // });
 
   return (
     <div>
@@ -34,6 +42,7 @@ function ArtistIdea() {
                     <p><b>Idea:</b> {idea.idea}</p>
                     <footer className="blockquote-footer">
                       <b>Created on:</b> {moment(idea.created_at).format("MMM Do YYYY")}
+                      <Button onClick={() => archiveIdeaFun(idea.id, idea.artist_id)} >Delete idea</Button>
                     </footer>
                   </blockquote>
                 </Card.Body>
