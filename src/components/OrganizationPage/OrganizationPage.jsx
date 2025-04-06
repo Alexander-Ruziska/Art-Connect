@@ -201,7 +201,7 @@ function OrganizationPage() {
                     onClick={() => setIsEditing(true)}
                     className="ms-2"
                   >
-                    Edit
+                    Edit profile
                   </Button>
                 )}
               </>

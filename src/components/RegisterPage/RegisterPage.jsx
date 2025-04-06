@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import useStore from '../../zustand/store';
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
+// import { useNavigate } from 'react-router-dom';
 
 function RegisterPage() {
   const [username, setUsername] = useState('');
@@ -9,6 +10,7 @@ function RegisterPage() {
   const register = useStore((state) => state.register);
   const errorMessage = useStore((state) => state.authErrorMessage);
   const setAuthErrorMessage = useStore((state) => state.setAuthErrorMessage);
+  // const navigate = useNavigate();
 
   useEffect(() => {
     return () => {
@@ -24,6 +26,9 @@ function RegisterPage() {
       is_artist: role === 'artist',
       is_organization: role === 'organization',
     });
+    // if(user.is_artist){
+    //   navigate(`/api/artist/${user.artist_id}`);
+    // }
   };
 
   const inputStyle = { borderRadius: '3px' };

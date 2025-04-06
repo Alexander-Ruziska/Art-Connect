@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import "./ArtistPage.css";
 import UploadArtistProfileWidget from "../UploadArtistProfileWidget/UploadArtistProfileWidget";
+import Nav from 'react-bootstrap/Nav';
 
 
 function ArtistPage() {
@@ -72,10 +73,7 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
     navigate(`/artists/${artistOBJ.id}/ideas`);
   };
 
-      //navigation for an artist to add a new idea
-      const newIdeaNav= () => {
-        navigate(`/ideas`);
-    }
+
 
         //navigation to add photos to an artist's profile
         const newPhotoNav= () => {
@@ -223,13 +221,10 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
           <p>{artistOBJ.phone}</p>
           <Button className="idea-button" onClick={ideaButton}>Artist Ideas</Button>
           {isMember && (
-            <Button variant="secondary" onClick={() => setIsEditing(true)} className="ms-2">Edit</Button>
+            <Button variant="secondary" onClick={() => setIsEditing(true)} className="ms-2">Edit profile</Button>
           )}
                       <div>
                 {user.artist_id && <button onClick={newPhotoNav} >Add art to profile</button>}
-            </div>
-            <div>
-            {user.artist_id && <button onClick={newIdeaNav}>Post new idea</button>}
             </div>
         </Card.Body>
       </Card>
