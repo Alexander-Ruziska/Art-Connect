@@ -185,9 +185,6 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
         <Card.Header>{artistOBJ.name}</Card.Header>
         <Card.Body>
           <p>{artistOBJ.headline_description}</p>
-          {artistOBJ.profile_pic && (
-            <img src={artistOBJ.profile_pic} alt="Artist" className="rounded-3" style={{ width: 200, height: "auto" }} />
-          )}
           <h4>Projects</h4>
           {/* Soundcloud */}
           <div>
@@ -208,8 +205,6 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
               ))}
             </div>
           )}
-          <img src="{artistOBJ.profile_pic}" />
-          {/* <img src="{artistOBJ.profile_pic}" /> */}
           {artistOBJ.profile_pic && (
             <img src={artistOBJ.profile_pic} alt="Artist" className="rounded-3" style={{ width: 200, height: "auto" }} />
           )}          

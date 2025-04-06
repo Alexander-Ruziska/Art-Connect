@@ -6,7 +6,6 @@ import { NavLink } from 'react-router-dom';
 import { useState } from "react";
 import useStore from "../../zustand/store";
 import { useNavigate } from 'react-router-dom';
-import ArtistProfilePage from "../ArtistProfilePage/ArtistProfilePage";
 
 function Navi() {
   const user = useStore((store) => store.user);
@@ -53,7 +52,7 @@ function Navi() {
               {user.artist_id && (
                 <>
                   <Nav.Item>
-                    <NavLink className="nav-link" to={`/artists/${user.artist_id}`} onClick={() => setExpanded(false)} element={<ArtistProfilePage />} >
+                    <NavLink className="nav-link" to={`/artists/${user.artist_id}`} onClick={() => setExpanded(false)} >
                     Profile
                     </NavLink>
                   </Nav.Item>
