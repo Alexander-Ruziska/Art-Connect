@@ -221,7 +221,7 @@ const myNewArtist = {...editedArtist, profile_pic: profilePhoto}
           <p>{artistOBJ.phone}</p>
           <Button className="idea-button" onClick={ideaButton}>Artist Ideas</Button>
           {isMember && (
-            <Button variant="secondary" onClick={() => setIsEditing(true)} className="ms-2">Edit</Button>
+            <Button variant="secondary" onClick={() => setIsEditing(true)} className="ms-2">Edit profile</Button>
           )}
                       <div>
                 {user.artist_id && <button onClick={newPhotoNav} >Add art to profile</button>}
