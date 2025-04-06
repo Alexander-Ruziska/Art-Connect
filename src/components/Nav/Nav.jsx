@@ -42,6 +42,27 @@ function Navi() {
               <Nav.Item>
                 <NavLink className="nav-link" to="/" onClick={() => setExpanded(false)}>Home</NavLink>
               </Nav.Item>
+
+              {user.artist_id && (
+                <>
+                  <Nav.Item>
+                    <NavLink className="nav-link" to={`/artists/${user.artist_id}`} onClick={() => setExpanded(false)} >
+                    Profile
+                    </NavLink>
+                  </Nav.Item>
+                </>
+              )}
+
+              {user.organization_id && (
+                <>
+                  <Nav.Item>
+                    <NavLink className="nav-link" to={`/organization-list/${user.organization_id}`} onClick={() => setExpanded(false)} >
+                    Profile
+                    </NavLink>
+                  </Nav.Item>
+                </>
+              )}
+              
               <Nav.Item>
                 <NavLink className="nav-link" to="/artists" onClick={() => setExpanded(false)}>Artists List</NavLink>
               </Nav.Item>

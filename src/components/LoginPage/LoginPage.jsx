@@ -53,7 +53,7 @@ function LoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
-                placeholder="Enter username"
+                placeholder="Enter email"
                 style={inputStyle}
               />
             </Form.Group>
