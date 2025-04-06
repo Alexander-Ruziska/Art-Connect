@@ -5,6 +5,7 @@ import moment from "moment";
 import Card from "react-bootstrap/Card";
 import "./ArtistIdea.css"; 
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -13,6 +14,8 @@ function ArtistIdea() {
   const params = useParams();
   const fetchArtistIdeas = useStore((state) => state.fetchArtistIdeas);
   const archiveIdeaFun = useStore((state) => state.archiveIdeaFun);
+  const user = useStore((state) => state.user);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(`Getting artist by id on the ideas page ${params.artistId}`);
@@ -22,14 +25,22 @@ function ArtistIdea() {
   useEffect(() => {
     console.log('updated artistIdeas array:', artistIdeas);
   }, [artistIdeas]);
+
   
   // archiveIdea((idea.id) => {
   //   archiveIdeaFun(idea.id);
   // });
 
+        //navigation for an artist to add a new idea
+        const newIdeaNav= () => {
+          navigate(`/ideas`);
+      }
   return (
     <div>
       <section>
+      <div>
+            {user.artist_id && <button onClick={newIdeaNav}>Post new idea</button>}
+            </div>
         {artistIdeas?.length === 0 ? (
           <p className="text-muted">Artist has not posted any ideas.</p>
         ) : (
