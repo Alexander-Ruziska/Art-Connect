@@ -9,7 +9,11 @@ import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal"; // Import Modal from react-bootstrap
 import "./ArtistPage.css";
 import UploadArtistProfileWidget from "../UploadArtistProfileWidget/UploadArtistProfileWidget";
-import Nav from 'react-bootstrap/Nav';
+import linkedInPhoto from '/images/InBug-Black.png';
+import spotifyPhoto from '/images/Spotify_Primary_Logo_RGB_Black.png';
+import facebookPhoto from '/images/facebook-icon-black-cbf5.png';
+import instaPhoto from '/images/Instagram_Glyph_Black.png';
+import websitePhoto from '/images/website.png';
 
 function ArtistPage() {
   const { artistId } = useParams();
@@ -204,33 +208,28 @@ function ArtistPage() {
               </div>
                 )}
               {artistOBJ.website && (
-                <div>
-              <p>Personal website:</p>
-              <p><a href={artistOBJ.website} target="_blank" rel="noopener noreferrer">  {artistOBJ.website}</a></p>
+                <div id="linkImg" >
+              <a href={artistOBJ.website} target="_blank" rel="noopener noreferrer">  <img id="linkImg" src={websitePhoto}/></a>
               </div>
                 )}
               {artistOBJ.spotify_id && (
-                <div>
-              <p>Spotify:</p>
-              <p><a href={artistOBJ.spotify_id} target="_blank" rel="noopener noreferrer">  {artistOBJ.spotify_id}</a></p>
+                <div id="linkImg">
+             <a href={artistOBJ.spotify_id} target="_blank" rel="noopener noreferrer"> <img id="linkImg" src={spotifyPhoto}/></a>
               </div>
                 )}
               {artistOBJ.linkedin && (
-                <div>
-              <p>LinkedIn:</p>
-              <p><a href={artistOBJ.linkedin} target="_blank" rel="noopener noreferrer">  {artistOBJ.linkedin}</a></p>
+                <div id="linkImg">
+              <a href={artistOBJ.linkedin} target="_blank" rel="noopener noreferrer"><img id="linkImg" src={linkedInPhoto}/></a>
               </div>
                 )}
               {artistOBJ.facebook && (
-                <div>
-              <p>Facebook:</p>
-              <p><a href={artistOBJ.facebook} target="_blank" rel="noopener noreferrer">  {artistOBJ.facebook}</a></p>
+                <div id="linkImg">
+              <a href={artistOBJ.facebook} target="_blank" rel="noopener noreferrer"> <img id="linkImg" src={facebookPhoto}/></a>
               </div>
                 )}
               {artistOBJ.insta && (
-                <div>
-              <p>Instagram:</p>
-              <p><a href={artistOBJ.insta} target="_blank" rel="noopener noreferrer">  {artistOBJ.insta}</a></p>
+                <div id="linkImg">
+              <a href={artistOBJ.insta} target="_blank" rel="noopener noreferrer"> <img id="linkImg" src={instaPhoto}/></a>
               </div>
                 )}
               <p>{artistOBJ.phone}</p>
