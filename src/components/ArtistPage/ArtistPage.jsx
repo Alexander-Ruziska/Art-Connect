@@ -165,7 +165,7 @@ function ArtistPage() {
       ) : (
         <>
           <Card className="mb-3">
-            <Card.Header>{artistOBJ.name}</Card.Header>
+          <Card.Header style={{ fontSize: '2rem' }}>{artistOBJ.name}</Card.Header>
             <Card.Body>
               <p>{artistOBJ.headline_description}</p>
               <h4>Projects</h4>
@@ -179,11 +179,15 @@ function ArtistPage() {
               {/* Artist Portfolio Layout */}
               {artistOBJ.photos && artistOBJ.photos.length > 0 && (
                 <>
-                  {/* First image large and full-width */}
-                  <div className="artist-feature-image" onClick={() => handleImageClick(artistOBJ.photos[0].image_url)}>
-                    <img src={artistOBJ.photos[0].image_url} alt={artistOBJ.photos[0].title} />
-                    <p className="mt-2"><strong>{artistOBJ.photos[0].title}</strong></p>
-                    <p>{artistOBJ.photos[0].description}</p>
+                  {/* First image large and centered */}
+                  <div className="artist-feature">
+                    <div className="artist-feature-image">
+                      <img src={artistOBJ.photos[0].image_url} alt={artistOBJ.photos[0].title} onClick={() => handleImageClick(artistOBJ.photos[0].image_url)} />
+                    </div>
+                    <div className="artist-feature-text">
+                      <p><strong>{artistOBJ.photos[0].title}</strong></p>
+                      <p>{artistOBJ.photos[0].description}</p>
+                    </div>
                   </div>
 
                   {/* 2-column layout for remaining images */}
@@ -198,10 +202,19 @@ function ArtistPage() {
                   </div>
                 </>
               )}
-              {artistOBJ.profile_pic && (
-                <img src={artistOBJ.profile_pic} alt="Artist" className="rounded-3" style={{ width: 200, height: "auto" }} />
-              )}
-              <p>{artistOBJ.bio}</p>
+
+             {artistOBJ.profile_pic && (
+  <div className="artist-profile-container">
+    <img
+      src={artistOBJ.profile_pic}
+      alt="Artist"
+      className="rounded-3"
+      style={{ width: 250, height: "auto" }}  // Set width to 400px, 2x larger than before
+    />
+    <p>{artistOBJ.bio}</p>  {/* Bio text beside the image */}
+  </div>
+)}
+
               {(artistOBJ.website || artistOBJ.spotify_id || artistOBJ.linkedin || artistOBJ.facebook || artistOBJ.insta) && (
               <div>
               <h5>Links:</h5>
@@ -238,7 +251,7 @@ function ArtistPage() {
                 <Button variant="secondary" onClick={() => setIsEditing(true)} className="ms-2">Edit profile</Button>
               )}
               <div>
-                {user.artist_id && <button onClick={newPhotoNav} >Add art to profile</button>}
+                {user.artist_id && <button onClick={newPhotoNav}>Add art to profile</button>}
               </div>
             </Card.Body>
           </Card>
@@ -268,10 +281,6 @@ function ArtistPage() {
     <img src={selectedImage} alt="Full size" className="img-fluid modal-image" />
   </Modal.Body>
 </Modal>
-
-
-
-
     </div>
   ) : (
     <p>Loading...</p>
