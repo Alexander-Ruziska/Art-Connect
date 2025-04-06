@@ -208,6 +208,14 @@
     margin: 0;
 }
 
+#linkImg{
+    height: 50px !important;
+    width: 50px !important;
+    display: inline-block !important;
+    padding: 10px !important;
+    align-items: center !important;
+}
+
 .close-button:hover {
     color: red; /* Change color to red when hovered */
 }
