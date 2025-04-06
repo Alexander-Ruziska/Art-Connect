@@ -5,11 +5,8 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import "./IdeaForm.css";
 
 function IdeaForm() {
-  // Zustand store info
   const addIdea = useStore((state) => state.addIdea);
   const navigate = useNavigate();
-
-  // State changes
   const [titleInput, setTitleInput] = useState('');
   const [ideaInput, setIdeaInput] = useState('');
 
