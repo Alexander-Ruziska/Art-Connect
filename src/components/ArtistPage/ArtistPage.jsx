@@ -315,7 +315,7 @@ function ArtistPage() {
                   </Button>
                 )}
 
-                {user.artist_id && (
+                {user.artist_id === artistOBJ.id && (
                   <Button
                   variant="light"
                     onClick={newPhotoNav}
