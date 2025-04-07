@@ -18,7 +18,12 @@ const OrganizationItem = ({ organization }) => {
           variant="top" 
           src={organization.profile_pic} 
           alt={`${organization.name} logo`} 
-          style={{ objectFit: "cover" }} // Ensures the image fits within the set size
+          style={{ 
+            width: '100%', 
+            height: '300px',  // Fixed height for the image
+            objectFit: 'cover',  // Ensures the image fits within the set size
+            borderRadius: '0'  // No rounded corners for the image
+          }}
         />
       )}
       <Card.Body>
@@ -31,7 +36,13 @@ const OrganizationItem = ({ organization }) => {
         <Button 
           variant="light" 
           onClick={handleClick} 
-          style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem" }}
+          style={{
+            borderRadius: "3px", 
+            border: "1px solid black", 
+            backgroundColor: "#e0e0e0", 
+            padding: "6px 12px", 
+            fontSize: "1rem"
+          }}
         >
           Go to organization profile
         </Button>

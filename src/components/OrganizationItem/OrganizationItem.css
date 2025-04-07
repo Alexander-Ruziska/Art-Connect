@@ -1,54 +1,53 @@
-#organizationItem {
-  width: 18rem !important; /* Fixed width for all cards */
-  height: 27rem !important; /* Fixed height for all cards */
+#organizationList .card {
+  width: 23rem !important; /* Ensure consistent width */
+  height: 30rem !important; /* Set a fixed height for all cards */
   display: flex;
   flex-direction: column; /* Ensure content stacks vertically */
   margin-bottom: 20px;
-  border-radius: 0 !important; /* Ensure no rounded corners for cards */
+  border-radius: 2px !important; /* Ensure no rounded corners for cards */
 }
 
-#organizationItem .card-body {
+#organizationList .card-body {
   padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start; /* Ensure the text and title stay at the top */
   overflow-y: auto; /* Enable scrolling if text overflows */
-  flex-grow: 1; /* Ensure the content takes up available space and allows scrolling */
+  flex-grow: 1; /* Ensure the body grows to take available space */
 }
 
-#organizationItem .card-body img {
+#organizationList .card-body img {
   width: 100%;
-  height: 150px; /* Adjusted image height to make it smaller and allow more room for text */
-  object-fit: cover; /* Ensures images don't stretch or skew */
-  border-radius: 0 !important; /* No rounded corners for images */
+  object-fit: cover; /* Ensures the image fits within the box without distortion */
+  border-radius: 2px !important;
   margin-top: 10px;
 }
 
-#organizationItem .card-footer {
-  display: flex;
-  justify-content: center; /* Center the button */
+#organizationList .card-footer {
   padding: 10px;
   background-color: #fff;
+  border-top: 1px solid #ddd;
+  text-align: center; /* Center the button */
 }
 
-#organizationItem .btn {
+#organizationList .btn {
   font-size: 1rem;
   padding: 8px 15px;
-  border-radius: 3px !important; /* Slightly rounded corners for buttons */
+  border-radius: 3px !important;
 }
 
-#organizationItem .btn-primary {
+#organizationList .btn-primary {
   background-color: #0066cc;
   border-color: #0066cc;
   border-radius: 3px !important;
 }
 
-#organizationItem .btn-secondary {
+#organizationList .btn-secondary {
   background-color: #f0f0f0;
   border-color: #ccc;
   border-radius: 3px !important;
 }
 
-#organizationItem .ms-2 {
+#organizationList .ms-2 {
   margin-left: 0.5rem;
 }
