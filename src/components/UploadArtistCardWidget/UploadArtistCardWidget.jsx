@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import Button from 'react-bootstrap/Button';
 
-const UploadOrgProfileWidget = ({setImagePreview}) => {
+const UploadArtistCardWidget = ({setCardPhoto}) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
 
@@ -15,21 +15,22 @@ const UploadOrgProfileWidget = ({setImagePreview}) => {
       folder: 'Art-Connect'
     }, function(error, result) {
       if (!error && result && result.event === "success") {
-        console.log(result);
-        
-        setImagePreview(result.info.secure_url);
-        console.log('Done! Here is the public ID: ', result.info.public_id);
+        console.log('results', result);
+        const cardImageUrl = result.info.secure_url;
+        // setEditedArtist((prev) => ({ ...prev, profile_pic: imageUrl }));
+        setCardPhoto(cardImageUrl);
       }
-    });
+    }
+  );
   }, []);
 
   return (
     <Button variant="dark" type='button' onClick={() => widgetRef.current.open()}>
-      Upload Org photo
+      Upload Cover photo
     </Button>
   );
 };
 
 
 
-export default UploadOrgProfileWidget;
+export default UploadArtistCardWidget;

@@ -97,6 +97,7 @@ router.put('/:id', async (req, res) => {
     spotify_id,
     accepted_jobs,
     headline_description,
+    card_photo,
     profile_pic,
     linkedin,
     facebook,
@@ -117,9 +118,9 @@ router.put('/:id', async (req, res) => {
 
     await pool.query(
       `UPDATE artists
-       SET name = $1, soundcloud_id = $2, spotify_id = $3, accepted_jobs = $4, headline_description = $5
-       WHERE id = $6`,
-      [name, soundcloud_id, spotify_id, accepted_jobs, headline_description, artistId]
+       SET name = $1, soundcloud_id = $2, spotify_id = $3, accepted_jobs = $4, headline_description = $5, card_photo = $6
+       WHERE id = $7`,
+      [name, soundcloud_id, spotify_id, accepted_jobs, headline_description, card_photo, artistId]
     );
 
     await pool.query(

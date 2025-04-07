@@ -10,6 +10,9 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import "./OrganizationPage.css";
 import { FaArchive, FaTrashRestoreAlt } from "react-icons/fa";
+import linkedInPhoto from '/images/InBug-Black.png';
+import facebookPhoto from '/images/facebook-icon-black-cbf5.png';
+import instaPhoto from '/images/Instagram_Glyph_Black.png';
 
 function OrganizationPage() {
   const { organizationId } = useParams();
@@ -33,7 +36,7 @@ function OrganizationPage() {
 
   const cld = new Cloudinary({
     cloud: {
-      cloudName: "dwqjkxlqe",
+      cloudName: "dk6cndcmh",
     },
   });
 
@@ -190,16 +193,39 @@ function OrganizationPage() {
                     style={{ width: "200px", height: "auto" }}
                   />
                 )}
-                <h4>Recent Work</h4>
+
                 <p>{organizationObj.description}</p>
                 <p>{organizationObj.mission_statement}</p>
 
                 <p><strong>Bio:</strong> {organizationObj.bio}</p>
-                <p><strong>LinkedIn:</strong> {organizationObj.linkedin}</p>
-                <p><strong>Facebook:</strong> {organizationObj.facebook}</p>
-                <p><strong>Instagram:</strong> {organizationObj.insta}</p>
-                <p><strong>Website:</strong> {organizationObj.website}</p>
-                <p><strong>Phone:</strong> {organizationObj.phone}</p>
+                <p><strong>Phone number:</strong> {organizationObj.phone}</p>
+                {(organizationObj.website || organizationObj.linkedin || organizationObj.facebook || organizationObj.insta) && (
+              <div>
+              <h5>Links:</h5>
+              </div>
+                )}
+                {organizationObj.website && (
+                <div>
+                <p>Website:</p>
+              <a href={organizationObj.website} target="_blank" rel="noopener noreferrer">{organizationObj.website}</a>
+              </div>
+              )}
+                {organizationObj.linkedin && (
+                 <div id="linkImg">
+                  <a href={organizationObj.linkedin} target="_blank" rel="noopener noreferrer"><img id="linkImg" src={linkedInPhoto}/></a>
+                  </div>
+              )}
+              {organizationObj.facebook && (
+                <div id="linkImg">
+                <a href={organizationObj.facebook} target="_blank" rel="noopener noreferrer"> <img id="linkImg" src={facebookPhoto}/></a>
+                </div>
+              )}
+              {organizationObj.insta && (
+                <div id="linkImg">
+                <a href={organizationObj.insta} target="_blank" rel="noopener noreferrer"> <img id="linkImg" src={instaPhoto}/></a>
+                </div>
+              )}
+
 
                 {organizationObj?.is_member && (
                   <Button

@@ -6,6 +6,7 @@ import Card from "react-bootstrap/Card";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./ArtistIdea.css"; // Make sure you have the corresponding CSS file
+import Nav from 'react-bootstrap/Nav';
 
 function ArtistIdea() {
   const artistIdeas = useStore((state) => state.artistIdeas);
@@ -24,14 +25,26 @@ function ArtistIdea() {
     navigate(`/ideas`);
   };
 
+  const backNav = () => {
+    navigate(-1);
+  };
+  
   return (
     <div className="artist-idea-container">
+        <Nav variant="tabs" defaultActiveKey={`/artists/${params}/ideas`}>
+          <Nav.Item>
+            <Nav.Link onClick={backNav} >Profile</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>Ideas</Nav.Link>
+          </Nav.Item>
+        </Nav>
       <div className="text-center mb-4">
         <h2 className="fw-bold">Artist Ideas</h2>
         <p className="text-muted">Check out the ideas posted by the artist.</p>
       </div>
       
-      {user.artist_id && (
+      {String(user.artist_id) === params.artistId && (
         <div className="mb-4">
           <Button variant="success" onClick={newIdeaNav}>Post New Idea</Button>
         </div>
