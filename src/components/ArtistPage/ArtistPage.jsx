@@ -13,7 +13,8 @@ import linkedInPhoto from '/images/InBug-Black.png';
 import spotifyPhoto from '/images/Spotify_Primary_Logo_RGB_Black.png';
 import facebookPhoto from '/images/facebook-icon-black-cbf5.png';
 import instaPhoto from '/images/Instagram_Glyph_Black.png';
-import websitePhoto from '/images/website.png';
+import UploadArtistCardWidget from "../UploadArtistCardWidget/UploadArtistCardWidget";
+
 
 function ArtistPage() {
   const { artistId } = useParams();
@@ -26,6 +27,7 @@ function ArtistPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [editedArtist, setEditedArtist] = useState({});
   const [profilePhoto, setProfilePhoto] = useState(null);
+  const [cardPhoto, setCardPhoto] = useState(null);
 
   // Modal state for full-size image display
   const [showModal, setShowModal] = useState(false);
@@ -43,7 +45,7 @@ function ArtistPage() {
   };
 
   const handleSave = () => {
-    const myNewArtist = { ...editedArtist, profile_pic: profilePhoto };
+    const myNewArtist = { ...editedArtist, card_photo: cardPhoto, profile_pic: profilePhoto };
     updateArtist(artistId, myNewArtist);
     setIsEditing(false);
   };
@@ -95,6 +97,12 @@ function ArtistPage() {
             {isEditing && (<UploadArtistProfileWidget setProfilePhoto={setProfilePhoto}/>)}
             {editedArtist.profile_pic && (
               <img src={editedArtist.profile_pic} alt="Preview" style={{ width: 200, height: "auto" }} />
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3">
+            {isEditing && (<UploadArtistCardWidget setCardPhoto={setCardPhoto}/>)}
+            {editedArtist.card_photo && (
+              <img src={editedArtist.card_photo} alt="Preview" style={{ width: 200, height: "auto" }} />
             )}
           </Form.Group>
           <Form.Group className="mb-3">
@@ -221,8 +229,9 @@ function ArtistPage() {
               </div>
                 )}
               {artistOBJ.website && (
-                <div id="linkImg" >
-              <a href={artistOBJ.website} target="_blank" rel="noopener noreferrer">  <img id="linkImg" src={websitePhoto}/></a>
+                <div>
+                <p>Website:</p>
+              <a href={artistOBJ.website} target="_blank" rel="noopener noreferrer">{artistOBJ.website}</a>
               </div>
                 )}
               {artistOBJ.spotify_id && (

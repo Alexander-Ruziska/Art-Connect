@@ -23,7 +23,7 @@ function EditMedia() {
     // Create a Cloudinary instance and set your cloud name.
     const cld = new Cloudinary({
         cloud: {
-          cloudName: 'dwqjkxlqe'
+          cloudName: 'dk6cndcmh'
 
         }
       });

@@ -33,7 +33,7 @@ function OrganizationPage() {
 
   const cld = new Cloudinary({
     cloud: {
-      cloudName: "dwqjkxlqe",
+      cloudName: "dk6cndcmh",
     },
   });
 
