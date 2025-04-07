@@ -94,9 +94,9 @@ const PostJob = () => {
 
             <Button
               type="submit"
-              variant="primary"
+              variant="light"
               className="w-100 fw-semibold px-4 py-2"
-              style={{ borderRadius: '3px' }}
+              style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem" }}
             >
               Post Job
             </Button>

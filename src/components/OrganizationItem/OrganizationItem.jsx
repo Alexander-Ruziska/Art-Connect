@@ -19,7 +19,8 @@ const OrganizationItem = ({ organization }) => {
       <Card.Body>
         <Card.Title>{organization.name}</Card.Title>
         <Card.Text>{organization.description}</Card.Text>
-        <Button variant="primary" onClick={handleClick}>Go to organization profile</Button>
+        <Button variant="light" onClick={handleClick} style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem" }}>Go to organization profile</Button>
+        
       </Card.Body>
     </Card>
   );

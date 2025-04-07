@@ -50,7 +50,7 @@ function AdminPage() {
                   <td>{String(user.is_organization)}</td>
                   <td>{user.phone || "N/A"}</td>
                   <td>
-                    <button className="btn btn-danger btn-sm" onClick={() => handleBan(user.id)}>Disable</button>
+                    <button className="btn btn-danger btn-sm" onClick={() => handleBan(user.id)} style={{ borderRadius: "1px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem", color: "black" }}>Disable</button>
                   </td>
                 </tr>
               ))}
@@ -83,7 +83,7 @@ function AdminPage() {
               <button
                 className="btn btn-success btn-sm"
                 onClick={() => handleUnban(user.id)}
-              >
+                style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem", color: "black" }}>
                 Enable
               </button>
             </td>
