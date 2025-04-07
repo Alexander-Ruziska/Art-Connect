@@ -31,8 +31,7 @@ function ArtistIdea() {
         <p className="text-muted">Check out the ideas posted by the artist.</p>
       </div>
       
-      {/* Update this so it only shows this button to the logged in artist */}
-      {user.artist_id && (
+      {String(user.artist_id) === params.artistId && (
         <div className="mb-4">
           <Button variant="primary" onClick={newIdeaNav}>Post New Idea</Button>
         </div>
