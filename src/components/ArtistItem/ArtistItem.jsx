@@ -17,7 +17,7 @@ const ArtistItem = ({ artist }) => {
       {artist.soundcloud_id ? (
         <iframe
           width="100%"
-          height="200" // Set a fixed height for the iframe (same as image height)
+          height="220" // Set a fixed height for the iframe (same as image height)
           allow="autoplay"
           src={`https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/${artist.soundcloud_id}`}
           frameBorder="0"
@@ -36,7 +36,7 @@ const ArtistItem = ({ artist }) => {
           alt={`Image of ${artist.name}`}
           style={{
             width: "100%", // Ensure the image takes up full width of the container
-            height: "200px", // Fixed height for the image
+            height: "220px", // Fixed height for the image
             objectFit: "cover", // Ensures the image covers the container without distortion
             borderRadius: "0", // No rounded corners for the image
           }}
