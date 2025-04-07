@@ -28,7 +28,7 @@ function ArtistIdea() {
   const backNav = () => {
     navigate(-1);
   };
-  //fix the nav code for the profile button
+  
   return (
     <div className="artist-idea-container">
         <Nav variant="tabs" defaultActiveKey={`/artists/${params}/ideas`}>
