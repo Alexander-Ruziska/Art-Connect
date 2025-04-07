@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 router.get('/', async (req, res) => {
   // Only get organizations where the associated user is not banned
   const query = `
-    SELECT organizations.* 
+    SELECT organizations.*, "user"."profile_pic" 
     FROM organizations
     JOIN user_organizations ON user_organizations.organization_id = organizations.id
     JOIN "user" ON "user".id = user_organizations.user_id
