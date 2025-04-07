@@ -263,10 +263,10 @@ function ArtistPage() {
               <p>{artistOBJ.phone}</p>
               <Button className="idea-button" onClick={ideaButton}>Artist Ideas</Button>
               {isMember && (
-                <Button variant="secondary" onClick={() => setIsEditing(true)} className="ms-2">Edit profile</Button>
+              <Button variant="secondary" onClick={() => setIsEditing(true)} className="ms-2">Edit profile</Button>
               )}
               <div>
-                {user.artist_id && <button onClick={newPhotoNav}>Add art to profile</button>}
+                {user.artist_id === artistOBJ.id && <Button onClick={newPhotoNav}>Add art to profile</Button>}
               </div>
             </Card.Body>
           </Card>
