@@ -3,6 +3,7 @@ import useStore from "../../zustand/store";
 import { useParams, useNavigate } from "react-router-dom";
 import { Cloudinary } from "@cloudinary/url-gen/index";
 import { fill } from "@cloudinary/url-gen/actions/resize";
+import Nav from 'react-bootstrap/Nav';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
@@ -178,6 +179,14 @@ function ArtistPage() {
         </Form>
       ) : (
         <>
+        <Nav variant="tabs" defaultActiveKey={`/artists/${artistId}`}>
+        <Nav.Item>
+          <Nav.Link href={`/artists/${artistId}`}>Profile</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+        <Nav.Link onClick={ideaButton}>Ideas</Nav.Link>
+        </Nav.Item>
+        </Nav>
           <Card className="mb-3">
           <Card.Header style={{ fontSize: '2rem' }}>{artistOBJ.name}</Card.Header>
             <Card.Body>
@@ -261,12 +270,12 @@ function ArtistPage() {
               </div>
                 )}
               <p>{artistOBJ.phone}</p>
-              <Button className="idea-button" onClick={ideaButton}>Artist Ideas</Button>
+              {/* <Button className="idea-button" onClick={ideaButton}>Artist Ideas</Button> */}
               {isMember && (
-                <Button variant="secondary" onClick={() => setIsEditing(true)} className="ms-2">Edit profile</Button>
+              <Button variant="secondary" onClick={() => setIsEditing(true)} className="ms-2">Edit profile</Button>
               )}
               <div>
-                {user.artist_id && <button onClick={newPhotoNav}>Add art to profile</button>}
+                {user.artist_id === artistOBJ.id && <Button onClick={newPhotoNav}>Add art to profile</Button>}
               </div>
             </Card.Body>
           </Card>
