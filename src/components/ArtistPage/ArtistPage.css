@@ -172,6 +172,19 @@
     margin: 0; /* Remove default margin for the paragraph */
 }
 
+/* Apply dark button variant styles */
+#artistPage .btn-dark {
+    border-radius: 3px !important;
+    background-color: #343a40 !important; /* Dark background */
+    border-color: #343a40 !important; /* Dark border */
+    color: white !important; /* White text */
+  }
+  
+  #artistPage .btn-dark:hover {
+    background-color: #23272b !important; /* Darker hover state */
+    border-color: #1d2124 !important; /* Darker border on hover */
+  }
+  
 
 /* Custom modal size */
 .custom-modal-size .modal-dialog {

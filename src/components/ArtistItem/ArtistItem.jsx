@@ -36,13 +36,7 @@ const ArtistItem = ({ artist }) => {
       <Card.Body>
         <Card.Title>{artist.name}</Card.Title>
         <Card.Text>{artist.headline_description}</Card.Text>
-        <Button
-          variant="primary"
-          onClick={handleClick}
-          className="w-100"
-        >
-          Go to artist profile
-        </Button>
+        <Button variant="light" onClick={handleClick} className="w-100" style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem" }}>Go to artist profile</Button>
       </Card.Body>
     </Card>
   );

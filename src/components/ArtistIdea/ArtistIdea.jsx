@@ -46,7 +46,7 @@ function ArtistIdea() {
       
       {String(user.artist_id) === params.artistId && (
         <div className="mb-4">
-          <Button variant="primary" onClick={newIdeaNav}>Post New Idea</Button>
+          <Button variant="success" onClick={newIdeaNav}>Post New Idea</Button>
         </div>
       )}
       
@@ -62,7 +62,7 @@ function ArtistIdea() {
                   <p><b>Idea:</b> {idea.idea}</p>
                   <footer className="blockquote-footer">
                     <b>Created on:</b> {moment(idea.created_at).format("MMM Do YYYY")}
-                    <Button variant="danger" onClick={() => archiveIdeaFun(idea.id, idea.artist_id)} className="ms-2">
+                    <Button variant="light" onClick={() => archiveIdeaFun(idea.id, idea.artist_id)} className="ms-2" style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem" }}>
                       Delete Idea
                     </Button>
                   </footer>

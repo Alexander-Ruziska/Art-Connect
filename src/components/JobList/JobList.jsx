@@ -90,13 +90,13 @@ function JobList() {
                     {user.artist_id && !job.is_archived && (
                       <Button
                         size="sm"
-                        variant={hasRequested ? "outline-danger" : "primary"}
+                        variant={hasRequested ? "outline-danger" : "light"}
                         onClick={() =>
                           hasRequested
                             ? withdrawInterest(job.id)
                             : expressInterest(job.id)
                         }
-                      >
+                        style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem" }}>
                         {hasRequested ? "Withdraw Interest" : "I'm Interested"}
                       </Button>
                     )}

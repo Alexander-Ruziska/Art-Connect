@@ -97,13 +97,6 @@ function OrganizationPage() {
                 <Form.Group className="mb-3">
                   <Form.Label>Profile Picture</Form.Label>
                   <UploadOrgProfileWidget setImagePreview={setImagePreview} />
-                  {/* {editedOrganization.profile_pic && (
-                    <img
-                      src={editedOrganization.profile_pic}
-                      alt="Preview"
-                      style={{ width: 200, height: "auto" }}
-                    />
-                  )} */}
                 </Form.Group>
 
                 <Form.Group className="mb-3">
@@ -166,13 +159,26 @@ function OrganizationPage() {
                   />
                 </Form.Group>
 
-                <Button variant="success" onClick={handleSave}>
+                <Button
+                  variant="light"
+                  onClick={handleSave}
+                  style={{
+                    borderRadius: "3px",
+                    border: "1px solid black",
+                    backgroundColor: "#e0e0e0",
+                  }}
+                >
                   Save
                 </Button>
                 <Button
-                  variant="secondary"
+                  variant="light"
                   onClick={() => setIsEditing(false)}
                   className="ms-2"
+                  style={{
+                    borderRadius: "3px",
+                    border: "1px solid black",
+                    backgroundColor: "#e0e0e0",
+                  }}
                 >
                   Cancel
                 </Button>
@@ -223,8 +229,13 @@ function OrganizationPage() {
 
                 {organizationObj?.is_member && (
                   <Button
-                  variant="secondary"
+                    variant="light"
                     onClick={() => setIsEditing(true)}
+                    style={{
+                      borderRadius: "3px",
+                      border: "1px solid black",
+                      backgroundColor: "#e0e0e0",
+                    }}
                     className="ms-2"
                   >
                     Edit profile
