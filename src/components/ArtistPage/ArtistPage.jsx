@@ -17,6 +17,9 @@ import UploadArtistCardWidget from "../UploadArtistCardWidget/UploadArtistCardWi
 
 
 function ArtistPage() {
+  //the artist edit page goes blank when you edit it every time you start up the server
+  //It is grabbing the new photo but not updating it in the database. I logged into Alex's profile which didn't have a cover photo, updated it and it wouldn't show it while I was logged in as him, but it showed it when I logged out and logged in as myself..?
+
   const { artistId } = useParams();
   const navigate = useNavigate();
   const artistOBJ = useStore((state) => state.artistOBJ);
@@ -46,6 +49,8 @@ function ArtistPage() {
 
   const handleSave = () => {
     const myNewArtist = { ...editedArtist, card_photo: cardPhoto, profile_pic: profilePhoto };
+    console.log('card photo', cardPhoto);
+
     updateArtist(artistId, myNewArtist);
     setIsEditing(false);
   };
