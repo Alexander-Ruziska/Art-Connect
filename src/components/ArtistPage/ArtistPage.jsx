@@ -305,15 +305,6 @@ function ArtistPage() {
 
               <p>{artistOBJ.phone}</p>
 
-              <div style={{ display: "flex", gap: "10px" }}>
-                <Button
-                  variant="light"
-                  onClick={ideaButton}
-                  style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0" }}
-                >
-                  Artist Ideas
-                </Button>
-
                 {isMember && (
                   <Button
                     variant="light"
@@ -325,24 +316,14 @@ function ArtistPage() {
                 )}
 
                 {user.artist_id && (
-                  <button
+                  <Button
+                  variant="light"
                     onClick={newPhotoNav}
-                    style={{ padding: "6px 12px", fontSize: "1rem", borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0" }}
-                  >
+                    style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem" }}>
                     Add art to profile
-                  </button>
+                  </Button>
                 )}
-
              
-              <p>{artistOBJ.phone}</p>
-              {/* <Button className="idea-button" onClick={ideaButton}>Artist Ideas</Button> */}
-              {isMember && (
-              <Button variant="secondary" onClick={() => setIsEditing(true)} className="ms-2">Edit profile</Button>
-              )}
-              <div>
-                {user.artist_id === artistOBJ.id && <Button onClick={newPhotoNav}>Add art to profile</Button>}
-
-              </div>
             </Card.Body>
           </Card>
         </>
