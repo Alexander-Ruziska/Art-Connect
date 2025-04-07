@@ -27,7 +27,7 @@ const ArtistJobRequests = () => {
 
   return (
     <div id="homePage" className="container text-center">
-      <h1 className="mb-4">🎨 My Job Requests</h1>
+      <h1 className="mb-4">My Job Requests</h1>
 
       {artistRequests.length === 0 ? (
         <p className="text-muted">No job requests yet.</p>
