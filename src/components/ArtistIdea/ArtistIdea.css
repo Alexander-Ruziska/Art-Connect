@@ -1,36 +1,60 @@
-/* Container for the idea list */
+/* Add similar styles for ArtistIdea as in ArtistList */
 .artist-idea-container {
-    margin-top: 30px;
-    padding: 20px;
-  }
-  
-  /* Styling for the Card component */
-  .card {
-    border-radius: 0 !important;
-  }
-  
-  .card-header {
-    font-weight: bold;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-  }
-  
-  .blockquote {
-    border-left: 5px solid #007bff;
-    padding-left: 15px;
-    margin: 0;
-    font-style: italic;
-  }
-  
-  .blockquote-footer {
-    font-size: 0.875rem;
-    color: #6c757d;
-  }
-  
-  .no-ideas {
-    font-size: 1.25rem;
-    text-align: center;
-    margin-top: 50px;
-    color: #6c757d;
-  }
-  
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 3px !important;
+  max-width: 800px;  /* Ensures the container is the same size as in ArtistList */
+  margin: 0 auto;
+}
+
+.artist-idea-container h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.artist-idea-container p {
+  font-size: 1.2rem;
+  color: #333;
+  text-align: center;
+}
+
+.artist-idea-container .card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.artist-idea-container .card-body {
+  padding: 15px;
+}
+
+.artist-idea-container .card-body p {
+  font-size: 1.1rem;
+}
+
+.artist-idea-container .blockquote-footer {
+  font-size: 1rem;
+  color: #555;
+}
+
+.artist-idea-container .btn-primary {
+  background-color: #0066cc;
+  border-color: #0066cc;
+  border-radius: 3px;
+}
+
+.artist-idea-container .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  border-radius: 3px;
+}
+
+.artist-idea-container .btn-primary:hover,
+.artist-idea-container .btn-danger:hover {
+  opacity: 0.8;
+}
