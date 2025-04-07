@@ -17,13 +17,16 @@ const ArtistItem = ({ artist }) => {
       {artist.soundcloud_id ? (
         <iframe
           width="100%"
-          height="220" // Set a fixed height for the iframe (same as image height)
+          height="200" // Set a fixed height for the iframe (same as image height)
           allow="autoplay"
           src={`https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/${artist.soundcloud_id}`}
           frameBorder="0"
           allowFullScreen
           title="SoundCloud Player"
-          style={{ objectFit: "cover" }} // Ensures the iframe fits the container like the image
+          style={{
+            objectFit: "cover", // Ensures the iframe fits the container like the image
+            borderRadius: "0", // Ensures no rounded corners for the iframe
+          }}
         ></iframe>
       ) : (
         <Card.Img
@@ -31,6 +34,12 @@ const ArtistItem = ({ artist }) => {
           src={artist.card_photo}
           className="card-img-top"
           alt={`Image of ${artist.name}`}
+          style={{
+            width: "100%", // Ensure the image takes up full width of the container
+            height: "200px", // Fixed height for the image
+            objectFit: "cover", // Ensures the image covers the container without distortion
+            borderRadius: "0", // No rounded corners for the image
+          }}
         />
       )}
       <Card.Body>
@@ -40,18 +49,18 @@ const ArtistItem = ({ artist }) => {
 
       {/* Button container, always at the bottom */}
       <Card.Footer>
-      <Button
+        <Button
           variant="light"
           onClick={handleClick}
           style={{
-          borderRadius: "3px",
-          border: "1px solid black",
-          backgroundColor: "#e0e0e0",
-          padding: "6px 12px",
-          fontSize: "1rem",
-          display: "block",  // Makes the button a block element
-          margin: "0 auto",  // Centers it horizontally
-        }}
+            borderRadius: "3px",
+            border: "1px solid black",
+            backgroundColor: "#e0e0e0",
+            padding: "6px 12px",
+            fontSize: "1rem",
+            display: "block", // Makes the button a block element
+            margin: "0 auto", // Centers it horizontally
+          }}
         >
           Go to artist profile
         </Button>
