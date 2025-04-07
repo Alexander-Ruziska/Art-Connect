@@ -10,9 +10,9 @@ const UploadArtistProfileWidget = ({setProfilePhoto}) => {
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
     widgetRef.current = cloudinaryRef.current.createUploadWidget({
-      cloudName: 'dwqjkxlqe',
-      uploadPreset: 'my_first_preset',
-      // folder: ''
+      cloudName: 'dk6cndcmh',
+      uploadPreset: 'art_connect',
+      folder: 'Art-Connect'
     }, function(error, result) {
       if (!error && result && result.event === "success") {
         console.log('results', result);
@@ -26,7 +26,7 @@ const UploadArtistProfileWidget = ({setProfilePhoto}) => {
 
   return (
     <Button variant="dark" type='button' onClick={() => widgetRef.current.open()}>
-      Upload Artist photo
+      Upload Profile photo
     </Button>
   );
 };

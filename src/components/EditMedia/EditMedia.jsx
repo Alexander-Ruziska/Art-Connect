@@ -8,46 +8,53 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import "./EditMedia.css";
 
 function EditMedia() {
-  const user = useStore((state) => state.user);
-  const addPhoto = useStore((state) => state.addPhoto);
-  const navigate = useNavigate();
-  const [imageInput, setImageInput] = useState('');
-  const [titleInput, setTitleInput] = useState('');
-  const [descriptionInput, setDescriptionInput] = useState('');
 
-  //----CLOUDINARY INFO----//
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: 'dwqjkxlqe'
-    }
-  });
+    const user = useStore((state) => state.user);
+    const addPhoto = useStore((state) => state.addPhoto);
+    const navigate = useNavigate();
+    const [imageInput, setImageInput] = useState('');
+    const [titleInput, setTitleInput] = useState('');
+    const [descriptionInput, setDescriptionInput] = useState('');
+    
 
-  const myImage = cld.image('docs/result.info.public_id');
-  myImage.resize(fill().width(150).height(150)); // Resize image using the 'fill' action
+//----CLOUDINARY INFO----//
 
-  //----REGULAR FORM INFO----//
-  const photoHandler = (event) => {
-    event.preventDefault();
+    // Create a Cloudinary instance and set your cloud name.
+    const cld = new Cloudinary({
+        cloud: {
+          cloudName: 'dk6cndcmh'
+        }
+      });
+  
+        // Instantiate a CloudinaryImage object for the image with the public ID, 'docs/models'.
+    const myImage = cld.image('docs/result.info.public_id'); 
+      myImage.resize(fill().width(150).height(150));  // Resize image using the 'fill' action
 
-    const newPhoto = {
-      artist_id: user.artist_id,
-      image_url: imageInput,
-      title: titleInput,
-      description: descriptionInput
-    }
 
-    console.log('New Photo:', newPhoto);
+    //----REGULAR FORM INFO----//
+    const photoHandler = (event) => {
+        event.preventDefault();
 
-    addPhoto(newPhoto);
+        const newPhoto = {
+            artist_id: user.artist_id,
+            image_url: imageInput,
+            title: titleInput,
+            description: descriptionInput
+        }
 
-    // Clear the prior inputs
-    setImageInput('');
-    setTitleInput('');
-    setDescriptionInput('');
+        console.log('New Photo:', newPhoto);
 
-    // Navigate to the artist's profile page
-    // navigate('');
-  };
+        addPhoto(newPhoto);
+
+        //The code below is getting rid of the prior inputs
+        setImageInput('');
+        setTitleInput('');
+        setDescriptionInput('');
+
+        //navigate to artists profile page -INSERT CODE BELOW-
+        // navigate('');
+    };
+
 
   return (
     <div className="artist-idea-container">
