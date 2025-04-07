@@ -1,9 +1,14 @@
 #artistPage {
     padding: 30px;
     background-color: #f8f9fa;
-    border-radius: 0 !important; /* Ensure no rounded edges for container */
+    border-radius: 3 !important; 
+
 }
 
+#artistPage .card {
+    border-radius: 3px !important; 
+  }
+  
 #artistPage h1 {
     font-size: 2.5rem;
     font-weight: bold;

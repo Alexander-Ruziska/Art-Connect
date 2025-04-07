@@ -78,16 +78,17 @@ function ArtistPage() {
     <div id="artistPage" className="mt-4">
       {isEditing ? (
         <Form>
-          <Form.Group className="mb-3">
-            <Form.Label>Artist Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              value={editedArtist.name || ""}
-              onChange={handleChange}
-              placeholder="Artist Name"
-            />
-          </Form.Group>
+          <Form.Group className="mb-3" style={{ borderRadius: '3px' }}>
+  <Form.Label>Artist Name</Form.Label>
+  <Form.Control
+    type="text"
+    name="name"
+    value={editedArtist.name || ""}
+    onChange={handleChange}
+    placeholder="Artist Name"
+  />
+</Form.Group>
+
           <Form.Group className="mb-3">
             <Form.Label>Headline Description</Form.Label>
             <Form.Control

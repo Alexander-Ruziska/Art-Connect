@@ -24,9 +24,15 @@ const UploadGalleryWidget = ({setImageInput}) => {
   }, []);
 
   return (
-    <Button variant="dark" type='button' onClick={() => widgetRef.current.open()}>
-      Upload photo
-    </Button>
+    <Button
+  variant="dark"
+  type="button"
+  onClick={() => widgetRef.current.open()}
+  style={{ borderRadius: '3px' }} 
+>
+  Upload photo
+</Button>
+
   );
 };
 
