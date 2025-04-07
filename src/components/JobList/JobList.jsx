@@ -47,7 +47,7 @@ function JobList() {
             variant="success"
             onClick={() => navigate(`/post-job/${user.organization_id}`)}
           >
-            ➕ Post New Job
+             Post New Job
           </Button>
 
           <Form.Check
