@@ -158,7 +158,7 @@ router.put('/:id', async (req, res) => {
 //get artist ideas for specific artist
 router.get('/:artistId/ideas', (req, res) => {
   const query = `
-     SELECT "ideas"."id", "ideas"."artist_id", "ideas"."created_at", "ideas"."is_archived", "ideas"."idea", "artists"."id" AS "art_id", "artists"."name"
+     SELECT "ideas"."id", "ideas"."artist_id", "ideas"."created_at", "ideas"."is_archived", "ideas"."idea", "artists"."id" AS "art_id", "artists"."name", "ideas"."title"
   	FROM "ideas"
   	JOIN "artists"
   	ON "ideas"."artist_id" = "artists"."id"

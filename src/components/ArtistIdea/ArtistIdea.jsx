@@ -56,10 +56,10 @@ function ArtistIdea() {
         artistIdeas.map((idea) => (
           <div key={idea.id} id={idea.id}>
             <Card className="mb-3">
-              <Card.Header>{idea.title}</Card.Header>
+              <Card.Header style={{ padding: "20px"  }}>{idea.title}</Card.Header>
               <Card.Body>
                 <blockquote className="blockquote mb-0">
-                  <p><b>Idea:</b> {idea.idea}</p>
+                  <p><b></b> {idea.idea}</p>
                   <footer className="blockquote-footer">
                     <b>Created on:</b> {moment(idea.created_at).format("MMM Do YYYY")}
                     <Button variant="light" onClick={() => archiveIdeaFun(idea.id, idea.artist_id)} className="ms-2" style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem" }}>

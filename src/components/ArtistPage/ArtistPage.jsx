@@ -254,19 +254,14 @@ function ArtistPage() {
                     className="rounded-3"
                     style={{ width: 250, height: "auto" }}  // Set width to 400px, 2x larger than before
                   />
-                  <p>{artistOBJ.bio}</p>  {/* Bio text beside the image */}
+                  <p>{artistOBJ.bio}</p>
                 </div>
               )}
 
-              {(artistOBJ.website || artistOBJ.spotify_id || artistOBJ.linkedin || artistOBJ.facebook || artistOBJ.insta) && (
-                <div>
-                  <h5>Links:</h5>
-                </div>
-              )}
-
+              {/* Links for the artist */}
               {artistOBJ.website && (
                 <div>
-                <p>Website:</p>
+                <p style={{ marginTop: "10px" }}>Website:</p>
               <a href={artistOBJ.website} target="_blank" rel="noopener noreferrer">{artistOBJ.website}</a>
               </div>
                 )}
@@ -304,12 +299,13 @@ function ArtistPage() {
               )}
 
               <p>{artistOBJ.phone}</p>
-
+              <br></br>
+              
                 {isMember && (
                   <Button
                     variant="light"
                     onClick={() => setIsEditing(true)}
-                    style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem" }}
+                    style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem", marginTop: "30px", marginBottom: "20px", marginRight: "20px" }}
                   >
                     Edit profile
                   </Button>
@@ -319,7 +315,7 @@ function ArtistPage() {
                   <Button
                   variant="light"
                     onClick={newPhotoNav}
-                    style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem" }}>
+                    style={{ borderRadius: "3px", border: "1px solid black", backgroundColor: "#e0e0e0", padding: "6px 12px", fontSize: "1rem", marginBottom: "20px", marginTop: "30px" }}>
                     Add art to profile
                   </Button>
                 )}

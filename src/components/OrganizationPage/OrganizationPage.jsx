@@ -199,11 +199,8 @@ function OrganizationPage() {
 
                 <p><strong>Bio:</strong> {organizationObj.bio}</p>
                 <p><strong>Phone number:</strong> {organizationObj.phone}</p>
-                {(organizationObj.website || organizationObj.linkedin || organizationObj.facebook || organizationObj.insta) && (
-              <div>
-              <h5>Links:</h5>
-              </div>
-                )}
+
+                {/* Links for the artist */}
                 {organizationObj.website && (
                 <div>
                 <p>Website:</p>
@@ -235,6 +232,9 @@ function OrganizationPage() {
                       borderRadius: "3px",
                       border: "1px solid black",
                       backgroundColor: "#e0e0e0",
+                      marginTop: "10px",
+                      marginLeft: "20px",
+                      marginRight: "20px"
                     }}
                     className="ms-2"
                   >
